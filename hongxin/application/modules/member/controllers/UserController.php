@@ -169,11 +169,11 @@ class Member_UserController extends Member_CommonController
             $field['leaseEndTime'] = $filter->filter(trim($this->_request->getPost('leaseEndTime')));
             $field['taxRegistrationCertificate'] = $filter->filter(trim($this->_request->getPost('taxRegistrationCertificate')));
             $field['businessLicenseNumber'] = $filter->filter(trim($this->_request->getPost('businessLicenseNumber')));
-            $field['businessLicenseCopyPath'] = $this->_uploadFile('businessLicenseCopy', 'certificateCopy', $row,
+            $field['businessLicenseCopyPath'] = $this->__uploadFile('businessLicenseCopy', 'certificateCopy', $row,
             									array('path' => empty($memberEnterpriseRow) ? '' : $memberEnterpriseRow['businessLicenseCopyPath'],
             										'imgWidth' => 600, 'imgHeight' => 400));
             $field['organizationCode'] = $filter->filter(trim($this->_request->getPost('organizationCode')));
-            $field['organizationCodeCopyPath'] = $this->_uploadFile('organizationCodeCopy', 'certificateCopy', $row,
+            $field['organizationCodeCopyPath'] = $this->__uploadFile('organizationCodeCopy', 'certificateCopy', $row,
             		array('path' => empty($memberEnterpriseRow) ? '' : $memberEnterpriseRow['organizationCodeCopyPath'],
             				'imgWidth' => 400, 'imgHeight' => 300));
             $field['licenseNumberBankAccount'] = $filter->filter(trim($this->_request->getPost('licenseNumberBankAccount')));
@@ -181,7 +181,7 @@ class Member_UserController extends Member_CommonController
             $field['employeesNumber'] = $filter->filter(trim($this->_request->getPost('employeesNumber')));
             $field['legalPersonName'] = $filter->filter(trim($this->_request->getPost('legalPersonName')));
             $field['legalPersonIDCard'] = $filter->filter(trim($this->_request->getPost('legalPersonIDCard')));
-            $field['legalPersonIDCardCopyPath'] = $this->_uploadFile('legalPersonIDCardCopy', 'certificateCopy', $row,
+            $field['legalPersonIDCardCopyPath'] = $this->__uploadFile('legalPersonIDCardCopy', 'certificateCopy', $row,
             		array('path' => empty($memberEnterpriseRow) ? '' : $memberEnterpriseRow['legalPersonIDCardCopyPath'],
             				'imgWidth' => 400, 'imgHeight' => 300));
             if (empty($memberEnterpriseRow)) {
@@ -297,7 +297,7 @@ class Member_UserController extends Member_CommonController
         $this->view->avatarUrl = $avatarUrl;
 
         if ($this->_request->isPost()) {
-            $avatarPath = $this->_uploadFile('avatarPhoto', 'memberAvatar', $userRow, array('path' => $userRow['avatarPath']));
+            $avatarPath = $this->__uploadFile('avatarPhoto', 'memberAvatar', $userRow, array('path' => $userRow['avatarPath']));
             if (!empty($avatarPath)) {
                 $memberLoginModel->update(array('avatarPath'=>$avatarPath), "`id` = {$userRow['id']}");
                 echo $this->view->message("上传成功。") ;
@@ -878,55 +878,4 @@ class Member_UserController extends Member_CommonController
         $this->_helper->getHelper('Json')->sendJson($result);
     }
     
-    private function _uploadFile($fieldName, $type, $userRow, $options=array())
-    {
-    	$defalut = array('path' => '', 'imgWidth' => 80, 'imgHeight' => 80);
-    	$options = array_merge($defalut, $options);
-    	
-    	//上传设置
-    	$uploadFileExtension = array('jpg', 'jpeg', 'png', 'gif');
-    	$maxSize = 1024 * 1024 * 1;
-    	$configBasePath = $type . 'BasePath';
-    	$files = $_FILES;
-    	$path = '';
-    	if (isset($files[$fieldName]) && $files[$fieldName]['error'] != 4) {
-    		if ($files[$fieldName]['error'] == 6) {
-    			echo $this->view->message('上传临时文件夹错误，请与管理员联系！') ;
-    			exit;
-    		} else if ($files[$fieldName]['error'] == 7) {
-    			echo $this->view->message('上传不可写，请与管理员联系！') ;
-    			exit;
-    		} else if ($files[$fieldName]['error'] != 0 && $files[$fieldName]['error'] != 4) {
-    			echo $this->view->message('其他上传错误！') ;
-    			exit;
-    		}
-    		if ($files[$fieldName]['size'] > $maxSize) {
-    			echo $this->view->message("上传的文件必须小于" . sizeToString($maxSize) . "！") ;
-    			exit;
-    		}
-    	
-    		//检查文件扩展名是否正确
-    		$extension = strtolower(substr(strrchr($files[$fieldName]['name'], "."), 1));
-    		if (!in_array($extension, $uploadFileExtension)) {
-    			echo $this->view->message("上传文件只允许" . implode(',', $uploadFileExtension) . "格式的文件！") ;
-    			exit;
-    		}
-    	
-    		if (!empty($options['path'])) {
-    			unlink($this->_configs['project'][$configBasePath] . $options['path']);
-    		}
-    	
-    		//记录入库
-    		$row = array();
-    		$dir = $this->_configs['project'][$configBasePath] . '/' . date('Y-m-d', $userRow['regTime']);
-    		$path = '/' . date('Y-m-d', $userRow['regTime']) . '/' . $fieldName . '-' . $userRow['id'] . '.' . $extension;
-    	
-    		//保存文件
-    		createDirectory($dir);//创建临时文件夹
-    		move_uploaded_file($files[$fieldName]['tmp_name'], $this->_configs['project'][$configBasePath] . $path);
-    		imageResize($this->_configs['project'][$configBasePath] . $path, $options['imgWidth'], $options['imgHeight']);
-    	}
-    	
-    	return $path;
-    }
 }

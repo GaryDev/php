@@ -100,6 +100,8 @@ return array(
         'serviceAvatarDefaultUrl' => '/files/default/images/no-avatar.jpg',
         'certificateCopyBasePath' => PUBLIC_PATH . '/files/upload/certificate-copy',
     	'certificateCopyBaseUrl' => '/files/upload/certificate-copy',
+    	'ticketCopyBasePath' => PUBLIC_PATH . '/files/upload/ticket-copy',
+    	'ticketCopyBaseUrl' => '/files/upload/ticket-copy',
     	'uploadPath' => PUBLIC_PATH . '/files/upload',
         'uploadUrl' => '/files/upload',
     ),

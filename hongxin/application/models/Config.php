@@ -262,15 +262,16 @@ class Application_Model_Config
             'inputType' => 'text', //输入的类型 text/editor/textarea/checkbox/radio
             'options' => array()//checkbox中的选项
         );
+        */
         $models['borrowingUnitMin'] = array(
-            'title' => '投标最小限额',//标题
-            'description' => '单位：元',//描述
+            'title' => '最小投资份数',//标题
+            'description' => '单位：份',//描述
             'dataType' => 'number',//数据类型 string/number
             'maxlength' => 50, //长度
             'inputType' => 'text', //输入的类型 text/editor/textarea/checkbox/radio
             'options' => array()//checkbox中的选项
         );
-        */
+        
         /*
         $models['systemIsOpen'] = array(
             'title' => '状态',//标题

@@ -90,4 +90,56 @@ class Member_CommonController extends Zend_Controller_Action
             $memberVisitModel->updateOnlineTime(Application_Model_MemberLogin::getLoginedUserName(), intval(Application_Model_MemberLogin::getLoginedUserVisitId()));
         }
     }
+    
+    protected function __uploadFile($fieldName, $type, $userRow, $options=array())
+    {
+    	$defalut = array('path' => '', 'imgWidth' => 80, 'imgHeight' => 80);
+    	$options = array_merge($defalut, $options);
+    	 
+    	//上传设置
+    	$uploadFileExtension = array('jpg', 'jpeg', 'png', 'gif');
+    	$maxSize = 1024 * 1024 * 1;
+    	$configBasePath = $type . 'BasePath';
+    	$files = $_FILES;
+    	$path = '';
+    	if (isset($files[$fieldName]) && $files[$fieldName]['error'] != 4) {
+    		if ($files[$fieldName]['error'] == 6) {
+    			echo $this->view->message('上传临时文件夹错误，请与管理员联系！') ;
+    			exit;
+    		} else if ($files[$fieldName]['error'] == 7) {
+    			echo $this->view->message('上传不可写，请与管理员联系！') ;
+    			exit;
+    		} else if ($files[$fieldName]['error'] != 0 && $files[$fieldName]['error'] != 4) {
+    			echo $this->view->message('其他上传错误！') ;
+    			exit;
+    		}
+    		if ($files[$fieldName]['size'] > $maxSize) {
+    			echo $this->view->message("上传的文件必须小于" . sizeToString($maxSize) . "！") ;
+    			exit;
+    		}
+    		 
+    		//检查文件扩展名是否正确
+    		$extension = strtolower(substr(strrchr($files[$fieldName]['name'], "."), 1));
+    		if (!in_array($extension, $uploadFileExtension)) {
+    			echo $this->view->message("上传文件只允许" . implode(',', $uploadFileExtension) . "格式的文件！") ;
+    			exit;
+    		}
+    		 
+    		if (!empty($options['path'])) {
+    			unlink($this->_configs['project'][$configBasePath] . $options['path']);
+    		}
+    		 
+    		//记录入库
+    		$row = array();
+    		$dir = $this->_configs['project'][$configBasePath] . '/' . date('Y-m-d', $userRow['regTime']);
+    		$path = '/' . date('Y-m-d', $userRow['regTime']) . '/' . $fieldName . '-' . $userRow['id'] . '.' . $extension;
+    		 
+    		//保存文件
+    		createDirectory($dir);//创建临时文件夹
+    		move_uploaded_file($files[$fieldName]['tmp_name'], $this->_configs['project'][$configBasePath] . $path);
+    		imageResize($this->_configs['project'][$configBasePath] . $path, $options['imgWidth'], $options['imgHeight']);
+    	}
+    	 
+    	return $path;
+    }
 }

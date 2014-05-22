@@ -19,46 +19,40 @@
 
 <body>
 <?php echo $this->render('top.php');?>
-<div class="mainbox">
-	<?php echo $this->render('member-menu.php');?>
-	<div class="tb3 mtop10">
+<table width="1085" border="0" align="center" cellpadding="0" cellspacing="0" style="margin-top:15px;">
+  <tr>
+    <td width="180" height="40" align="left" valign="top">
+    	<?php echo $this->render('member-menu.php');?>
+    </td>
+    <td valign="top">
 		<div class="nytit6">
-		<h3>借款明细</h3></div>
+		<h3>融资明细</h3></div>
 		<div class="nytxt6 search">
-
 			<table width="100%" border="0" align="left" class="table">
 				<tr>
-					<td align="left">借款编号：</td>
+					<td width="15%" align="left">融资编号：</td>
 					<td align="left"><?php echo $this->row['code'];?> <input type="submit" name="back" id="back" value="返回" class="button" onclick="history.go(-1);"/>	</td>
 				</tr>
 				<tr>
-					<td width="15%" align="left">借款类型：</td>
-					<td width="85%" align="left"><?php if ($this->row['type'] == 'credit') {echo '信用借款';} else if ($this->row['type'] == 'recommend') {echo '推荐借款';} ?></td>
-				</tr>
-				<tr>
-					<td align="left">借款标题：</td>
+					<td align="left">融资标题：</td>
 					<td align="left"><?php echo $this->row['title'];?></td>
 				</tr>
 				<tr>
-					<td align="left">借款金额：</td>
-					<td align="left">￥<?php echo $this->row['amount'];?></td>
-				</tr>
-				<tr>
-					<td align="left">网站收费：</td>
-					<td align="left">￥<?php echo $this->row['fee'] * 1;?></td>
+					<td align="left">融资金额：</td>
+					<td align="left"><?php echo $this->row['amount'] / 10000;?>万</td>
 				</tr>
 				<tr>
 					<td align="left">还款方式：</td>
-					<td align="left"><?php if ($this->row['repaymentType'] == '1') {echo '等额本息';} else if ($this->row['repaymentType'] == '2') {echo '等本等息';} ?></td>
+					<td align="left"><?php echo '保本保息'; ?></td>
 				</tr>
 				<tr>
 					<td align="left">年利率：</td>
-					<td align="left"><?php echo $this->row['monthInterestRate'] * 12 * 100;?>%</td>
+					<td align="left"><?php echo $this->row['yearInterestRate'];?>%</td>
 				</tr>
 		
 				<tr>
 					<td align="left">状态：</td>
-					<td align="left"><?php if ($this->row['status'] == 1) {echo '已提交待审核';} else if ($this->row['status'] == 2) {echo '已审核借款中';} else if ($this->row['status'] == 3) {echo '借款完成审核中';}  else if ($this->row['status'] == 4) {echo '还款中';}  else if ($this->row['status'] == 5) {echo '还款完成';}   else if ($this->row['status'] == 6) {echo '<span style="color:#ccc;">已经审核未通过(作废)</span>';}?></td>
+					<td align="left"><?php if ($this->row['status'] == 1) {echo '已提交待审核';} else if ($this->row['status'] == 2) {echo '初审已通过';} else if ($this->row['status'] == 3) {echo '终审已通过（融资中）';}  else if ($this->row['status'] == 4) {echo '初审未通过';}  else if ($this->row['status'] == 5) {echo '终审未通过';} ?></td>
 				</tr>
 <?php
 if (trim($this->row['statusMessage']) != '') {
@@ -71,19 +65,39 @@ if (trim($this->row['statusMessage']) != '') {
 }
 ?>
 				<tr>
-					<td align="left">借款期限：</td>
-					<td align="left"><?php echo $this->row['deadline'];?>个月</td>
+					<td align="left">融资期限：</td>
+					<td align="left"><?php echo $this->row['deadline'];?>天</td>
 				</tr>
 				<tr>
-					<td align="left">投标限额：</td>
-					<td align="left">￥<?php echo $this->row['amountMaxUnit'] * 1;?></td>
+					<td align="left">投资单位：</td>
+					<td align="left"><?php echo $this->borrowingUnitMin;?>元/份</td>
 				</tr>
 				<tr>
-					<td align="left">申请时间：</td>
-					<td align="left"><?php echo date('Y-m-d H:i:s', $this->row['addTime']);?></td>
+					<td align="left">最小投资份数：</td>
+					<td align="left"><?php echo $this->row['amountMinUnit'];?>份</td>
 				</tr>
 				<tr>
-					<td align="left">借款说明：</td>
+					<td align="left">最大投资份数：</td>
+					<td align="left"><?php echo $this->row['amountMaxUnit'];?>份</td>
+				</tr>
+				<tr>
+					<td align="left">募集开始时间：</td>
+					<td align="left"><?php echo date('Y-m-d', $this->row['startTime']);?></td>
+				</tr>
+				<tr>
+					<td align="left">募集截止时间：</td>
+					<td align="left"><?php echo date('Y-m-d', $this->row['endTime']);?></td>
+				</tr>
+				<tr>
+					<td align="left">融资到期时间：</td>
+					<td align="left"><?php echo date('Y-m-d', $this->row['ticketEndTime']);?></td>
+				</tr>
+				<tr>
+					<td align="left">最迟还款日期：</td>
+					<td align="left"><?php echo date('Y-m-d', $this->row['repayEndTime']);?></td>
+				</tr>
+				<tr>
+					<td align="left">融资说明：</td>
 					<td align="left"><?php echo str_replace("\n", "<br/>", $this->row['notes']);?></td>
 				</tr>
 
@@ -180,9 +194,9 @@ if ($this->row['status'] == '4') {
 }
 ?>
 		</div>
-	</div>
-</div>
-<div class="cl"></div>
+    </td>
+</tr>
+</table>
 
 <?php echo $this->render('footer.php');?>
 

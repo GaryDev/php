@@ -213,6 +213,7 @@ class Member_BorrowingController extends Member_CommonController
         }
 
         $this->view->row = $row;
+        $this->view->borrowingUnitMin = $this->_configs['project']['borrowingUnitMin'];
         $this->view->borrowingDetailRows = $borrowingDetailRows;
         $this->view->repaymentRows = $repaymentRows;
         $this->view->surplusAvailableAmount = $surplusAvailableAmount;
@@ -314,79 +315,29 @@ class Member_BorrowingController extends Member_CommonController
             $filter = new Zend_Filter_StripTags();
             $field = array();
             $field['userName'] = Application_Model_MemberLogin::getLoginedUserName();
-            //$field['type'] = $filter->filter(trim($this->_request->get('type')));
-            //$field['repaymentType'] = $filter->filter(trim($this->_request->get('repaymentType')));
+            $field['type'] = 'recommend';
+            $field['repaymentType'] = 3;	//保息固定
+			$field['repaymentBank'] = $filter->filter(trim($this->_request->get('repayBank')));
             $field['title'] = $filter->filter(trim($this->_request->get('title')));
             $field['code'] = date('YmdHis') . rand(1000, 9999);
             $field['amount'] = is_numeric(trim($this->_request->get('amount'))) ? trim($this->_request->get('amount')) : 0;
-            
-            //$field['deadline'] = intval(trim($this->_request->get('deadline')));
-            //$field['fee'] = $this->_model->getFee($field['userName'], $field['amount'], $field['type'], $field['deadline'], $field['repaymentType']);
             $yearInterestRate = is_numeric(trim($this->_request->get('yearInterestRate'))) ? trim($this->_request->get('yearInterestRate')) : 0;
-            $field['monthInterestRate'] = $yearInterestRate / 12 / 100;
-            //$field['amountMaxUnit'] = is_numeric(trim($this->_request->get('amountMaxUnit'))) ? trim($this->_request->get('amountMaxUnit')) : 0;
-            //$field['amountMinUnit'] = $this->_configs['project']['borrowingUnitMin'];
-            $field['startTime'] = 0;
+            $field['yearInterestRate'] = $yearInterestRate;
+            //$field['monthInterestRate'] = $yearInterestRate / 12 / 100;
+            $field['amountMaxUnit'] = $field['amount']; // 最大投资份数
+            $field['amountMinUnit'] = $this->_configs['project']['borrowingUnitMin'];	// 最小投资份数
+            $field['startTime'] = time();												// 募集开始时间
+            $field['endTime'] = strtotime($filter->filter(trim($this->_request->get('applyEndDate')))); // 募集截止时间
+            $field['ticketEndTime'] = strtotime($filter->filter(trim($this->_request->get('ticketEndDate'))));	//项目到期时间
+            $field['repayEndTime'] = strtotime($filter->filter(trim($this->_request->get('repayEndTime'))));	//最迟还款日期
+            $field['deadline'] = (int)(($field['ticketEndTime'] - $field['startTime'])/86400);	   // 期限
             $field['notes'] = $filter->filter(trim($this->_request->get('notes')));
+            $field['ticketCopyPath'] = $this->__uploadFile('ticketCopy', 'ticketCopy', $memberRow, array('imgWidth' => 210, 'imgHeight' => 280));
             $field['status'] = '1';
             $field['statusMessage'] = '';
             $field['statusUpdateTime'] = 0;
             $field['addTime'] = time();
-
-            /*
-            if (!($field['type'] == 'credit' || $field['type'] == 'recommend')) {
-                echo $this->view->message('借款类型选择错误！') ;
-                exit;
-            }
-            */
-            if ($field['title'] == '') {
-                echo $this->view->message('借款标题不能为空！') ;
-                exit;
-            }
-            if ($field['amount'] <= 0) {
-                echo $this->view->message('借款金额必须大于0！') ;
-                exit;
-            }
-            /*
-            if ($field['deadline'] <= 0 || $field['deadline'] > 12) {
-                echo $this->view->message('借款期限错误，必须为1-12个月！') ;
-                exit;
-            }
-            */
-            if ($yearInterestRate <= 0) {
-                echo $this->view->message('年利率必须大于0！') ;
-                exit;
-            }
-            /*
-            if ($yearInterestRate > $this->_configs['project']['pbcYearRate'] * 4) {
-                echo $this->view->message('年利率不能大于%' . ($this->_configs['project']['pbcYearRate'] * 4) . '！') ;
-                exit;
-            }
-            if ($field['type'] == 'credit') {
-                if ($field['amount'] > $creditAmount) {
-                    echo $this->view->message('借款金额必须小于可用额度￥' . $creditAmount . '！') ;
-                    exit;
-                }
-                if ($field['amount'] < $this->_configs['project']['borrowingMin']) {
-                    echo $this->view->message('借款金额必须大于单笔借款金额￥' . $this->_configs['project']['borrowingMin'] . '！') ;
-                    exit;
-                }
-            }
-            if ($field['type'] == 'recommend') {
-                if ($field['amount'] > $recommendAmount) {
-                    echo $this->view->message('借款金额必须小于可用额度￥' . $recommendAmount . '！') ;
-                    exit;
-                }
-                if ($field['amount'] < $this->_configs['project']['borrowingMin']) {
-                    echo $this->view->message('借款金额必须大于单笔借款金额￥' . $this->_configs['project']['borrowingMin'] . '！') ;
-                    exit;
-                }
-            }
-            if (!($field['amountMaxUnit'] == 0 || ($field['amountMaxUnit'] >= $this->_configs['project']['borrowingUnitEnterMax1'] && $field['amountMaxUnit'] <= $this->_configs['project']['borrowingUnitEnterMax2']))) {
-                echo $this->view->message('投标限额填写错误！') ;
-                exit;
-            }
-            */
+            //var_dump($field);die();
             $this->_model->add($field);
             echo $this->view->message('提交成功，请等待审核！', $this->view->projectUrl(array('action'=>'in-progress'))) ;
             exit;

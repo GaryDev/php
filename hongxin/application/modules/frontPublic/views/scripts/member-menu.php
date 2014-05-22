@@ -42,6 +42,7 @@
             </tr>
           </table>
         <?php } ?>
+          <!--  
           <table width="120" border="0" align="center" cellpadding="0" cellspacing="0" style="margin-top:10px;">
             <tr>
               <td height="30" class="bt_hs14">我的理财</td>
@@ -53,6 +54,7 @@
               <td><a href="#">· 订单管理</a><br/></td>
             </tr>
           </table>
+          -->
           <table width="120" border="0" align="center" cellpadding="0" cellspacing="0" style="margin-top:10px;">
             <tr>
               <td height="30" class="bt_hs14">会员资料</td>

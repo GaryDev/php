@@ -59,8 +59,10 @@
             <span class="bt_hs14">企业融资</span><br/>
              	 等待付款(<span class="bt_js12">0</span>) 付款成功(<span class="bt_js12">0</span>) 退款(<span class="bt_js12">0</span>) <br/>
               <br/>
+              <!--  
               <span class="bt_hs14">我的理财</span><br/>
               	等待付款(<span class="bt_js12">0</span>) 付款成功(<span class="bt_js12">0</span>) 退款(<span class="bt_js12">0</span>) </td>
+              -->
              <?php }?>
           </tr>
         </table></td>

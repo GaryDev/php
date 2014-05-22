@@ -191,4 +191,58 @@ class Admin_BorrowingController extends Admin_CommonController
             }
         }
     }
+    
+    /**
+     * 修改
+     *
+     * @return void
+     */
+    public function approveAction()
+    {
+    	$id = intval($this->_request->get('id'));
+    	$backUrl = urldecode($this->_request->get('backUrl'));
+    	$borrowingDetailModel = new Application_Model_BorrowingDetail();
+    
+    	$row = $this->_model->fetchRow("`id` = {$id}");
+    	if (empty($row)) {
+    		echo $this->view->message('记录不存在，请返回重试！', $backUrl) ;
+    		exit;
+    	}
+    	$row['statusLogRows'] = trim($row['statusLog']) != '' ? Zend_Json::decode($row['statusLog']) : array();
+    	$borrowingDetailRows = $borrowingDetailModel->fetchAll("`borrowingCode` = '{$row['code']}'", "id ASC");
+    
+    	$this->view->row = $row;
+    	$this->view->borrowingUnitMin = $this->_configs['project']['borrowingUnitMin'];
+    	$this->view->borrowingDetailRows = $borrowingDetailRows;
+    	$this->view->backUrl = $backUrl;
+    
+    	if ($this->_request->isPost() && $this->_request->get('act') == 'updateStatus') {
+    		$field = array();
+    		$filter = new Zend_Filter_StripTags();
+    		$field['status'] = $filter->filter(trim($this->_request->getPost('status')));
+    		$field['statusMessage'] = $filter->filter(trim($this->_request->getPost('statusMessage')));
+    		if ($field['status'] < $row['status']) {
+    			echo $this->view->message('状态不能向前修改！') ;
+    			exit;
+    		} else if (($field['status'] != $row['status']) &&
+    				(
+    						($row['status'] == 1 && $field['status'] == 2) ||
+    						($row['status'] == 2 && $field['status'] == 3) ||
+    						(in_array($row['status'], array('1', '2')) && $field['status'] == 4) ||
+    						(in_array($row['status'], array('2', '3')) && $field['status'] == 5)
+    				)
+    		){
+    			$status = array('1'=>'已提交待审核', '2'=>'初审已通过', '3'=>'终审已通过（融资中）', '4'=>'初审未通过', '5'=>'终审未通过');
+    			$log = trim($row['statusLog']) != '' ? Zend_Json::decode($row['statusLog']) : array();
+    			$log[] = array('previousStatus'=>$status[$row['status']], 'currentStatus'=>$status[$field['status']], 'user'=>$this->_currentUserRow['userName'], 'time'=>date('Y-m-d H:i:s'));
+    			$field['statusLog'] = Zend_Json::encode($log);
+    
+    			$field['statusUpdateTime'] = time();
+    			$this->_model->update($field, "`id` = {$id}");
+    		}
+    
+    		echo $this->view->message('操作成功！') ;
+    		exit;
+    	}
+    }
 }

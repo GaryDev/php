@@ -29,11 +29,10 @@
         		<select name="status" id="status">
 					<option value="0">状态不限</option>
 					<option value="1" <?php echo $this->vars['status'] == 1 ? ' selected' : '';?>>等待审核</option>
-					<option value="2" <?php echo $this->vars['status'] == 2 ? ' selected' : '';?>>已审核借款中</option>
-					<option value="3" <?php echo $this->vars['status'] == 3 ? ' selected' : '';?>>借款完成审核中</option>
-					<option value="4" <?php echo $this->vars['status'] == 4 ? ' selected' : '';?>>还款中</option>
-					<option value="5" <?php echo $this->vars['status'] == 5 ? ' selected' : '';?>>还款完成</option>
-					<option value="6" <?php echo $this->vars['status'] == 6 ? ' selected' : '';?>>作废</option>
+					<option value="2" <?php echo $this->vars['status'] == 2 ? ' selected' : '';?>>初审已通过</option>
+					<option value="3" <?php echo $this->vars['status'] == 3 ? ' selected' : '';?>>终审已通过</option>
+					<option value="4" <?php echo $this->vars['status'] == 4 ? ' selected' : '';?>>初审未通过</option>
+					<option value="5" <?php echo $this->vars['status'] == 5 ? ' selected' : '';?>>终审未通过</option>
 				</select>
        		<input name="search" type="submit" id="search" value="查找" class="button" /></td>
        	</tr>
@@ -46,8 +45,6 @@
             <td align="center">借款编号</td>
             <td align="center">标题</td>
             <td align="center">借款金额</td>
-            <td align="center">网站费用</td>
-            <td align="center">借款类型</td>
             <td align="center">还款方式</td>
             <td align="center">期限</td>
             <td align="center">年利率</td>
@@ -62,15 +59,13 @@ foreach ($this->rows as $key=>$row) {
             <td align="center"><?php echo $row['userName'];?></td>
             <td align="center"><?php echo $row['code'];?></td>
             <td align="center" title="<?php echo $row['title'];?>"><?php echo substrMoreCn($row['title'], 20);?></td>
-            <td align="center">￥<?php echo $row['amount'] * 1;?></td>
-            <td align="center">￥<?php echo $row['fee'] * 1;?></td>
-            <td align="center"><?php if ($row['type'] == 'credit') {echo '信用借款';} else if ($row['type'] == 'recommend') {echo '推荐借款';} ?></td>
-            <td align="center"><?php if ($row['repaymentType'] == '1') {echo '等额本息';} else if ($row['repaymentType'] == '2') {echo '等本等息';} ?></td>
-            <td align="center"><?php echo $row['deadline'];?>个月</td>
-            <td align="center"><?php echo $row['monthInterestRate'] * 12 * 100;?>%</td>
-            <td align="center"><?php if ($row['status'] == 1) {echo '已提交待审核';} else if ($row['status'] == 2) {echo '已审核借款中';} else if ($row['status'] == 3) {echo '借款完成审核中';}  else if ($row['status'] == 4) {echo '还款中';}  else if ($row['status'] == 5) {echo '还款完成';}   else if ($row['status'] == 6) {echo '<span style="color:#ccc;">已经审核未通过(作废)</span>';}?></td>
+            <td align="center"><?php echo $row['amount'] / 10000;?>万</td>
+            <td align="center"><?php echo '保本保息'; ?></td>
+            <td align="center"><?php echo $row['deadline'];?>天</td>
+            <td align="center"><?php echo $row['yearInterestRate'];?>%</td>
+            <td align="center"><?php if ($row['status'] == 1) {echo '已提交待审核';} else if ($row['status'] == 2) {echo '初审已通过';} else if ($row['status'] == 3) {echo '终审已通过（融资中）';}  else if ($row['status'] == 4) {echo '初审未通过';}  else if ($row['status'] == 5) {echo '终审未通过';} ?></td>
             <td align="center"><?php echo date('Y-m-d', $row['addTime']);?></td>
-            <td width="10%" align="center"><a href="<?php echo $this->projectUrl(array('action'=>'update', 'id'=>$row['id'], 'backUrl'=>urlencode($this->pageUrl)));?>">修改</a></td>
+            <td width="10%" align="center"><a href="<?php echo $this->projectUrl(array('action'=>'approve', 'id'=>$row['id'], 'backUrl'=>urlencode($this->pageUrl)));?>">审核</a></td>
         </tr>
 <?php
 }

@@ -14,37 +14,41 @@
 
 <body>
 <?php echo $this->render('top.php');?>
-<div class="mainbox">
-	<?php echo $this->render('member-menu.php');?>
-	<div class="tb3 mtop10">
-		<div class="nytit6">
-		<h3>修改密码</h3></div>
-		<div class="nytxt6 search">
-			<form id="passForm" name="passForm" method="post" action="">
-				<table width="100%" border="0" cellpadding="0" cellspacing="0" class="table">
-					<tr>
-						<td>原密码：</td>
-						<td><input name="oldPassword" type="password" class="validate[required] input" id="oldPassword" value="" size="30" /></td>
-					</tr>
-					<tr>
-						<td>新密码：</td>
-						<td><input name="password" type="password" class="validate[length[6,30]] input" id="password" value="" size="30" /></td>
-					</tr>
-					<tr>
-						<td>确认新密码：</td>
-						<td><input name="password2" type="password" class="validate[required,confirm[password]] input" id="password2" value="" size="30" /></td>
-					</tr>
-					<tr>
-						<td></td>
-						<td><input name="submit" type="submit" id="submit" value="修改" class="button" /></td>
-					</tr>
-				</table>
-			</form>
-		</div>
-		
-	</div>
-</div>
-<div class="cl"></div>
+<table width="1085" border="0" align="center" cellpadding="0" cellspacing="0" style="margin-top:15px;">
+  <tr>
+    <td width="180" height="40" align="left" valign="top">
+    	<?php echo $this->render('member-menu.php');?>
+    </td>
+    <td valign="top">
+		<table width="100%" border="0" cellpadding="0" cellspacing="0" class="subTab">
+			<tr>
+				<td><h3>修改密码</h3></td>
+				<td align="right"></td>
+			</tr>
+		</table>
+		<form id="passForm" name="passForm" method="post" action="">
+			<table width="100%" border="0" cellpadding="0" cellspacing="0" class="table">
+				<tr>
+					<td width="15%">原密码：</td>
+					<td><input name="oldPassword" type="password" class="validate[required] input" id="oldPassword" value="" size="30" /></td>
+				</tr>
+				<tr>
+					<td width="15%">新密码：</td>
+					<td><input name="password" type="password" class="validate[length[6,30]] input" id="password" value="" size="30" /></td>
+				</tr>
+				<tr>
+					<td width="15%">确认新密码：</td>
+					<td><input name="password2" type="password" class="validate[required,confirm[password]] input" id="password2" value="" size="30" /></td>
+				</tr>
+				<tr>
+					<td></td>
+					<td><input name="submit" type="submit" id="submit" value="修改" class="button" /></td>
+				</tr>
+			</table>
+		</form>
+    </td>
+  </tr>
+</table>
 
 <?php echo $this->render('footer.php');?>
 </body>

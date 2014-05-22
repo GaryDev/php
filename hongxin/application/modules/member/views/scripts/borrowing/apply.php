@@ -27,7 +27,7 @@
     <td valign="top">
     	<div class="nytit6"><h3>融资申请</h3></div>
 		<div class="nytxt6 search">
-			<form id="applyForm" name="applyForm" method="post" action="">
+			<form id="applyForm" name="applyForm" enctype="multipart/form-data" method="post" action="">
 				<table width="100%" border="0" align="left" class="table">
 					<tr>
 						<td align="left">融资标题：</td>
@@ -53,16 +53,16 @@
 						<script type="text/javascript">Calendar.setup({"ifFormat":"%Y-%m-%d","firstDay":0,"showsTime":false,"showOthers":false,"inputField":"applyEndDate","button":"applyEndDate"});</script></td>
 					</tr>
 					<tr>
-						<td align="left">票据起始日期：</td>
-						<td align="left">
-						<input name="ticketStartDate" type="text" class="input" readonly="readonly" id="ticketStartDate" value="" size="15"/>
-						<script type="text/javascript">Calendar.setup({"ifFormat":"%Y-%m-%d","firstDay":0,"showsTime":false,"showOthers":false,"inputField":"ticketStartDate","button":"ticketStartDate"});</script></td>
-					</tr>
-					<tr>
 						<td align="left">票据截止日期：</td>
 						<td align="left">
 						<input name="ticketEndDate" type="text" class="input" readonly="readonly" id="ticketEndDate" value="" size="15"/>
 						<script type="text/javascript">Calendar.setup({"ifFormat":"%Y-%m-%d","firstDay":0,"showsTime":false,"showOthers":false,"inputField":"ticketEndDate","button":"ticketEndDate"});</script></td>
+					</tr>
+					<tr>
+						<td align="left">最迟还款日期：</td>
+						<td align="left">
+						<input name="repayEndTime" type="text" class="input" readonly="readonly" id="repayEndTime" value="" size="15"/>
+						<script type="text/javascript">Calendar.setup({"ifFormat":"%Y-%m-%d","firstDay":0,"showsTime":false,"showOthers":false,"inputField":"repayEndTime","button":"repayEndTime"});</script></td>
 					</tr>
 					<tr>
 						<td align="left">到期承诺还款银行：</td>
