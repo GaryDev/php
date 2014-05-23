@@ -31,7 +31,7 @@ class BorrowingController extends CommonController
         $memberModel = new Application_Model_Member();
 
         //获取当前页码
-        $pageSize = 15;
+        $pageSize = 20;
         $pageNo = intval($this->_request->get('pageNo'));
         if (empty($pageNo)) {
             $pageNo = 1;
@@ -42,13 +42,14 @@ class BorrowingController extends CommonController
         $wheres = array();
         $vars = array();
 
-        $vars['status'] = in_array($this->_request->get('status'), array('1', '2', '3')) ? $this->_request->get('status') : '1';
+        $vars['status'] = '3'; //in_array($this->_request->get('status'), array('1', '2', '3')) ? $this->_request->get('status') : '3';
         $vars['keyword'] = trim($this->_request->get('keyword'));
         $vars['amount1'] = trim($this->_request->get('amount1')) != '' ? intval($this->_request->get('amount1')) : NULL;
         $vars['amount2'] = trim($this->_request->get('amount2')) != '' ? intval($this->_request->get('amount2')) : NULL;
         $vars['deadlineLimit'] = trim($this->_request->get('deadlineLimit'));
         $vars['orderby'] = trim($this->_request->get('orderby'));
 
+        /*
         if ($vars['status'] == '1') {
             $wheres[] = "`b`.`status` IN ('1', '2')";
         } else if ($vars['status'] == '2') {
@@ -56,6 +57,9 @@ class BorrowingController extends CommonController
         } else if ($vars['status'] == '3') {
             $wheres[] = "`b`.`status` IN ('4', '5')";
         }
+        */
+        $wheres[] = "`b`.`status` IN ('3')";
+        
         if ($vars['keyword'] != '') {
             $wheres[] = "`b`.`code` = {$this->_model->getAdapter()->quote($vars['keyword'])} OR `b`.`title` LIKE '%" . addslashes($vars['keyword']) . "%'";
         }
@@ -114,13 +118,16 @@ class BorrowingController extends CommonController
             $rows[$key] = $row;
         }
 
+        
+        $this->view->banks = explode(",", $this->_configs['project']['bankTypes']);
+        
         //分配view(分页处理后的记录集以及分页HTML字符)
         $this->view->pageString = $paginator->getPageString();
         $this->view->rows = $rows;
         $urls['pageNo'] = $pageNo;
         $this->view->pageUrl = $this->view->projectUrl($urls);
         $this->view->vars = $vars;
-        $this->view->title = '借款项目列表 - ' . $this->view->title;
+        $this->view->title = '融资项目列表 - ' . $this->view->title;
     }
 
     /**
