@@ -30,13 +30,13 @@
     <td height="40" bgcolor="#1eb2d5"><table width="1085" border="0" align="center" cellpadding="0" cellspacing="0">
       <tr>
         <td align="center"><a id="index" href="<?php echo $this->projectUrl(array('module'=>'default', 'controller'=>'index', 'action'=>'index'));?>" class="menu"><span class="menu_on">首页</span></a></td>
-        <td align="center"><a id="about" href="<?php echo $this->projectUrl(array('module'=>'default', 'controller'=>'info', 'action'=>'about'));?>" class="menu">关于我们</a></td>
-        <td align="center"><a id="lease" href="#" class="menu">投资理财</a></td>
         <td align="center"><a id="borrowing" href="<?php echo $this->projectUrl(array('module'=>'default', 'controller'=>'borrowing', 'action'=>'index'));?>" class="menu">企业融资</a></td>
         <td align="center"><a id="cession" href="#" class="menu">债券转让</a></td>
+        <td align="center"><a id="lease" href="#" class="menu">投资理财</a></td>
         <td align="center"><a id="notice" href="<?php echo $this->projectUrl(array('module'=>'default', 'controller'=>'info', 'action'=>'notice'));?>" class="menu">信息公告</a></td>
-        <td align="center"><a id="guide" href="<?php echo $this->projectUrl(array('module'=>'default', 'controller'=>'info', 'action'=>'guide'));?>" class="menu">新手指引</a></td>
+        <td align="center"><a id="guide" href="<?php echo $this->projectUrl(array('module'=>'default', 'controller'=>'guide', 'action'=>'index'));?>" class="menu">新手指引</a></td>
         <td align="center"><a id="member" href="<?php echo $this->projectUrl(array('module'=>'member', 'controller'=>'index', 'action'=>'index'));?>" class="menu">会员中心</a></td>
+        <td align="center"><a id="about" href="<?php echo $this->projectUrl(array('module'=>'default', 'controller'=>'info', 'action'=>'about'));?>" class="menu">关于我们</a></td>
         <td align="center"><a id="contact" href="<?php echo $this->projectUrl(array('module'=>'default', 'controller'=>'info', 'action'=>'contact'));?>" class="menu">联系我们</a></td>
       </tr>
     </table></td>
@@ -44,10 +44,12 @@
 </table>
 <script language="javascript">
 <?php
-if ($this->module == 'default' && $this->controller != 'borrowing') {
-	$menu = $this->action;
-} else if ($this->controller == 'borrowing') {
-	$menu = 'borrowing';
+if ($this->module == 'default') {
+	if($this->controller == 'borrowing' || $this->controller == 'guide') {
+		$menu = $this->controller;
+	} else {
+		$menu = $this->action;
+	}
 } else if ($this->module == 'member') {
 	$menu = 'member';
 } else {

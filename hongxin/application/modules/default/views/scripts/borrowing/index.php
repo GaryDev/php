@@ -6,21 +6,9 @@
 <link href="<?php echo $this->baseUrl;?>/files/default/css/style.css" media="screen" rel="stylesheet" type="text/css" />
 <script language="javascript" src="<?php echo $this->baseUrl;?>/files/publicFiles/scripts/jquery.js"></script>
 <script language="javascript" src="<?php echo $this->baseUrl;?>/files/publicFiles/scripts/public.js"></script>
-<script language="javascript" src="<?php echo $this->baseUrl;?>/files/publicFiles/scripts/jqueryProgressBar/jquery.progressbar.js"></script>
 <title><?php echo $this->title;?></title>
 <meta name="keywords" content="<?php echo $this->keywords;?>" />
 <meta name="description" content="<?php echo $this->description;?>" />
-<script type="text/javascript">
-	$(document).ready(function(){ 
-        $(".progressbar").each(function(){
-        	$(this).progressBar({
-	        	boxImage	: '/files/default/images/progressbar.gif',
-		        barImage: '/files/default/images/progressbg_green.gif'
-		    });
-	    });
-              
-    }); 
-</script>
 </head>
 
 <body>
@@ -88,7 +76,7 @@ foreach($this->rows as $row) {
         </tr>
     </table></td>
     <td width="150" align="center">预期年收益率：<span class="hsbfb1"></span><span class="ny_bfb"><?php echo $row['yearInterestRate'];?>%</span></td>
-    <td width="150"><table width="80%" border="0" align="right" cellpadding="0" cellspacing="0">
+    <td width="160"><table width="80%" border="0" align="right" cellpadding="0" cellspacing="0">
       <tr>
         <td height="25" align="left">融资期限：<?php echo $row['deadline'];?>天</td>
       </tr>
@@ -102,13 +90,23 @@ foreach($this->rows as $row) {
     <td width="200">
     <table width="104" border="0" align="center" cellpadding="0" cellspacing="8">
       <tr>
-        <td align="center"><input type="button" class="btn" name="goBuyBtn" value="立即投资"/></td>
+        <td align="center"><input type="button" class="btn" name="goBuyBtn" value="立即投资" 
+        	onclick='window.location.href = "<?php echo $this->projectUrl(array('module'=>'default', 'controller'=>'borrowing', 'action'=>'view', 'code'=>$row['code']));?>";' /></td>
       </tr>
       <tr>
         <td align="center">已投<span class="ny_bfb">49401</span>份</td>
       </tr>
       <tr>
-        <td align="center"><span class="progressbar" style="width: 100%;">97%</span></td>
+        <td align="left">
+           <div class="barbox">
+				<div class="bartext">85%</div>
+    			<div class="progressbar">
+				    <div style="width: 85%;">
+				        <span></span>
+				    </div>
+				</div>
+			</div>
+        </td>
       </tr>
     </table></td>
   </tr>

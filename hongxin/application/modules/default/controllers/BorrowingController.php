@@ -138,11 +138,11 @@ class BorrowingController extends CommonController
     public function viewAction()
     {
         $memberModel = new Application_Model_Member();
-        $memberBaseModel = new Application_Model_MemberBase();
+        /*$memberBaseModel = new Application_Model_MemberBase();
         $memberBalanceModel = new Application_Model_MemberBalance();
         $serviceModel = new Application_Model_Service();
         $borrowingDetailModel = new Application_Model_BorrowingDetail();
-        $repaymentModel = new Application_Model_Repayment();
+        $repaymentModel = new Application_Model_Repayment();*/
         $code = trim($this->_request->get('code'));
 
         $borrowingSelect = $this->_model->select(false)
@@ -156,11 +156,12 @@ class BorrowingController extends CommonController
             echo $this->view->message('记录不存在，请返回重试！', $this->view->projectUrl(array('action'=>'index'))) ;
             exit;
         }
-        if (!empty($row['avatarPath'])) {
-            $row['avatarUrl'] = $this->_configs['project']['memberAvatarBaseUrl'] . $row['avatarPath'];
+        if (!empty($row['ticketCopyPath'])) {
+            $row['ticketCopyPath'] = $this->_configs['project']['ticketCopyBaseUrl'] . $row['ticketCopyPath'];
         } else {
-            $row['avatarUrl'] = $this->_configs['project']['memberAvatarDefaultUrl'];
+            $row['ticketCopyPath'] = $this->_configs['project']['ticketCopyBaseUrl'];
         }
+        /*
         $borrowedInfo = Zend_Json::decode($row['borrowedJson']);
         $row['schedule'] = round($borrowedInfo['amount'] / $row['amount'] * 100, 1);
         $row['borrowedCount'] = $borrowedInfo['count'];
@@ -176,15 +177,15 @@ class BorrowingController extends CommonController
             $borrowingNoPayRow['bx'] = Application_Model_Borrowing::fetchAllBx($borrowingNoPayRow['amount'], $borrowingNoPayRow['monthInterestRate'], $borrowingNoPayRow['deadline'], $borrowingNoPayRow['repaymentType']);
             $borrowingNoPayRows[$key] = $borrowingNoPayRow;
         }
-
+		*/
         $this->view->row = $row;
-        $this->view->x = $x;
+        /*$this->view->x = $x;
         $this->view->serviceRow = $serviceRow;
         $this->view->memberBaseRow = $memberBaseRow;
-        $this->view->memberBalanceRow = $memberBalanceRow;
+        $this->view->memberBalanceRow = $memberBalanceRow;*/
         $this->view->memberVars = $this->_configs['project']['memberVars'];
-        $this->view->borrowingDetailRows = $borrowingDetailRows;
-        $this->view->borrowingNoPayRows = $borrowingNoPayRows;
+        //$this->view->borrowingDetailRows = $borrowingDetailRows;
+        //$this->view->borrowingNoPayRows = $borrowingNoPayRows;
         $this->view->title = "{$row['title']} - " . $this->view->title;
     }
 

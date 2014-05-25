@@ -6,7 +6,6 @@
 <script language="javascript" src="<?php echo $this->baseUrl;?>/files/publicFiles/scripts/jquery.js"></script>
 <script language="javascript" src="<?php echo $this->baseUrl;?>/files/publicFiles/scripts/public.js"></script>
 <script language="javascript" src="<?php echo $this->baseUrl;?>/files/publicFiles/scripts/jqueryTableSorter/jquery.tablesorter.js"></script>
-<script language="javascript" src="<?php echo $this->baseUrl;?>/files/publicFiles/scripts/jqueryProgressBar/jquery.progressbar.js"></script>
 <title><?php echo $this->title;?></title>
 <meta name="keywords" content="<?php echo $this->keywords;?>" />
 <meta name="description" content="<?php echo $this->description;?>" />
@@ -16,14 +15,6 @@
 	        	headers: { 0: { sorter: false}, 5: {sorter: false} },
 		        debug: true
 	        });
-	        $(".progressbar").each(function(){
-				var barColor = $(this).attr("barColor");
-	        	$(this).progressBar({
-		        	boxImage	: '/files/default/images/progressbar.gif',
-			        barImage: '/files/default/images/progressbg_' + barColor + '.gif'
-			    });
-		    });
-	              
 	    }); 
 </script>
 </head>
@@ -206,7 +197,14 @@
         <td height="30"><table width="88%" border="0" align="center" cellpadding="0" cellspacing="0">
           <tr height="10" >
             <td align="left" valign="middle">
-            <span class="progressbar" barColor="orange" style="width: 100%;">35%</span>
+    			<div class="barbox">
+					<div class="bartext">45%</div>
+	    			<div class="progressbar">
+					    <div class="orange" style="width: 45%;">
+					        <span></span>
+					    </div>
+					</div>
+				</div>
             </td>
           </tr>
         </table></td>
@@ -263,7 +261,16 @@
       <tr>
         <td height="30"><table width="88%" border="0" align="center" cellpadding="0" cellspacing="0">
             <tr height="10" >
-              <td align="left" valign="middle"><span class="progressbar" barColor="red" style="width: 100%;">85%</span></td>
+              <td align="left" valign="middle">
+    			<div class="barbox">
+					<div class="bartext">85%</div>
+	    			<div class="progressbar">
+					    <div class="red" style="width: 85%;">
+					        <span></span>
+					    </div>
+					</div>
+				</div>
+              </td>
             </tr>
         </table></td>
       </tr>
@@ -314,7 +321,16 @@
       <tr>
         <td height="30"><table width="88%" border="0" align="center" cellpadding="0" cellspacing="0">
             <tr height="10" >
-              <td align="left" valign="middle"><span class="progressbar" barColor="green" style="width: 100%;">55%</span></td>
+              <td align="left" valign="middle">
+    			<div class="barbox">
+					<div class="bartext">55%</div>
+	    			<div class="progressbar">
+					    <div style="width: 55%;">
+					        <span></span>
+					    </div>
+					</div>
+				</div>
+              </td>
             </tr>
         </table></td>
       </tr>
