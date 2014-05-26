@@ -13,7 +13,7 @@
               <td><a href="<?php echo $this->projectUrl(array('module'=>'member', 'controller'=>'borrowing', 'action'=>'apply'));?>">· 票据融资申请</a><br/></td>
             </tr>
             <tr>
-              <td><a href="#">· 订单管理</a><br/></td>
+              <td><a href="<?php echo $this->projectUrl(array('module'=>'member', 'controller'=>'borrowing', 'action'=>'in-progress'));?>">· 我的融资申请</a><br/></td>
             </tr>
           </table>       
         <?php } ?>

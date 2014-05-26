@@ -323,9 +323,10 @@ class Member_BorrowingController extends Member_CommonController
             $field['amount'] = is_numeric(trim($this->_request->get('amount'))) ? trim($this->_request->get('amount')) : 0;
             $yearInterestRate = is_numeric(trim($this->_request->get('yearInterestRate'))) ? trim($this->_request->get('yearInterestRate')) : 0;
             $field['yearInterestRate'] = $yearInterestRate;
-            //$field['monthInterestRate'] = $yearInterestRate / 12 / 100;
-            $field['amountMaxUnit'] = $field['amount']; // 最大投资份数
-            $field['amountMinUnit'] = $this->_configs['project']['borrowingUnitMin'];	// 最小投资份数
+            $field['borrowUnit'] = $this->_configs['project']['borrowingUnitMin'];
+            $field['amountMinUnit'] = $field['borrowUnit'];	// 最小投资份数
+            $field['amountMaxUnit'] = $field['amount'] / $field['borrowUnit']; // 最大投资份数
+            $field['amountUnit'] = $field['amountMaxUnit'];
             $field['startTime'] = time();												// 募集开始时间
             $field['endTime'] = strtotime($filter->filter(trim($this->_request->get('applyEndDate')))); // 募集截止时间
             $field['ticketEndTime'] = strtotime($filter->filter(trim($this->_request->get('ticketEndDate'))));	//项目到期时间

@@ -32,7 +32,6 @@ class Application_Model_Order extends Application_Model_Common
 		return $result;
 	}
 	
-	
 	/**
 	 *    生成订单号
 	 *

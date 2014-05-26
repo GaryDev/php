@@ -26,6 +26,11 @@ class OrderController extends CommonController
 			echo $this->view->message('记录不存在，请返回重试！', $this->view->projectUrl(array('action'=>'index'))) ;
 			exit;
 		}
+		/*
+		if ($row['amountUnit'] == 0) {
+			echo $this->view->message('份额不足，请返回重试！', $this->view->projectUrl(array('module'=>'default', 'controller'=>'borrowing', 'action'=>'view', 'code'=>$code)));
+			exit;
+		}*/
 		
 		$this->view->row = $row;
 		$this->view->LoginedRow = $memberLoginModel->getLoginedRow();
@@ -37,6 +42,7 @@ class OrderController extends CommonController
 			
 			$field['sellUser'] = $row['userName'];
 			$field['buyUser'] = Application_Model_MemberLogin::getLoginedUserName();
+			$field['borrowCode'] = $row['code'];
 			$field['status'] = 10;
 			$field['addTime'] = time();
 			$field['orderUnit'] = $row['borrowUnit'];
@@ -45,6 +51,10 @@ class OrderController extends CommonController
 			$field['benifit'] = 0.5;
 			
 			$id = $this->_model->add($field);
+			if($id > 0)
+			{
+				$borrowingModel->changeAmountUnit($code, $row['amountUnit'] - $field['orderQty']);
+			}
 			echo $this->view->message('订单提交成功！', $this->view->projectUrl(array('action'=>'checkout', 'orderId'=>$id))) ;
 			exit;
 		}

@@ -8,7 +8,7 @@
 <link rel="stylesheet" href="<?php echo $this->baseUrl;?>/files/publicFiles/scripts/jqueryFormValidator/css/validationEngine.jquery.css" type="text/css" />
 <script type="text/javascript" src="<?php echo $this->baseUrl;?>/files/publicFiles/scripts/jqueryFormValidator/js/jquery.validationEngine-cn.js"></script>
 
-<title>个人用户注册 - <?php echo $this->title;?></title>
+<title>用户注册 - <?php echo $this->title;?></title>
 <meta name="keywords" content="<?php echo $this->keywords;?>" />
 <meta name="description" content="<?php echo $this->description;?>" />
 </head>
@@ -53,9 +53,9 @@
 				<tr>
 					<td class="bgtd1"></td>
 					<td colspan="2" class="bgtd2">
-						<label><input type="checkbox" name="agreement" id="agreement" class="validate[required]"/>
-我已经阅读并同意此协议</label>
-						<div style="height:200px; width:100%; overflow-y:scroll; overflow-x:hidden; border:#ccc solid 1px; padding:5px;"><?php echo $this->agreement;?></div>
+						<label><input type="checkbox" name="agreement" id="agreement" class="validate[required]" checked="checked" />
+我同意 <a href="#">会员注册协议</a> 和 <a href="#">隐私政策</a> 条款</label>
+						<!--  <div style="height:200px; width:100%; overflow-y:scroll; overflow-x:hidden; border:#ccc solid 1px; padding:5px;"><?php echo $this->agreement;?></div>-->
 					</td>
 				</tr>
 

@@ -19,6 +19,7 @@
 
 <form method="post">
 
+
 <table width="1085" border="0" align="center" cellpadding="10" cellspacing="0" style="border:1px #dedede solid;margin-top: 10px;">
 	<tr>
 		<td>填写并核对订单信息</td>
@@ -98,10 +99,6 @@
 		</td>
 	</tr>
 </table>
-
-
-
-
 
 </form>
 

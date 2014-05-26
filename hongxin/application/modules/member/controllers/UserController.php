@@ -394,7 +394,7 @@ class Member_UserController extends Member_CommonController
     {
         $memberLoginModel = new Application_Model_MemberLogin();
         $memberLoginModel->logout();
-        redirect($this->view->projectUrl(array('module'=>'member', 'controller'=>'user', 'action'=>'login')));
+        redirect($this->view->projectUrl(array('module'=>'default', 'controller'=>'index', 'action'=>'index')));
     }
 
     /**

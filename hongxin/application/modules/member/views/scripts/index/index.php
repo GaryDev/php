@@ -95,7 +95,7 @@
                   <td height="25" align="left" class="box_hs">下单时间：<?php echo date('Y-m-d H:i:s', $orderRow['addTime']); ?></td>
                 </tr>
                 <tr>
-                  <td height="25" align="left" class="box_hs">订单状态：<?php echo $orderRow['status']; ?></td>
+                  <td height="25" align="left" class="box_hs">订单状态：<?php echo $orderRow['statusText']; ?></td>
                 </tr>
             </table>
             </td>
@@ -132,6 +132,9 @@
             </td>
             </tr>
         </table>
+        <?php } ?>
+        <?php if(empty($this->orderRows)) {?>
+        	<div style="text-align:center; line-height:40px;">暂无记录</div>
         <?php } ?>
         </td>
       </tr>

@@ -61,7 +61,7 @@ class Member_IndexController extends Member_CommonController
         	->limit(3);
         $orderRows = $orderModel->fetchAll($orderSelect);
         foreach($orderRows as $key=>$orderRow) {
-        	$orderRow['status'] = $orderTypes[$orderRow['status']];
+        	$orderRow['statusText'] = $orderTypes[$orderRow['status']];
         	$orderRows[$key] = $orderRow;
         }
         

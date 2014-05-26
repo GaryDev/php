@@ -81,7 +81,15 @@ class Application_Model_Borrowing extends Application_Model_Common
         parent::update(array('code'=>$code), "`id` = {$result}");
         return $result;
     }
-
+    
+    public function changeAmountUnit($code, $unit)
+    {
+    	if (!$code) return false;
+    	$data = array('amountUnit' => $unit);
+    	$where = "`code` = {$this->getAdapter()->quote($code)}";
+    	parent::update($data, $where);
+    }
+    
     /**
      * 更改状态
      * 

@@ -3,7 +3,6 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <link href="<?php echo $this->baseUrl;?>/files/default/css/base.css" media="screen" rel="stylesheet" type="text/css" />
-<link href="<?php echo $this->baseUrl;?>/files/default/css/style.css" media="screen" rel="stylesheet" type="text/css" />
 <script language="javascript" src="<?php echo $this->baseUrl;?>/files/publicFiles/scripts/jquery.js"></script>
 <script language="javascript" src="<?php echo $this->baseUrl;?>/files/publicFiles/scripts/public.js"></script>
 <title><?php echo $this->title;?></title>
@@ -94,14 +93,14 @@ foreach($this->rows as $row) {
         	onclick='window.location.href = "<?php echo $this->projectUrl(array('module'=>'default', 'controller'=>'borrowing', 'action'=>'view', 'code'=>$row['code']));?>";' /></td>
       </tr>
       <tr>
-        <td align="center">已投<span class="ny_bfb">49401</span>份</td>
+        <td align="center">已投<span class="ny_bfb"><?php echo $row['borrowedCount']; ?></span>份</td>
       </tr>
       <tr>
         <td align="left">
            <div class="barbox">
-				<div class="bartext">85%</div>
+				<div class="bartext"><?php echo $row['percent']; ?>%</div>
     			<div class="progressbar">
-				    <div class="green" style="width: 85%;">
+				    <div class="green" style="width: <?php echo $row['percent']; ?>%;">
 				        <span></span>
 				    </div>
 				</div>

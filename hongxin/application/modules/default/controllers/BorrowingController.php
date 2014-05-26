@@ -107,14 +107,8 @@ class BorrowingController extends CommonController
         $rows = $dbPaginator->getRows();
 
         foreach($rows as $key=>$row) {
-            if (!empty($row['avatarPath'])) {
-                $row['avatarUrl'] = $this->_configs['project']['memberAvatarBaseUrl'] . $row['avatarPath'];
-            } else {
-                $row['avatarUrl'] = $this->_configs['project']['memberAvatarDefaultUrl'];
-            }
-            $borrowedInfo = Zend_Json::decode($row['borrowedJson']);
-            $row['schedule'] = round($borrowedInfo['amount'] / $row['amount'] * 100, 1);
-            $row['borrowedCount'] = $borrowedInfo['count'];
+            $row['borrowedCount'] = $row['amountMaxUnit'] - $row['amountUnit'];
+            $row['percent'] = floor($row['borrowedCount'] / $row['amountMaxUnit'] * 100);
             $rows[$key] = $row;
         }
 
@@ -161,6 +155,10 @@ class BorrowingController extends CommonController
         } else {
             $row['ticketCopyPath'] = $this->_configs['project']['ticketCopyBaseUrl'];
         }
+        
+        $row['borrowedCount'] = $row['amountMaxUnit'] - $row['amountUnit'];
+        $row['percent'] = floor($row['borrowedCount'] / $row['amountMaxUnit'] * 100);
+        
         /*
         $borrowedInfo = Zend_Json::decode($row['borrowedJson']);
         $row['schedule'] = round($borrowedInfo['amount'] / $row['amount'] * 100, 1);

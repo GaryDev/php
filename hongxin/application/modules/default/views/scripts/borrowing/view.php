@@ -40,9 +40,9 @@
     			<td colspan="2"><span class="nyls" style="font-size: 20px;"><?php echo $this->row['title']; ?></span></td>
     			<td>
 	    			<div class="barbox">
-						<div class="bartext">80%</div>
+						<div class="bartext"><?php echo $this->row['percent']; ?>%</div>
 		    			<div class="progressbar">
-						    <div style="width: 80%;">
+						    <div style="width: <?php echo $this->row['percent']; ?>%;">
 						        <span></span>
 						    </div>
 						</div>
