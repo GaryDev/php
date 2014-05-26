@@ -31,18 +31,12 @@ class Member_IndexController extends Member_CommonController
         $borrowingModel = new Application_Model_Borrowing();
         $borrowingDetailModel = new Application_Model_BorrowingDetail();
         $memberModel = new Application_Model_Member();
-        $accountDetailsModel = new Application_Model_AccountDetails();
         $repaymentDetailModel = new Application_Model_RepaymentDetail();
         $repaymentModel = new Application_Model_Repayment();
         $accountDetailsModel = new Application_Model_AccountDetails();
+        $orderModel = new Application_Model_Order();
 
         $row = $memberLoginModel->getLoginedRow();
-
-        if (!empty($row['avatarPath'])) {
-            $avatarUrl = $this->_configs['project']['memberAvatarBaseUrl'] . $row['avatarPath'];
-        } else {
-            $avatarUrl = $this->_configs['project']['memberAvatarDefaultUrl'];
-        }
         
         $memberEnterpriseRow = array();
         if($row['userType'] == 'E') {
@@ -52,32 +46,25 @@ class Member_IndexController extends Member_CommonController
         
         //判断用户资料是否填写完整
         $infoComplete = $memberLoginModel->hasCompleteInfo($row, $memberEnterpriseRow);
-        
-        //客服代表
-        $serviceRow = $memberLoginModel->getMemberGradeServiceRow($row['userName']);
 
         //资金总额
         $amounts = $accountDetailsModel->getSurplusAmounts($row['userName']);
-        
 
-        //最新贷款的项目
-        $borrowingSelect = $borrowingModel->select(false)
-                 ->setIntegrityCheck(false)
-                 ->from(array('b'=>$borrowingModel->getTableName()), array('borrowedAmount'=>new Zend_Db_Expr('get_borrowed_amount(`b`.`code`)'), '*'))
-                 ->joinLeft(array('m'=>$memberModel->getTableName()), "`b`.`userName` = `m`.`userName`", "avatarPath")
-                 ->order('b.addTime DESC')
-                 ->where("`b`.`status`  IN('1', '2')")
-                 ->limit(8);
-        $borrowingRows = $borrowingModel->fetchAll($borrowingSelect);
-        foreach($borrowingRows as $key=>$borrowingRow) {
-            if (!empty($borrowingRow['avatarPath'])) {
-                $borrowingRow['avatarUrl'] = $this->_configs['project']['memberAvatarBaseUrl'] . $borrowingRow['avatarPath'];
-            } else {
-                $borrowingRow['avatarUrl'] = $this->_configs['project']['memberAvatarDefaultUrl'];
-            }
-            $borrowingRow['schedule'] = round($borrowingRow['borrowedAmount'] / $borrowingRow['amount'] * 100, 1);
-            $borrowingRows[$key] = $borrowingRow;
+        //最新订单
+        $orderTypes = $this->_configs['project']['memberVars']['orderType'];
+        $orderSelect = $orderModel->select(false)
+	        ->setIntegrityCheck(false)
+	        ->from(array('o'=>$orderModel->getTableName()), array('*'))
+	        ->joinLeft(array('b'=>$borrowingModel->getTableName()), "`o`.`borrowCode` = `b`.`code`", array('title', 'yearInterestRate', 'deadline', 'endTime', 'repayEndTime'))
+	        ->order('o.addTime DESC')
+	        ->where("`o`.`buyUser` = {$orderModel->getAdapter()->quote($row['userName'])}")
+        	->limit(3);
+        $orderRows = $orderModel->fetchAll($orderSelect);
+        foreach($orderRows as $key=>$orderRow) {
+        	$orderRow['status'] = $orderTypes[$orderRow['status']];
+        	$orderRows[$key] = $orderRow;
         }
+        
 
         //待收本金利息
         $lenderNoRepaymentAmounts = $repaymentDetailModel->getNoRepaymentAmounts($row['userName']);
@@ -103,12 +90,10 @@ class Member_IndexController extends Member_CommonController
         //借出总额
         $borrowingDetailAmount = $borrowingDetailModel->getBorrwingDetailAmount($row['userName']);
 
-        $this->view->avatarUrl = $avatarUrl;
         $this->view->infoComplete = $infoComplete;
         $this->view->memeberRow = $row;
         $this->view->memberEnterpriseRow = $memberEnterpriseRow;
-        $this->view->serviceRow = $serviceRow;
-        $this->view->borrowingRows = $borrowingRows;
+        $this->view->orderRows = $orderRows;
         $this->view->surplusAvailableAmount = $amounts['surplusAvailableAmount'];
         $this->view->surplusLockAmount = $amounts['surplusLockAmount'];
         $this->view->lenderNoRepaymentAmounts = $lenderNoRepaymentAmounts;

@@ -101,7 +101,7 @@ foreach($this->rows as $row) {
            <div class="barbox">
 				<div class="bartext">85%</div>
     			<div class="progressbar">
-				    <div style="width: 85%;">
+				    <div class="green" style="width: 85%;">
 				        <span></span>
 				    </div>
 				</div>

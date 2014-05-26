@@ -35,7 +35,7 @@
     </table>
     </td>
     <td width="750" valign="top">
-    	<table width="90%" border="1" align="center" class="brief" cellpadding="15" cellspacing="0">
+    	<table width="90%" border="0" align="center" class="brief" cellpadding="15" cellspacing="0">
     		<tr>
     			<td colspan="2"><span class="nyls" style="font-size: 20px;"><?php echo $this->row['title']; ?></span></td>
     			<td>
@@ -75,7 +75,8 @@
     			<td>&nbsp;</td>
     		</tr>
     		<tr>
-    			<td colspan="3"><input type="button" class="btn" name="goBuyBtn" value="立即投资" /></td>
+    			<td colspan="3"><input type="button" class="btn" name="goBuyBtn" value="立即投资" 
+    			onclick='window.location.href = "<?php echo $this->projectUrl(array('module'=>'default', 'controller'=>'order', 'action'=>'create', 'code'=>$this->row['code']));?>";' /></td>
     		</tr>
     	</table>
     </td>

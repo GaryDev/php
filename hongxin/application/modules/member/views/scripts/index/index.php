@@ -58,7 +58,7 @@
             <td width="66%" align="left" valign="top" style="padding:20px; line-height:25px;">
             <span class="bt_hs14">企业融资</span><br/>
              	 等待付款(<span class="bt_js12">0</span>) 付款成功(<span class="bt_js12">0</span>) 退款(<span class="bt_js12">0</span>) <br/>
-              <br/>
+              <br/></td>
               <!--  
               <span class="bt_hs14">我的理财</span><br/>
               	等待付款(<span class="bt_js12">0</span>) 付款成功(<span class="bt_js12">0</span>) 退款(<span class="bt_js12">0</span>) </td>
@@ -76,121 +76,65 @@
         </table></td>
       </tr>
       <tr>
-        <td valign="top"><table width="100%" border="0" align="center" cellpadding="0" cellspacing="0" style="margin-top:15px; border-bottom:1px #e5e5e5 solid;">
+        <td valign="top">
+        <?php foreach ($this->orderRows as $orderRow) {?>
+        <table width="100%" border="0" align="center" cellpadding="0" cellspacing="0" style="margin-top:15px; border-bottom:1px #e5e5e5 solid;">
           <tr>
-            <td width="92"><a href="#" class="ny_img"><img src="/files/default/images/tu.jpg" width="90" height="90"></a></td>
-            <td width="324" height="110"><table width="95%" border="0" align="center" cellpadding="0" cellspacing="0">
+            <td width="324" height="110">
+            <table width="95%" border="0" align="center" cellpadding="0" cellspacing="0">
                 <tr>
-                  <td height="40" align="left"><a href="#" class="nyls">稳健盈家KF01号第122期预约365天型</a></td>
+                  <td height="25" align="left" class="box_hs">订单金额：<?php echo $orderRow['orderAmount']; ?>元</td>
                 </tr>
                 <tr>
-                  <td height="25" align="left" class="bt_js12">起始金额：￥5万</td>
+                  <td height="25" align="left" class="box_hs">订单号：<?php echo $orderRow['orderSN']; ?></td>
                 </tr>
                 <tr>
-                  <td height="25" align="left" class="box_hs">开发银行：中国工商银行</td>
-                </tr>
-            </table></td>
-            <td width="243" align="center" valign="middle">收益率：<span class="hsbfb1"></span><span class="ny_bfb">12.3%</span> 收益类型：保息固定</td>
-            <td width="246"><table width="80%" border="0" align="right" cellpadding="0" cellspacing="0">
-                <tr>
-                  <td height="25" align="left">风险等级：极低-R1</td>
+                  <td height="40" align="left">产品名称：<a href="<?php echo $this->projectUrl(array('module'=>'default', 'controller'=>'borrowing', 'action'=>'view', 'code'=>$orderRow['borrowCode']));?>" class="nyls"><?php echo $orderRow['title']; ?></a></td>
                 </tr>
                 <tr>
-                  <td height="25" align="left">发行起始日：2014-05-13</td>
+                  <td height="25" align="left" class="box_hs">下单时间：<?php echo date('Y-m-d H:i:s', $orderRow['addTime']); ?></td>
                 </tr>
                 <tr>
-                  <td height="25" align="left" class="box_hs">发行截止日：2014-05-19</td>
+                  <td height="25" align="left" class="box_hs">订单状态：<?php echo $orderRow['status']; ?></td>
                 </tr>
-            </table></td>
+            </table>
+            </td>
+            <td width="243" align="center" valign="middle">
+            	<table width="95%" border="0" align="center" cellpadding="0" cellspacing="0">
+	                <tr>
+	                  <td height="25" align="left">
+	                  	收益率：<span class="ny_bfb"><?php echo $orderRow['yearInterestRate']; ?>%</span>
+	                  </td>
+	                </tr>
+	                <tr>
+	                  <td height="25" align="left" class="box_hs">融资期限：<?php echo $orderRow['deadline'];?>天</td>
+	                </tr>
+	                <tr>
+	                  <td height="25" align="left" class="box_hs">融资截止日期：<?php echo date('Y-m-d', $orderRow['endTime']);?></td>
+	                </tr>
+	                <tr>
+	                  <td height="25" align="left" class="box_hs">最迟起息日期：<?php echo date('Y-m-d', $orderRow['repayEndTime']);?></td>
+	                </tr>
+            	</table>
+            </td>
+            <td width="246">
+            <table width="80%" border="0" align="right" cellpadding="3" cellspacing="0">
+                <tr>
+                  <td align="center"><input type="button" class="btn" name="goPay" value="付款" /></td>
+                </tr>
+                <tr>
+                  <td align="center"><input type="button" class="btn" name="goCancel" value="取消" /></td>
+                </tr>
+                <tr>
+                  <td align="center"><input type="button" class="btn" name="goDetail" value="详情" /></td>
+                </tr>
+            </table>
+            </td>
             </tr>
         </table>
-          <table width="100%" border="0" align="center" cellpadding="0" cellspacing="0" style="margin-top:15px; border-bottom:1px #e5e5e5 solid;">
-            <tr>
-              <td width="92"><a href="#" class="ny_img"><img src="/files/default/images/tu.jpg" width="90" height="90"></a></td>
-              <td width="324" height="110"><table width="95%" border="0" align="center" cellpadding="0" cellspacing="0">
-                  <tr>
-                    <td height="40" align="left"><a href="#" class="nyls">稳健盈家KF01号第122期预约365天型</a></td>
-                  </tr>
-                  <tr>
-                    <td height="25" align="left" class="bt_js12">起始金额：￥5万</td>
-                  </tr>
-                  <tr>
-                    <td height="25" align="left" class="box_hs">开发银行：中国工商银行</td>
-                  </tr>
-              </table></td>
-              <td width="243" align="center" valign="middle">收益率：<span class="hsbfb1"></span><span class="ny_bfb">12.3%</span> 收益类型：保息固定</td>
-              <td width="246"><table width="80%" border="0" align="right" cellpadding="0" cellspacing="0">
-                  <tr>
-                    <td height="25" align="left">风险等级：极低-R1</td>
-                  </tr>
-                  <tr>
-                    <td height="25" align="left">发行起始日：2014-05-13</td>
-                  </tr>
-                  <tr>
-                    <td height="25" align="left" class="box_hs">发行截止日：2014-05-19</td>
-                  </tr>
-              </table></td>
-            </tr>
-          </table>
-          <table width="100%" border="0" align="center" cellpadding="0" cellspacing="0" style="margin-top:15px; border-bottom:1px #e5e5e5 solid;">
-            <tr>
-              <td width="92"><a href="#" class="ny_img"><img src="/files/default/images/tu.jpg" width="90" height="90"></a></td>
-              <td width="324" height="110"><table width="95%" border="0" align="center" cellpadding="0" cellspacing="0">
-                  <tr>
-                    <td height="40" align="left"><a href="#" class="nyls">稳健盈家KF01号第122期预约365天型</a></td>
-                  </tr>
-                  <tr>
-                    <td height="25" align="left" class="bt_js12">起始金额：￥5万</td>
-                  </tr>
-                  <tr>
-                    <td height="25" align="left" class="box_hs">开发银行：中国工商银行</td>
-                  </tr>
-              </table></td>
-              <td width="243" align="center" valign="middle">收益率：<span class="hsbfb1"></span><span class="ny_bfb">12.3%</span> 收益类型：保息固定</td>
-              <td width="246"><table width="80%" border="0" align="right" cellpadding="0" cellspacing="0">
-                  <tr>
-                    <td height="25" align="left">风险等级：极低-R1</td>
-                  </tr>
-                  <tr>
-                    <td height="25" align="left">发行起始日：2014-05-13</td>
-                  </tr>
-                  <tr>
-                    <td height="25" align="left" class="box_hs">发行截止日：2014-05-19</td>
-                  </tr>
-              </table></td>
-            </tr>
-          </table>
-          <table width="100%" border="0" align="center" cellpadding="0" cellspacing="0" style="margin-top:15px; border-bottom:1px #e5e5e5 solid;">
-            <tr>
-              <td width="92"><a href="#" class="ny_img"><img src="/files/default/images/tu.jpg" width="90" height="90"></a></td>
-              <td width="324" height="110"><table width="95%" border="0" align="center" cellpadding="0" cellspacing="0">
-                  <tr>
-                    <td height="40" align="left"><a href="#" class="nyls">稳健盈家KF01号第122期预约365天型</a></td>
-                  </tr>
-                  <tr>
-                    <td height="25" align="left" class="bt_js12">起始金额：￥5万</td>
-                  </tr>
-                  <tr>
-                    <td height="25" align="left" class="box_hs">开发银行：中国工商银行</td>
-                  </tr>
-              </table></td>
-              <td width="243" align="center" valign="middle">收益率：<span class="hsbfb1"></span><span class="ny_bfb">12.3%</span> 收益类型：保息固定</td>
-              <td width="246"><table width="80%" border="0" align="right" cellpadding="0" cellspacing="0">
-                  <tr>
-                    <td height="25" align="left">风险等级：极低-R1</td>
-                  </tr>
-                  <tr>
-                    <td height="25" align="left">发行起始日：2014-05-13</td>
-                  </tr>
-                  <tr>
-                    <td height="25" align="left" class="box_hs">发行截止日：2014-05-19</td>
-                  </tr>
-              </table></td>
-            </tr>
-          </table></td>
+        <?php } ?>
+        </td>
       </tr>
-      
-      
     </table></td>
   </tr>
 </table>
