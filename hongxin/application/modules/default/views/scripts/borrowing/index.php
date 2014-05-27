@@ -89,8 +89,8 @@ foreach($this->rows as $row) {
     <td width="200">
     <table width="104" border="0" align="center" cellpadding="0" cellspacing="8">
       <tr>
-        <td align="center"><input type="button" class="btn" name="goBuyBtn" value="立即投资" 
-        	onclick='window.location.href = "<?php echo $this->projectUrl(array('module'=>'default', 'controller'=>'borrowing', 'action'=>'view', 'code'=>$row['code']));?>";' /></td>
+        <td align="center"><input type="button" class="btn logincheck" name="goBuyBtn" value="立即投资" 
+        	onclick="goBuy('<?php echo $row["code"]?>');" /></td>
       </tr>
       <tr>
         <td align="center">已投<span class="ny_bfb"><?php echo $row['borrowedCount']; ?></span>份</td>
@@ -125,9 +125,19 @@ if (empty($this->rows)) {
 <?php
 }
 ?>
-
 </div>
 
 <?php echo $this->render('footer.php');?>
+
+<script type="text/javascript">
+	function goBuy(code)
+	{
+		if(checkLogin())
+		{
+			window.location.href = "<?php echo $this->projectUrl(array('module'=>'default', 'controller'=>'borrowing', 'action'=>'view'));?>/code/" + code;
+		}
+	}
+</script>
+
 </body>
 </html>

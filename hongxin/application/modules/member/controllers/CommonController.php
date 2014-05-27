@@ -131,8 +131,9 @@ class Member_CommonController extends Zend_Controller_Action
     		 
     		//记录入库
     		$row = array();
-    		$dir = $this->_configs['project'][$configBasePath] . '/' . date('Y-m-d');
-    		$path = '/' . date('Y-m-d') . '/' . date('YmdHis') . rand(1000, 9999) . '.' . $extension;
+    		$folder = date('Y-m-d');
+    		$dir = $this->_configs['project'][$configBasePath] . '/' . $folder;
+    		$path = '/' . $folder . '/' . date('YmdHis') . rand(1000, 9999) . '.' . $extension;
     		 
     		//保存文件
     		createDirectory($dir);//创建临时文件夹

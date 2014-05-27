@@ -43,6 +43,30 @@
   </tr>
 </table>
 <script language="javascript">
+
+function checkLogin(backUrl)
+{
+	var signedin = false;
+	var url = '<?php echo $this->projectUrl(array('module'=>'member', 'controller'=>'user', 'action'=>'check-login'));?>' + '?rand=' + Math.random();
+	var loginUrl = '<?php echo $this->projectUrl(array('module'=>'member', 'controller'=>'user', 'action'=>'login'));?>';
+	$.ajax({
+		type: "POST",
+		url: url,
+		dataType: "html",
+		async: false,
+		success: function(data){
+			if (data == 0) {
+				signedin = true;
+			}
+		}
+	});
+	if(!signedin) {
+		alert('请登录！');
+		window.location.href = backUrl ? loginUrl + "/backUrl" + backUrl : loginUrl;
+	}
+	return signedin;
+}
+
 <?php
 if ($this->module == 'default') {
 	if($this->controller == 'borrowing' || $this->controller == 'guide') {

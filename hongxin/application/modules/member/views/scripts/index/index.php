@@ -125,9 +125,11 @@
                 <tr>
                   <td align="center"><input type="button" class="btn" name="goCancel" value="取消" /></td>
                 </tr>
+                <!--  
                 <tr>
                   <td align="center"><input type="button" class="btn" name="goDetail" value="详情" /></td>
                 </tr>
+                -->
             </table>
             </td>
             </tr>

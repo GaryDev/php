@@ -379,6 +379,8 @@ class Member_UserController extends Member_CommonController
                 if (empty($backUrl)) {
                     redirect($this->view->projectUrl(array('module'=>'member', 'controller'=>'index', 'action'=>'index')));
                 } else {
+                	//var_dump($backUrl); die();
+                	$backUrl = 'http://hongxin.cn/borrowing';
                     redirect($backUrl);
                 }
             }
@@ -612,6 +614,14 @@ class Member_UserController extends Member_CommonController
         echo Zend_Json::encode($status);
         exit;
     }  
+    
+    public function checkLoginAction()
+    {
+    	$memberLoginModel = new Application_Model_MemberLogin();
+    	$status = $memberLoginModel->getLoginStatus();
+    	echo Zend_Json::encode($status);
+    	exit;
+    }
     
     /**
      * 注册
