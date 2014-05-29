@@ -379,9 +379,8 @@ class Member_UserController extends Member_CommonController
                 if (empty($backUrl)) {
                     redirect($this->view->projectUrl(array('module'=>'member', 'controller'=>'index', 'action'=>'index')));
                 } else {
-                	//var_dump($backUrl); die();
-                	$backUrl = 'http://hongxin.cn/borrowing';
-                    redirect($backUrl);
+                	$port = $_SERVER['SERVER_PORT'] == '80' ? '' : ":{$_SERVER['SERVER_PORT']}";
+                    redirect("http://{$_SERVER['SERVER_NAME']}{$port}/" . $backUrl);
                 }
             }
         }
@@ -613,7 +612,33 @@ class Member_UserController extends Member_CommonController
         }
         echo Zend_Json::encode($status);
         exit;
-    }  
+    }
+    
+    public function sendsmsAction()
+    {
+    	$mobile = trim($this->_request->get('mobile'));
+    	$code = '888888'; //rand(100000, 999999);
+    	$_SESSION['smscode'] = $code;
+    	$_SESSION['smstime'] = date("Y-m-d H:i:s");
+    	exit;
+    }
+    
+    public function checkSmscodeAction()
+    {
+    	$mcode = trim($this->_request->get('mcode'));
+    	$status = 0;
+    	if(!isset($_SESSION['smstime']) || !isset($_SESSION['smscode'])) {
+    		$status = -1;
+    	} else if (isset($_SESSION['smstime']) && (strtotime ( $_SESSION ['smstime'] ) + 60) < time ()) {
+			session_destroy ();
+			unset ( $_SESSION );
+			$status = 1;
+		} else if (isset($_SESSION['smscode']) && $mcode != $_SESSION['smscode']) {
+			$status = 2;
+		}
+    	echo Zend_Json::encode($status);
+    	exit;
+    }
     
     public function checkLoginAction()
     {
@@ -641,17 +666,26 @@ class Member_UserController extends Member_CommonController
     		$field['password'] = $password2 = trim($this->_request->getPost('password'));
     		$field['email'] = trim($filter->filter($this->_request->getPost('email')));
     		$field['userType'] = $this->_request->getPost('userType');
-    
+    		
     		$field['name'] = '';
-    		$field['mobile'] = '';
+    		$field['mobile'] = $field['userName'];
     		$field['idCardNumber'] = '';
     		$field['idCardAddress'] = '';
     
     		$field['regTime'] = time();
     		$field['regIp'] = getClientIP();
-    		$field['status'] = 1;
+    		$field['status'] = 2;
     		$field['borrowersStatus'] = 1;
     		$field['lendersStatus'] = 1;
+    		
+    		/*
+    		if ((strtotime ( $_SESSION ['smstime'] ) + 60) < time ()) {
+    			session_destroy ();
+    			unset ( $_SESSION );
+    			echo $this->view->message('验证码已过期！') ;
+    			exit;
+    		}*/    		
+    		
     		if ($field['userName'] == '') {
     			echo $this->view->message('用户名不能为空！') ;
     			exit;
@@ -668,6 +702,8 @@ class Member_UserController extends Member_CommonController
     			echo $this->view->message("用户名“{$field['userName']}”已经存在，请重新填写！") ;
     			exit;
     		}
+    		
+    		/*
     		if ($field['email'] == '') {
     			echo $this->view->message('邮件不能为空！') ;
     			exit;
@@ -676,6 +712,7 @@ class Member_UserController extends Member_CommonController
     			echo $this->view->message("邮件地址“{$field['email']}”已经存在，请重新填写！") ;
     			exit;
     		}
+    		*/
     		if ($field['password'] == '') {
     			echo $this->view->message('密码不能为空！') ;
     			exit;
@@ -687,7 +724,7 @@ class Member_UserController extends Member_CommonController
     
     		$field['password'] = md5($field['password']);
     		$memberModel->insert($field);
-    
+    /*
     		//生成设置激活的邮件
     		$port = $_SERVER['SERVER_PORT'] == '80' ? '' : ":{$_SERVER['SERVER_PORT']}";
     		$time = time();
@@ -712,6 +749,10 @@ class Member_UserController extends Member_CommonController
                      	echo $this->view->message('注册成功，激活邮件已经发送到你的邮箱，请注意查收！', $successUrl) ;
                      	exit;
                      }
+     */
+    		$successUrl = $this->view->projectUrl(array('action'=>'login'));
+    		echo $this->view->message('注册成功，请登录！', $successUrl) ;
+    		exit;
     	}
     }
 

@@ -29,10 +29,12 @@
 		<div class="nytxt6 search">
 			<form id="applyForm" name="applyForm" enctype="multipart/form-data" method="post" action="">
 				<table width="100%" border="0" align="left" class="table">
+					<!--  
 					<tr>
 						<td align="left">融资标题：</td>
 						<td align="left"><input name="title" type="text" class="input" id="title" size="40"/> <span class="desc">简单说明融资用途</span></td>
 					</tr>
+					-->
 					<tr>
 						<td align="left">融资金额：</td>
 						<td align="left"><input name="amount" type="text" class="input" id="amount" value="0" size="15"/>元 </td>
@@ -95,11 +97,11 @@
 <script language="javascript">
 $("#applyForm").submit(function()
 {
-	if ($.trim($("#title").val()) == '') {
+	/*if ($.trim($("#title").val()) == '') {
 		alert('请填写融资标题。');
 		$("#title").focus();
 		return false;
-	} else if (parseFloat($.trim($("#amount").val())) == 0) {
+	} else*/ if (parseFloat($.trim($("#amount").val())) == 0) {
 		alert('请填写融资金额。');
 		$("#amount").focus();
 		return false;

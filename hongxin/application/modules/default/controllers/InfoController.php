@@ -112,13 +112,13 @@ class InfoController extends CommonController
     }
     
     /**
-     * 新手指引
+     * 安全保障
      *
      * @return void
      */
-    public function guideAction()
+    public function safeAction()
     {
-    	$this->view->menuTitle = '新手指引 ';
+    	$this->view->menuTitle = '安全保障 ';
     	$textModel = new Application_Model_Text();
     	$this->view->content = $textModel->content(10);
     	$this->renderScript('info/info.php');

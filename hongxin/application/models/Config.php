@@ -299,16 +299,16 @@ class Application_Model_Config
                 array('key' => '看电影', 'value' => '看电影')
             )//checkbox中的选项
         );
-
-        $models['description'] = array(
-            'title' => '描述',//标题
+*/
+        $models['productTitle'] = array(
+            'title' => '融资产品标题',//标题
             'description' => '',//描述
             'dataType' => 'string',//数据类型 string/number
-            'maxlength' => 5000, //长度
-            'inputType' => 'editor', //输入的类型 text/editor/textarea/checkbox/radio
+            'maxlength' => 50, //长度
+            'inputType' => 'text', //输入的类型 text/editor/textarea/checkbox/radio
             'options' => array()//checkbox中的选项
         );
-        */
+        
         return $models;
     }
 }

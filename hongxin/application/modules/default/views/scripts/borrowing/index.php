@@ -132,7 +132,7 @@ if (empty($this->rows)) {
 <script type="text/javascript">
 	function goBuy(code)
 	{
-		if(checkLogin())
+		if(checkLogin('<?php echo $this->projectUrl(array('module'=>'default', 'controller'=>'borrowing', 'action'=>'index'));?>'))
 		{
 			window.location.href = "<?php echo $this->projectUrl(array('module'=>'default', 'controller'=>'borrowing', 'action'=>'view'));?>/code/" + code;
 		}

@@ -318,7 +318,7 @@ class Member_BorrowingController extends Member_CommonController
             $field['type'] = 'recommend';
             $field['repaymentType'] = 3;	//保息固定
 			$field['repaymentBank'] = $filter->filter(trim($this->_request->get('repayBank')));
-            $field['title'] = $filter->filter(trim($this->_request->get('title')));
+            $field['title'] = $this->_configs['project']['productTitle']; //$filter->filter(trim($this->_request->get('title')));
             $field['code'] = date('YmdHis') . rand(1000, 9999);
             $field['amount'] = is_numeric(trim($this->_request->get('amount'))) ? trim($this->_request->get('amount')) : 0;
             $yearInterestRate = is_numeric(trim($this->_request->get('yearInterestRate'))) ? trim($this->_request->get('yearInterestRate')) : 0;

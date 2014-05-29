@@ -22,6 +22,7 @@
 	<div class="nytxt3">
 		<form id="userForm" name="userForm" method="post" action="">
 			<table width="600" border="0" align="center" cellpadding="0" cellspacing="0" class="biaoge">
+				<!--
 				<tr>
 					<td class="bgtd1">用户名：</td>
 					<td class="bgtd2"><input name="userName" type="text" class="validate[length[5,20],callback[checkUserIsExists,1]] bginput1 " id="userName"/></td>
@@ -31,6 +32,17 @@
 					<td class="bgtd1">E-mail：</td>
 					<td class="bgtd2"><input name="email" type="text" class="validate[custom[email],callback[checkEmailIsExists,1]] bginput1 " id="email"/></td>
 					<td class="color999">格式：user@qq.com</td>
+				</tr>
+				-->
+				<tr>
+					<td class="bgtd1">手机号：</td>
+					<td class="bgtd2"><input name="userName" type="text" class="validate[custom(mobileTelephone),callback[checkUserIsExists,1]] bginput1 " id="userName"/></td>
+					<td class="color999">&nbsp;</td>
+				</tr>
+				<tr>
+					<td class="bgtd1">短信验证码：</td>
+					<td class="bgtd2"><input name="smscode" type="text" class="validate[required,callback[checkSmsCode,1]] bginput1 " id="smscode"/></td>
+					<td><input type="button" id="btn" value="获取验证码" onclick="time(this);" /></td>
 				</tr>
 				<tr>
 					<td class="bgtd1">注册类型：</td>
@@ -134,6 +146,63 @@ function checkEmailIsExists(address){
 		});
 	}
 	return checkResult;
+}
+
+function checkSmsCode(mcode){
+	checkResult = {'isRight':true, 'message':''};
+	if (mcode != '') {
+		var url = '<?php echo $this->projectUrl(array('module'=>'member', 'controller'=>'user', 'action'=>'check-smscode'));?>' + '?rand=' + Math.random();
+		$.ajax({
+			type: "POST",
+			url: url,
+			data: "mcode=" + mcode,
+			async: false,
+			success: function(data){
+				if(data == 1) {
+					checkResult = {'isRight':false, 'message':'* 验证码已经过期，请重新获取。'};
+					$("#smscode").val('')
+				} else if (data == 2) {
+					checkResult = {'isRight':false, 'message':'* 此验证码无效，请重新输入。'};
+				} else if (data == -1) {
+					checkResult = {'isRight':false, 'message':'* 请获取验证码。'};
+				}
+			} 
+		});
+	}
+	return checkResult;
+}
+
+var wait=60;
+function time(o)
+{
+	if (wait == 0) {
+		o.removeAttribute("disabled");			
+		o.value="获取验证码";
+		wait = 60;
+	} else {
+		if($("#userName").val() != "" && $("#userName").val().match(/^1[358][0-9]{9}$/)) {
+			if(wait == 60) {
+				var url = '<?php echo $this->projectUrl(array('module'=>'member', 'controller'=>'user', 'action'=>'sendsms'));?>' + '?rand=' + Math.random();
+				$.ajax({
+					type: "POST",
+					url: url,
+					data: "mobile=" + $("#userName").val(),
+					async: false,
+					success: function(data){ } 
+				});
+				o.focus();
+			}
+			o.setAttribute("disabled", true);
+			o.value=wait + "秒后重新获取";
+			wait--;
+			setTimeout(function() {
+				time(o)
+			},
+			1000)
+		} else {
+			alert("请输入正确的手机号！");
+		}
+	}
 }
 </script>
 </body>

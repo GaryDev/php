@@ -67,6 +67,23 @@ class Application_Model_Borrowing extends Application_Model_Common
             return 0;
         }
     }
+    
+    /**
+     * 获取是否可以申请
+     *
+     * @param string userName
+     * @return 1/0
+     */
+    public function getBorrowSeq()
+    {
+    	$sql = "SELECT COUNT(*) AS `c` FROM `{$this->getTableName()}` WHERE `status` = '3'";
+    	$row = $this->getAdapter()->fetchRow($sql);
+    	if ($row['c'] > 0) {
+    		return $row['c'] + 1;
+    	} else {
+    		return 1;
+    	}
+    }
 
     /**
      * 添加
@@ -100,9 +117,9 @@ class Application_Model_Borrowing extends Application_Model_Common
     public function update(array $data, $where)
     {
         try{
-            $borrowingDetailModel = new Application_Model_BorrowingDetail();
-            $repaymentModel = new Application_Model_Repayment();
-            $repaymentDetailModel = new Application_Model_RepaymentDetail();
+            //$borrowingDetailModel = new Application_Model_BorrowingDetail();
+            //$repaymentModel = new Application_Model_Repayment();
+            //$repaymentDetailModel = new Application_Model_RepaymentDetail();
             $time = time();
             if (isset($data['status'])) {
                 $this->getAdapter()->getConnection()->setAttribute(PDO::ATTR_EMULATE_PREPARES, true);
@@ -112,6 +129,13 @@ class Application_Model_Borrowing extends Application_Model_Common
                 if (empty($row)) {
                     return false;
                 }
+                
+                if($data['status'] == 3) {
+	                $seq = $this->getBorrowSeq();
+	                $data['title'] = str_replace("%", str_pad($seq, 4, '0', STR_PAD_LEFT), $row['title']);
+                }
+                
+                /*
                 if ($data['status'] > $row['status']) {
                     //借款完成审核中修改为还款中
                     if ($data['status'] == 4 && $row['status'] == 3) {
@@ -176,7 +200,7 @@ class Application_Model_Borrowing extends Application_Model_Common
                             }
                         }
                     }
-                }
+                }*/
             }
             $result = parent::update($data, $where);
             $this->getAdapter()->query("commit;");
