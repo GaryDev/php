@@ -42,42 +42,57 @@ class BorrowingController extends CommonController
         $wheres = array();
         $vars = array();
 
-        $vars['status'] = '3'; //in_array($this->_request->get('status'), array('1', '2', '3')) ? $this->_request->get('status') : '3';
-        $vars['keyword'] = trim($this->_request->get('keyword'));
-        $vars['amount1'] = trim($this->_request->get('amount1')) != '' ? intval($this->_request->get('amount1')) : NULL;
-        $vars['amount2'] = trim($this->_request->get('amount2')) != '' ? intval($this->_request->get('amount2')) : NULL;
-        $vars['deadlineLimit'] = trim($this->_request->get('deadlineLimit'));
-        $vars['orderby'] = trim($this->_request->get('orderby'));
-
-        /*
-        if ($vars['status'] == '1') {
-            $wheres[] = "`b`.`status` IN ('1', '2')";
-        } else if ($vars['status'] == '2') {
-            $wheres[] = "`b`.`status` IN ('3')";
-        } else if ($vars['status'] == '3') {
-            $wheres[] = "`b`.`status` IN ('4', '5')";
-        }
-        */
+        $vars['qBank'] = trim($this->_request->get('qBank'));
+        $vars['qDeadLine'] = trim($this->_request->get('qDeadLine'));
+        $vars['qYearRate'] = trim($this->_request->get('qYearRate'));
+        $vars['qAmount'] = trim($this->_request->get('qAmount'));
+        
         $wheres[] = "`b`.`status` IN ('3')";
         
-        if ($vars['keyword'] != '') {
-            $wheres[] = "`b`.`code` = {$this->_model->getAdapter()->quote($vars['keyword'])} OR `b`.`title` LIKE '%" . addslashes($vars['keyword']) . "%'";
+        if ($vars['qBank'] != '') {
+            $wheres[] = "`b`.`repaymentBank` = {$this->_model->getAdapter()->quote($vars['qBank'])}";
         }
-        if ($vars['amount1'] !== NULL) {
-            $wheres[] = "`b`.`amount` >= {$vars['amount1']}";
-        }
-        if ($vars['amount2'] !== NULL) {
-            $wheres[] = "`b`.`amount` <= {$vars['amount2']}";
-        }
-        if (in_array($vars['deadlineLimit'], array('1', '2'))) {
-            if ($vars['deadlineLimit'] == '1') {
-                $wheres[] = "`b`.`deadline` >= 1 AND `b`.`deadline` <= 6";
-            } else if ($vars['deadlineLimit'] == '2') {
-                $wheres[] = "`b`.`deadline` >= 7 AND `b`.`deadline` <= 12";
+        
+        if (in_array($vars['qDeadLine'], array('1', '2', '3', '4', '5'))) {
+            if ($vars['qDeadLine'] == '1') {
+                $wheres[] = "`b`.`deadline` < 30";
+            } else if ($vars['qDeadLine'] == '2') {
+                $wheres[] = "`b`.`deadline` >= 30 AND `b`.`deadline` < 90";
+            } else if ($vars['qDeadLine'] == '3') {
+                $wheres[] = "`b`.`deadline` >= 90 AND `b`.`deadline` < 180";
+            } else if ($vars['qDeadLine'] == '4') {
+                $wheres[] = "`b`.`deadline` >= 180 AND `b`.`deadline` < 365";
+            } else if ($vars['qDeadLine'] == '5') {
+                $wheres[] = "`b`.`deadline` >= 365";
             }
+        }
+        
+        if (in_array($vars['qYearRate'], array('1', '2', '3'))) {
+        	if ($vars['qYearRate'] == '1') {
+        		$wheres[] = "`b`.`yearInterestRate` < 5";
+        	} else if ($vars['qYearRate'] == '2') {
+        		$wheres[] = "`b`.`yearInterestRate` >= 5 AND `b`.`yearInterestRate` < 10";
+        	} else if ($vars['qYearRate'] == '3') {
+        		$wheres[] = "`b`.`yearInterestRate` >= 10";
+        	}
+        }
+        
+        if (in_array($vars['qAmount'], array('1', '2', '3', '4', '5'))) {
+        	if ($vars['qAmount'] == '1') {
+        		$wheres[] = "`b`.`amount` < 100000";
+        	} else if ($vars['qAmount'] == '2') {
+        		$wheres[] = "`b`.`amount` >= 100000 AND `b`.`amount` < 300000";
+        	} else if ($vars['qAmount'] == '3') {
+        		$wheres[] = "`b`.`amount` >= 300000 AND `b`.`amount` < 500000";
+        	} else if ($vars['qAmount'] == '4') {
+        		$wheres[] = "`b`.`amount` >= 500000 AND `b`.`amount` < 1000000";
+        	} else if ($vars['qAmount'] == '5') {
+        		$wheres[] = "`b`.`amount` >= 1000000";
+        	}
         }
 
         $orderby = "`b`.`addTime` DESC";
+        /*
         if ($vars['orderby'] == '1') {
             $orderby = "`b`.`addTime` DESC";
         } else if ($vars['orderby'] == '2') {
@@ -86,7 +101,7 @@ class BorrowingController extends CommonController
             $orderby = "`b`.`monthInterestRate` DESC";
         } else if ($vars['orderby'] == '4') {
             $orderby = "get_borrowed_amount(`b`.`code`)/`b`.`amount` DESC";
-        }
+        }*/
 
         $urls = $vars;
         $urls['pageNo'] = '{page}';

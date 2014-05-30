@@ -39,37 +39,15 @@ class IndexController extends CommonController
                  ->setIntegrityCheck(false)
                  ->from(array('b'=>$borrowingModel->getTableName()), array('borrowedAmount'=>new Zend_Db_Expr('get_borrowed_amount(`b`.`code`)'), '*'))
                  ->joinLeft(array('m'=>$memberModel->getTableName()), "`b`.`userName` = `m`.`userName`", "avatarPath")
-                 ->order('b.addTime DESC')
-                 ->where("`b`.`status`  IN('1', '2')")
-                 ->limit(8);
+                 ->order('b.yearInterestRate DESC')
+                 ->order('b.amountUnit ASC')
+                 ->where("`b`.`status` = '3' AND b.amountUnit > 0 ")
+                 ->limit(7);
         $borrowingRows = $borrowingModel->fetchAll($borrowingSelect);
         foreach($borrowingRows as $key=>$row) {
-            if (!empty($row['avatarPath'])) {
-                $row['avatarUrl'] = $this->_configs['project']['memberAvatarBaseUrl'] . $row['avatarPath'];
-            } else {
-                $row['avatarUrl'] = $this->_configs['project']['memberAvatarDefaultUrl'];
-            }
-            $row['schedule'] = round($row['borrowedAmount'] / $row['amount'] * 100, 1);
+        	$row['borrowedCount'] = $row['amountMaxUnit'] - $row['amountUnit'];
+            $row['percent'] = floor($row['borrowedCount'] / $row['amountMaxUnit'] * 100);
             $borrowingRows[$key] = $row;
-        }
-
-        //完成借款
-        $borrowingSelect = $borrowingModel->select(false)
-                 ->setIntegrityCheck(false)
-                 ->from(array('b'=>$borrowingModel->getTableName()), array('borrowedAmount'=>new Zend_Db_Expr('get_borrowed_amount(`b`.`code`)'), '*'))
-                 ->joinLeft(array('m'=>$memberModel->getTableName()), "`b`.`userName` = `m`.`userName`", "avatarPath")
-                 ->order('b.addTime DESC')
-                 ->where("`b`.`status`  IN( '4')")
-                 ->limit(3);
-        $borrowingCompleteRows = $borrowingModel->fetchAll($borrowingSelect);
-        foreach($borrowingCompleteRows as $key=>$row) {
-            if (!empty($row['avatarPath'])) {
-                $row['avatarUrl'] = $this->_configs['project']['memberAvatarBaseUrl'] . $row['avatarPath'];
-            } else {
-                $row['avatarUrl'] = $this->_configs['project']['memberAvatarDefaultUrl'];
-            }
-            $row['schedule'] = round($row['borrowedAmount'] / $row['amount'] * 100, 1);
-            $borrowingCompleteRows[$key] = $row;
         }
 
         //网站活动
@@ -84,7 +62,7 @@ class IndexController extends CommonController
             $actRows[$key] = $row;
         }
 
-        //借款资讯
+        //行业咨询
         $archivesSelect = $archivesModel->select(false)
                  ->setIntegrityCheck(false)
                  ->from(array($archivesModel->getTableName()), array('id', 'title', 'isLink', 'linkUrl', 'picture', 'updateTime', 'content'))
@@ -97,7 +75,7 @@ class IndexController extends CommonController
             $archives1Rows[$key] = $row;
         }
 
-        //投资理财
+        //理财课堂
         $archivesSelect = $archivesModel->select(false)
                  ->setIntegrityCheck(false)
                  ->from(array($archivesModel->getTableName()), array('id', 'title', 'isLink', 'linkUrl', 'picture', 'updateTime', 'content'))
@@ -150,7 +128,6 @@ class IndexController extends CommonController
         }
 
         $this->view->borrowingRows = $borrowingRows;
-        $this->view->borrowingCompleteRows = $borrowingCompleteRows;
         $this->view->actRows = $actRows;
         $this->view->archives1Rows = $archives1Rows;
         $this->view->archives2Rows = $archives2Rows;

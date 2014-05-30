@@ -14,40 +14,70 @@
 <?php echo $this->render('top.php');?>
 
 <div class="mainbox">
+<form name="borrowingForm" id="borrowingForm" method="post">
 <table width="1085" border="0" align="center" cellpadding="0" cellspacing="0" style="border:1px #dedede solid; border-top:none; background:#f3f3f3; border-bottom:1px #888888 solid; position:relative;">
   <tr>
     <td>
       <table width="100%" border="0" align="center" cellpadding="0" cellspacing="0" style="border-bottom:1px #d2d2d2 solid;">
         <tr>
           <td width="150" height="45" align="right" class="bt_hs12">到期承诺还款银行：</td>
-          <td><a href="#" class="xz">不限</a>
-          <?php foreach ($this->banks as $bank) {?>
-			<a href="#" class="xz"><?php echo $bank; ?></a>
-		  <?php } ?>
+          <td>
+          <select name="qBank" id="qBank">
+          	<option value="">不限</option>
+          	<?php foreach ($this->banks as $bank) {?>
+          		<option value="<?php echo $bank; ?>" <?php echo $this->vars['qBank'] == $bank ? ' selected' : ''; ?> ><?php echo $bank; ?></option>
+          	<?php } ?>
+          </select>
 		  </td>
         </tr>
       </table>
       <table width="100%" border="0" align="center" cellpadding="0" cellspacing="0" style="border-bottom:1px #d2d2d2 solid;">
         <tr>
           <td width="150" height="45" align="right" class="bt_hs12">融资期限：</td>
-          <td><a href="#" class="xz">不限</a>      <a href="#" class="xz">30天以内</a>      <a href="#" class="xz">30-90天</a>      <a href="#" class="xz">90-180天</a>      <a href="#" class="xz">180-365天</a>      <a href="#" class="xz">365天以上 </a></td>
+          <td>
+		  <select name="qDeadLine" id="qDeadLine">
+		  	<option value="">不限</option>
+		  	<option value="1" <?php echo $this->vars['qDeadLine'] == '1' ? ' selected' : '';?>>30天以内</option>
+		  	<option value="2" <?php echo $this->vars['qDeadLine'] == '2' ? ' selected' : '';?>>30-90天</option>
+		  	<option value="3" <?php echo $this->vars['qDeadLine'] == '3' ? ' selected' : '';?>>90-180天</option>
+		  	<option value="4" <?php echo $this->vars['qDeadLine'] == '4' ? ' selected' : '';?>>180-365天</option>
+		  	<option value="5" <?php echo $this->vars['qDeadLine'] == '5' ? ' selected' : '';?>>365天以上</option>
+		  </select>     
+          </td>
         </tr>
       </table>
       <table width="100%" border="0" align="center" cellpadding="0" cellspacing="0" style="border-bottom:1px #d2d2d2 solid;">
         <tr>
           <td width="150" height="45" align="right" class="bt_hs12">预期年收益率：</td>
-          <td><a href="#" class="xz">不限</a>      <a href="#" class="xz">5%以下</a>      <a href="#" class="xz">5%-10%</a>      <a href="#" class="xz">10%以上</a> </td>
+          <td>
+          <select name="qYearRate" id="qYearRate">
+		  	<option value="">不限</option>
+		  	<option value="1" <?php echo $this->vars['qYearRate'] == '1' ? ' selected' : '';?>>5%以下</option>
+		  	<option value="2" <?php echo $this->vars['qYearRate'] == '2' ? ' selected' : '';?>>5%-10%</option>
+		  	<option value="3" <?php echo $this->vars['qYearRate'] == '3' ? ' selected' : '';?>>10%以上</option>
+		  </select> 
+          </td>
         </tr>
       </table>
       <table width="100%" border="0" align="center" cellpadding="0" cellspacing="0">
         <tr>
           <td width="150" height="45" align="right" class="bt_hs12">融资金额：</td>
-          <td><a href="#" class="xz">不限</a>      <a href="#" class="xz">10万以下</a>      <a href="#" class="xz">10-30万</a>      <a href="#" class="xz">30-50万</a>      <a href="#" class="xz">50-100万</a>      <a href="#" class="xz">100万以上</a></td>
+          <td>
+          <select name="qAmount" id="qAmount">
+		  	<option value="">不限</option>
+		  	<option value="1" <?php echo $this->vars['qAmount'] == '1' ? ' selected' : '';?>>10万以下</option>
+		  	<option value="2" <?php echo $this->vars['qAmount'] == '2' ? ' selected' : '';?>>10-30万</option>
+		  	<option value="3" <?php echo $this->vars['qAmount'] == '3' ? ' selected' : '';?>>30-50万</option>
+		  	<option value="3" <?php echo $this->vars['qAmount'] == '4' ? ' selected' : '';?>>50-100万</option>
+		  	<option value="3" <?php echo $this->vars['qAmount'] == '5' ? ' selected' : '';?>>100万以上</option>
+		  </select> 
+          </td>
         </tr>
       </table>
     </td>
   </tr>
 </table>
+</form>
 </div>
 <div class="cl"></div>
 
@@ -137,6 +167,10 @@ if (empty($this->rows)) {
 			window.location.href = "<?php echo $this->projectUrl(array('module'=>'default', 'controller'=>'borrowing', 'action'=>'view'));?>/code/" + code;
 		}
 	}
+
+	$("select").change(function(){
+		document.forms[0].submit();
+	});
 </script>
 
 </body>

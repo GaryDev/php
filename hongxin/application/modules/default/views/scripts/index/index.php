@@ -114,69 +114,36 @@
           <tr>
             <th height="20" align="center">产品名称</th>
             <th width="100" height="30" align="center" class="header">年化收益率(%)</th>
-            <th width="70" height="30" align="center" class="header">金额(万)</th>
+            <th width="70" height="30" align="center" class="header">剩余(万)</th>
             <th width="70" height="30" align="center" class="header">期限(天)</th>
             <th width="70" height="30" align="center" class="header">投标率(%)</th>
             <th width="70" height="30" align="center">&nbsp;</th>
           </tr>
          </thead>
          <tbody>
-          <tr>
-            <td align="left" bgcolor="#FFFFFF" class="bt_hs12">项目名称项目名称项目名称1</td>
-            <td align="right" bgcolor="#FFFFFF" class="hsbfb">13.1</td>
-            <td align="right" bgcolor="#FFFFFF" class="bt_hs12">100</td>
-            <td align="right" bgcolor="#FFFFFF" class="bt_hs12">365</td>
-            <td align="right" bgcolor="#FFFFFF" class="bt_hs12">65</td>
-            <td align="center" bgcolor="#FFFFFF" class="bt_hs14"><a href="#" class="xq">详情</a></td>
-          </tr>
-          <tr>
-            <td align="left" bgcolor="#FFFFFF" class="bt_hs12">项目名称项目名称项目名称2</td>
-            <td align="right" bgcolor="#FFFFFF" class="hsbfb">13.2</td>
-            <td align="right" bgcolor="#FFFFFF" class="bt_hs12">110</td>
-            <td align="right" bgcolor="#FFFFFF" class="bt_hs12">365</td>
-            <td align="right" bgcolor="#FFFFFF" class="bt_hs12">66</td>
-            <td align="center" bgcolor="#FFFFFF" class="bt_hs14"><a href="#" class="xq">详情</a></td>
-          </tr> 
-          <tr>  
-            <td align="left" bgcolor="#FFFFFF" class="bt_hs12">项目名称项目名称项目名称3</td>
-            <td align="right" bgcolor="#FFFFFF" class="hsbfb">13.3</td>
-            <td align="right" bgcolor="#FFFFFF" class="bt_hs12">120</td>
-            <td align="right" bgcolor="#FFFFFF" class="bt_hs12">365</td>
-            <td align="right" bgcolor="#FFFFFF" class="bt_hs12">67</td>
-            <td align="center" bgcolor="#FFFFFF" class="bt_hs14"><a href="#" class="xq">详情</a></td>
-          </tr> 
-          <tr>  
-            <td align="left" bgcolor="#FFFFFF" class="bt_hs12">项目名称项目名称项目名称4</td>
-            <td align="right" bgcolor="#FFFFFF" class="hsbfb">13.4</td>
-            <td align="right" bgcolor="#FFFFFF" class="bt_hs12">130</td>
-            <td align="right" bgcolor="#FFFFFF" class="bt_hs12">365</td>
-            <td align="right" bgcolor="#FFFFFF" class="bt_hs12">68</td>
-            <td align="center" bgcolor="#FFFFFF" class="bt_hs14"><a href="#" class="xq">详情</a></td>
-          </tr> 
-          <tr>  
-            <td align="left" bgcolor="#FFFFFF" class="bt_hs12">项目名称项目名称项目名称5</td>
-            <td align="right" bgcolor="#FFFFFF" class="hsbfb">13.5</td>
-            <td align="right" bgcolor="#FFFFFF" class="bt_hs12">140</td>
-            <td align="right" bgcolor="#FFFFFF" class="bt_hs12">365</td>
-            <td align="right" bgcolor="#FFFFFF" class="bt_hs12">69</td>
-            <td align="center" bgcolor="#FFFFFF" class="bt_hs14"><a href="#" class="xq">详情</a></td>
-          </tr> 
-          <tr>  
-            <td align="left" bgcolor="#FFFFFF" class="bt_hs12">项目名称项目名称项目名称6</td>
-            <td align="right" bgcolor="#FFFFFF" class="hsbfb">13.6</td>
-            <td align="right" bgcolor="#FFFFFF" class="bt_hs12">150</td>
-            <td align="right" bgcolor="#FFFFFF" class="bt_hs12">365</td>
-            <td align="right" bgcolor="#FFFFFF" class="bt_hs12">70</td>
-            <td align="center" bgcolor="#FFFFFF" class="bt_hs14"><a href="#" class="xq">详情</a></td>
-          </tr> 
-          <tr>  
-            <td align="left" bgcolor="#FFFFFF" class="bt_hs12">项目名称项目名称项目名称7</td>
-            <td align="right" bgcolor="#FFFFFF" class="hsbfb">13.7</td>
-            <td align="right" bgcolor="#FFFFFF" class="bt_hs12">160</td>
-            <td align="right" bgcolor="#FFFFFF" class="bt_hs12">365</td>
-            <td align="right" bgcolor="#FFFFFF" class="bt_hs12">71</td>
-            <td align="center" bgcolor="#FFFFFF" class="bt_hs14"><a href="#" class="xq">详情</a></td>
-          </tr>
+          <?php for($i=0; $i<7; $i++) { 
+          	if(empty($this->borrowingRows) || count($this->borrowingRows) <= $i) {
+          ?>
+          	  <tr>
+	            <td align="left" bgcolor="#FFFFFF" class="bt_hs12">&nbsp;</td>
+	            <td align="right" bgcolor="#FFFFFF" class="hsbfb">&nbsp;</td>
+	            <td align="right" bgcolor="#FFFFFF" class="bt_hs12">&nbsp;</td>
+	            <td align="right" bgcolor="#FFFFFF" class="bt_hs12">&nbsp;</td>
+	            <td align="right" bgcolor="#FFFFFF" class="bt_hs12">&nbsp;</td>
+	            <td align="center" bgcolor="#FFFFFF" class="bt_hs14">&nbsp;</td>
+	          </tr>
+          <?php } else {?>
+	          <tr>
+	            <td align="left" bgcolor="#FFFFFF" class="bt_hs12"><?php echo $this->borrowingRows[$i]['title']; ?></td>
+	            <td align="right" bgcolor="#FFFFFF" class="hsbfb"><?php echo $this->borrowingRows[$i]['yearInterestRate']; ?></td>
+	            <td align="right" bgcolor="#FFFFFF" class="bt_hs12"><?php echo ($this->borrowingRows[$i]['amountUnit'] * $this->borrowingRows[$i]['borrowUnit']) / 10000; ?></td>
+	            <td align="right" bgcolor="#FFFFFF" class="bt_hs12"><?php echo $this->borrowingRows[$i]['deadline']; ?></td>
+	            <td align="right" bgcolor="#FFFFFF" class="bt_hs12"><?php echo $this->borrowingRows[$i]['percent']; ?></td>
+	            <td align="center" bgcolor="#FFFFFF" class="bt_hs14">
+	            	<a href="<?php echo $this->projectUrl(array('module'=>'default', 'controller'=>'borrowing', 'action'=>'view', 'code'=>$this->borrowingRows[$i]['code']));?>" class="xq">详情</a>
+	            </td>
+	          </tr>
+          <?php } } ?>
           </tbody>
         </table>
         </td>
