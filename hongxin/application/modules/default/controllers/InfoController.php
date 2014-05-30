@@ -50,27 +50,27 @@ class InfoController extends CommonController
      * 借贷规则
      * 
      * @return void
-     */
+     
     public function ruleAction()
     {
         $this->view->menuTitle = '借贷规则 ';
         $textModel = new Application_Model_Text();
         $this->view->content = $textModel->content(4);
         $this->renderScript('info/info.php');
-    }
+    }*/
 
     /**
      * 网站资费
      * 
      * @return void
-     */
+     
     public function priceAction()
     {
         $this->view->menuTitle = '网站资费 ';
         $textModel = new Application_Model_Text();
         $this->view->content = $textModel->content(5);
         $this->renderScript('info/info.php');
-    }
+    }*/
 
     /**
      * 法律政策
@@ -81,7 +81,7 @@ class InfoController extends CommonController
     {
         $this->view->menuTitle = '法律政策 ';
         $textModel = new Application_Model_Text();
-        $this->view->content = $textModel->content(6);
+        $this->view->content = $textModel->content(4);
         $this->renderScript('info/info.php');
     }
 
@@ -94,7 +94,7 @@ class InfoController extends CommonController
     {
         $this->view->menuTitle = '合作伙伴 ';
         $textModel = new Application_Model_Text();
-        $this->view->content = $textModel->content(8);
+        $this->view->content = $textModel->content(5);
         $this->renderScript('info/info.php');
     }
     
@@ -107,7 +107,7 @@ class InfoController extends CommonController
     {
     	$this->view->menuTitle = '信息公告 ';
     	$textModel = new Application_Model_Text();
-    	$this->view->content = $textModel->content(9);
+    	$this->view->content = $textModel->content(6);
     	$this->renderScript('info/info.php');
     }
     
@@ -120,7 +120,7 @@ class InfoController extends CommonController
     {
     	$this->view->menuTitle = '安全保障 ';
     	$textModel = new Application_Model_Text();
-    	$this->view->content = $textModel->content(10);
+    	$this->view->content = $textModel->content(7);
     	$this->renderScript('info/info.php');
     }
 

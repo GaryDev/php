@@ -432,6 +432,18 @@ class Admin_MemberController extends Admin_CommonController
     	$memberBaseRow = $memberBaseModel->fetchRow("`userName` = '{$row['userName']}'");
     	$memberContactRow = $memberContactModel->fetchRow("`userName` = '{$row['userName']}'");
     	$memberEnterpriseRow = $memberEnterpriseModel->fetchRow("`userName` = '{$row['userName']}'");
+    	
+    	$certificateUrl = $this->_configs['project']['certificateCopyBaseUrl'];
+    	if (!empty($memberEnterpriseRow['legalPersonIDCardCopyPath'])) {
+    		$memberEnterpriseRow['legalPersonIDCardCopyUrl'] = $certificateUrl . $memberEnterpriseRow['legalPersonIDCardCopyPath'];
+    	}
+    	if (!empty($memberEnterpriseRow['businessLicenseCopyPath'])) {
+    		$memberEnterpriseRow['businessLicenseCopyUrl'] = $certificateUrl . $memberEnterpriseRow['businessLicenseCopyPath'];
+    	}
+    	if (!empty($memberEnterpriseRow['organizationCodeCopyPath'])) {
+    		$memberEnterpriseRow['organizationCodeCopyUrl'] = $certificateUrl . $memberEnterpriseRow['organizationCodeCopyPath'];
+    	}
+    	
     	$memberSpouseRow = $memberSpouseModel->fetchRow("`userName` = '{$row['userName']}'");
     	
     	$this->view->memberVars = $this->_configs['project']['memberVars'];
@@ -455,7 +467,6 @@ class Admin_MemberController extends Admin_CommonController
     			$log[] = array('previousStatus'=>$status[$row['borrowersStatus']], 'currentStatus'=>$status[$field['borrowersStatus']], 'user'=>$this->_currentUserRow['userName'], 'time'=>date('Y-m-d H:i:s'));
     			$json = Zend_Json::encode($log);
     			$field['borrowersStatusLog'] = $json;
-    			$field['initApprovedLog'] = $json;
     		}
     	
     		$this->_model->update($field, "`id` = {$id}");

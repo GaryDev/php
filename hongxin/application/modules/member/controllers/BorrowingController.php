@@ -291,11 +291,11 @@ class Member_BorrowingController extends Member_CommonController
         $recommendAmount = $memberBorrowingAvailableAmountDetailsModel->getSurplusAmount(Application_Model_MemberLogin::getLoginedUserName(), 'recommend');
 */
         //获取是否没有审核过的
-        $isNoCheck = $this->_model->getIsNoCheck(Application_Model_MemberLogin::getLoginedUserName());
-        if ($isNoCheck) {
+        $isNoCheck = false; //$this->_model->getIsNoCheck(Application_Model_MemberLogin::getLoginedUserName());
+        /*if ($isNoCheck) {
         	echo $this->view->message('你尚未审核的申请，暂不能提交新的申请。！', $this->view->projectUrl(array('controller'=>'user', 'action'=>'index'))) ;
         	exit;
-        }
+        }*/
         
 
         $this->view->banks = explode(",", $this->_configs['project']['bankTypes']);

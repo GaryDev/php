@@ -20,7 +20,7 @@
     	<?php echo $this->render('member-menu.php');?>
     </td>
     <td valign="top">
-		<div class="nytit6"><h3>正在投标的项目</h3></div>
+		<div class="nytit6"><h3>正在融资的项目</h3></div>
 		<div class="nytxt6 search">
 			<div>
 				<form id="searchForm" name="searchForm" class="searchForm" method="post" action="<?php echo $this->projectUrl();?>">

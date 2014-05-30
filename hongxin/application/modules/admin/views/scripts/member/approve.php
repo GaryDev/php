@@ -208,13 +208,13 @@ foreach($this->memberVars['industry'] as $key=>$value) {
 			<td width="15%">法人姓名：</td>
 			<td width="35%"><input type="text" class="input" name="legalPersonName" id="legalPersonName" value="<?php echo isset($this->memberEnterpriseRow['legalPersonName']) ? htmlspecialchars($this->memberEnterpriseRow['legalPersonName']) : '';?>" /></td>
 			<td width="15%">法人身份证：</td>
-			<td width="35%"><?php if(isset($this->memberEnterpriseRow['legalPersonIDCardCopyPath'])) {?><a href="#">查看</a></td><?php } else { echo '未上传'; }?></td>
+			<td width="35%"><?php if(isset($this->memberEnterpriseRow['legalPersonIDCardCopyUrl'])) {?><a href="<?php echo $this->memberEnterpriseRow['legalPersonIDCardCopyUrl']; ?>" target="_blank">查看</a></td><?php } else { echo '未上传'; }?></td>
 		</tr>
 		<tr>
 			<td width="15%">营业执照：</td>
-			<td width="35%"><?php if(isset($this->memberEnterpriseRow['businessLicenseCopyPath'])) {?><a href="#">查看</a><?php } else { echo '未上传'; }?></td>
+			<td width="35%"><?php if(isset($this->memberEnterpriseRow['businessLicenseCopyUrl'])) {?><a href="<?php echo $this->memberEnterpriseRow['businessLicenseCopyUrl']; ?>" target="_blank">查看</a><?php } else { echo '未上传'; }?></td>
 			<td width="15%">组织机构代码证：</td>
-			<td width="35%"><?php if(isset($this->memberEnterpriseRow['organizationCodeCopyPath'])) {?><a href="#">查看</a><?php } else { echo '未上传'; }?></td>
+			<td width="35%"><?php if(isset($this->memberEnterpriseRow['organizationCodeCopyUrl'])) {?><a href="<?php echo $this->memberEnterpriseRow['organizationCodeCopyUrl']; ?>" target="_blank">查看</a><?php } else { echo '未上传'; }?></td>
 		</tr>
 	</form>
 </table>

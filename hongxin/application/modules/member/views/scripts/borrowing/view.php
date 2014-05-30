@@ -102,7 +102,7 @@ if (trim($this->row['statusMessage']) != '') {
 				</tr>
 
 			</table>
-
+<!--  
 			<h3>投标记录</h3>
 			
 			<table width="100%" border="0" cellspacing="0" cellpadding="0" class="table">
@@ -193,6 +193,7 @@ if ($this->row['status'] == '4') {
 <?php
 }
 ?>
+-->
 		</div>
     </td>
 </tr>

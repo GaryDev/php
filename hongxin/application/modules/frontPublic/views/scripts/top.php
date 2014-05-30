@@ -11,14 +11,14 @@
 <table width="1195" border="0" align="center" cellpadding="0" cellspacing="0">
   <tr>
     <td width="121"><img src="/files/default/images/logo.jpg" width="121" height="34"></td>
-    <td width="1074" height="70"><table width="40%" border="0" align="right" cellpadding="0" cellspacing="0">
+    <td width="1074" height="70"><table width="45%" border="0" align="right" cellpadding="0" cellspacing="0">
       <tr>
         <td class="top_tel">客服热线：400-606-0009</td>
         <?php if (empty($this->loginedUserName)) { ?>
-	        <td width="160" align="right"><a id="login" href="<?php echo $this->projectUrl(array('module'=>'member', 'controller'=>'user', 'action'=>'login'));?>" class="dl">登录</a> </td>
+	        <td width="200" align="right"><a id="login" href="<?php echo $this->projectUrl(array('module'=>'member', 'controller'=>'user', 'action'=>'login'));?>" class="dl">登录</a> </td>
 	        <td width="50" align="center"><a id="register" href="<?php echo $this->projectUrl(array('module'=>'member', 'controller'=>'user', 'action'=>'register'));?>" class="dl">注册</a></td>
 	    <?php } else { ?>
-	    	<td width="160" align="center">你好，用户<a href="<?php echo $this->projectUrl(array('module'=>'member', 'controller'=>'index', 'action'=>'index'));?>" class="dl"><?php echo $this->loginedUserName;?></a> </td>
+	    	<td width="200" align="center">你好，用户<a href="<?php echo $this->projectUrl(array('module'=>'member', 'controller'=>'index', 'action'=>'index'));?>" class="dl"><?php echo $this->loginedUserName;?></a> </td>
 	    	<td width="50" align="center"><a href="<?php echo $this->projectUrl(array('module'=>'member', 'controller'=>'user', 'action'=>'logout'));?>" class="dl">退出</a>
 	    <?php } ?>
       </tr>

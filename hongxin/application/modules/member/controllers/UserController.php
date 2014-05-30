@@ -258,7 +258,6 @@ class Member_UserController extends Member_CommonController
             $field = array();
             if ($row['borrowersStatus'] == '1' || $row['borrowersStatus'] == '4') {
                 $field['borrowersStatus'] = '2';
-                $field['initApproved'] = '2';
                 $memberLoginModel->update($field, "`userName` = '{$row['userName']}'");
                 echo $this->view->message('提交成功，我们会尽快审查你的资料。') ;
                 exit;

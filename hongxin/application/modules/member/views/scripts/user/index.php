@@ -35,10 +35,12 @@
 					<td width="15%">用户名：</td>
 					<td><?php echo $this->row['userName']?></td>
 				</tr>
+				<!--  
 				<tr>
 					<td>邮件：</td>
 					<td><?php echo htmlspecialchars($this->row['email']);?></td>
 				</tr>
+				-->
 			</table>
 		</form>
 		<table width="100%" border="0" cellpadding="0" cellspacing="0" class="subTab">

@@ -6,7 +6,7 @@ return array(
         'host' => 'localhost',
         'username' => 'root',
         'password' => 'secret',
-        'dbname' => 'test_daikuan',
+        'dbname' => 'test_hx_dev',
         'charset' => 'utf8',
         'driver_options' => array(
             1002 => 'SET NAMES UTF8;',
