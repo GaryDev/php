@@ -49,6 +49,17 @@ class IndexController extends CommonController
             $row['percent'] = floor($row['borrowedCount'] / $row['amountMaxUnit'] * 100);
             $borrowingRows[$key] = $row;
         }
+        
+        // 明星产品
+        $popRow = $borrowingModel->getPopstar();
+        if($popRow['id'] > 0) {
+        	$popRow['borrowedCount'] = $popRow['amountMaxUnit'] - $popRow['amountUnit'];
+        	$popRow['percent'] = floor($popRow['borrowedCount'] / $popRow['amountMaxUnit'] * 100);
+        	$ticketUrl = $this->_configs['project']['ticketCopyBaseUrl'];
+        	if (!empty($popRow['ticketCopyPath'])) {
+        		$popRow['ticketCopyUrl'] = $ticketUrl . $popRow['ticketCopyPath'];
+        	}
+        }
 
         //网站活动
         $archivesSelect = $archivesModel->select(false)
@@ -129,6 +140,7 @@ class IndexController extends CommonController
 
         $this->view->borrowingRows = $borrowingRows;
         $this->view->actRows = $actRows;
+        $this->view->popRow = $popRow;
         $this->view->archives1Rows = $archives1Rows;
         $this->view->archives2Rows = $archives2Rows;
         $this->view->archives3Rows = $archives3Rows;

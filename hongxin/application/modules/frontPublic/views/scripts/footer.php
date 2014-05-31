@@ -1,4 +1,4 @@
-<?php if($this->module == 'default' && $this->controller == 'index') { ?>
+<?php if($this->module == 'default' && $this->controller == 'index' && false) { ?>
 <table width="100%" border="0" align="center" cellpadding="0" cellspacing="0">
   <tr>
     <td><table width="100%" border="0" align="center" cellpadding="0" cellspacing="0">

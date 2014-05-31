@@ -84,6 +84,21 @@ class Application_Model_Borrowing extends Application_Model_Common
     		return 1;
     	}
     }
+    
+    /**
+     * 获取是否可以申请
+     *
+     * @param string userName
+     * @return 1/0
+     */
+    public function getPopstar()
+    {
+        $sql = "SELECT * FROM `{$this->getTableName()}` WHERE `popStar` = 'Y' AND `status` = '3'";
+        $row = $this->getAdapter()->fetchRow($sql);
+
+        $data = isset($row['id']) ? $row : array('id' => 0);
+        return $data;
+    }
 
     /**
      * 添加

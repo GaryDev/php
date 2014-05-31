@@ -48,7 +48,7 @@ class OrderController extends CommonController
 			$field['orderUnit'] = $row['borrowUnit'];
 			$field['orderQty'] = $filter->filter(trim($this->_request->get('orderQty')));
 			$field['orderAmount'] = $field['orderUnit'] * $field['orderQty'];
-			$field['benifit'] = 0.5;
+			$field['benifit'] = $field['orderAmount'] * ($row['yearInterestRate']/100) * ($row['deadline']/365);
 			
 			$id = $this->_model->add($field);
 			if($id > 0)
@@ -76,6 +76,20 @@ class OrderController extends CommonController
 		
 		$this->view->row = $row;
 		$this->view->LoginedRow = $memberLoginModel->getLoginedRow();
+	}
+	
+	public function cancelAction()
+	{
+		$orderNo = trim($this->_request->get('orderNo'));
+		if ($this->_request->isPost())
+		{
+			$field = array();
+			$field['status'] = 30;
+			$field['reason'] = '用户取消';
+			$this->_model->update($field, "`orderSN` = '{$orderNo}'");
+			echo $this->view->message('订单取消成功！', $this->view->projectUrl(array('action'=>'index'))) ;
+			exit;
+		}
 	}
 	
 }

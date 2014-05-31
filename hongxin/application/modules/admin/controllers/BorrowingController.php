@@ -201,7 +201,6 @@ class Admin_BorrowingController extends Admin_CommonController
     {
     	$id = intval($this->_request->get('id'));
     	$backUrl = urldecode($this->_request->get('backUrl'));
-    	$borrowingDetailModel = new Application_Model_BorrowingDetail();
     
     	$row = $this->_model->fetchRow("`id` = {$id}");
     	if (empty($row)) {
@@ -209,11 +208,13 @@ class Admin_BorrowingController extends Admin_CommonController
     		exit;
     	}
     	$row['statusLogRows'] = trim($row['statusLog']) != '' ? Zend_Json::decode($row['statusLog']) : array();
-    	$borrowingDetailRows = $borrowingDetailModel->fetchAll("`borrowingCode` = '{$row['code']}'", "id ASC");
     
+    	$popRow = $this->_model->getPopstar();
+    	
+    	
     	$this->view->row = $row;
+    	$this->view->popRow = $popRow;
     	$this->view->borrowingUnitMin = $this->_configs['project']['borrowingUnitMin'];
-    	$this->view->borrowingDetailRows = $borrowingDetailRows;
     	$this->view->backUrl = $backUrl;
     
     	if ($this->_request->isPost() && $this->_request->get('act') == 'updateStatus') {
@@ -241,6 +242,16 @@ class Admin_BorrowingController extends Admin_CommonController
     			$this->_model->update($field, "`id` = {$id}");
     		}
     
+    		echo $this->view->message('操作成功！') ;
+    		exit;
+    	}
+    	
+    	if ($this->_request->isPost() && $this->_request->get('act') == 'popstar') {
+    		$field = array();
+    		$filter = new Zend_Filter_StripTags();
+    		$popstar = $filter->filter(trim($this->_request->getPost('popstar')));
+    		$field['popStar'] = $popstar == '1' ? 'Y' : 'N';
+    		$this->_model->update($field, "`id` = {$id}");
     		echo $this->view->message('操作成功！') ;
     		exit;
     	}

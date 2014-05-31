@@ -100,5 +100,23 @@ foreach($this->row['statusLogRows'] as $logRow) {
         </tr>
     </table>
 </form>
+<?php if ($this->row['status'] == '3') {?>
+<form id="popstarForm" name="popstarForm" method="post" action="">
+<table width="100%" border="0" cellspacing="0" cellpadding="0" class="table">
+	<tr>
+		<td width="12%">明星产品：</td>
+		<?php if($this->popRow['id'] == 0 || $this->popRow['id'] == $this->row['id']) { ?>
+		<td>
+		<input type="checkbox" name="popstar" value="1" <?php echo $this->popRow['id'] == $this->row['id'] ? ' checked="checked"' : '';?> />
+		<input name="submit" type="submit" id="submit" value="修改" class="button" />
+		<input name="act" type="hidden" id="act" value="popstar" />
+		</td>
+		<?php } else { ?>
+		<td><a href="<?php echo $this->projectUrl(array('action'=>'approve', 'id'=>$this->popRow['id']));?>"><?php echo $this->popRow['title']; ?></a></td>
+		<?php } ?>
+	</tr>
+</table>
+</form>
+<?php } ?>
 </body>
 </html>

@@ -257,13 +257,13 @@ class Member_BorrowingController extends Member_CommonController
     {
         $memberLoginModel = new Application_Model_MemberLogin();
         //$memberBorrowingAvailableAmountDetailsModel = new Application_Model_MemberBorrowingAvailableAmountDetails();
-        /*
-        $memberGrade = $memberLoginModel->getCurrentMemberGrade(Application_Model_MemberLogin::getLoginedUserName());
-        if ($memberGrade != 1) {
-            echo $this->view->message('您尚未提交VIP会员申请，请申请后再发布借款信息！', $this->view->projectUrl(array('controller'=>'user', 'action'=>'apply-vip')));
+        
+        $memberType = Application_Model_MemberLogin::getLoginedUserType();
+        if ($memberType != 'C') {
+            echo $this->view->message('您是个人会员，不能发布融资信息！', $this->view->projectUrl(array('controller'=>'user', 'action'=>'index')));
             exit;
         }
-        */
+        
         $memberRow = $memberLoginModel->getLoginedRow();
         if ($memberRow['borrowersStatus'] != 3) {
             echo $this->view->message('你的资料还没通过审核，暂不能申请！', $this->view->projectUrl(array('controller'=>'user', 'action'=>'index'))) ;

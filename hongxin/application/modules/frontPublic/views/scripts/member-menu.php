@@ -4,7 +4,7 @@
         </tr>
       <tr>
         <td style="padding-bottom:30px;">
-         <?php if ($this->loginedUserType == 'E') { ?>
+         <?php if ($this->loginedUserType == 'C') { ?>
          <table width="120" border="0" align="center" cellpadding="0" cellspacing="0" style="margin-top:10px;">
             <tr>
               <td height="30" class="bt_hs14">企业融资</td>
@@ -82,7 +82,7 @@
 			</ul>
 		</div>
 		<?php } ?>
-		<?php if ($this->loginedUserType == 'E') { ?>
+		<?php if ($this->loginedUserType == 'C') { ?>
 		<div class="nytit4"><h3>我是借款者</h3></div>
 		<div class="nytxt4">
 			<ul>

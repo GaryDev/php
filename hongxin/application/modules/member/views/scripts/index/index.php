@@ -30,7 +30,7 @@
 	            <span class="bt_hs14">账号信息</span><br/>
 			    <?php if($this->infoComplete == 'Y') {?>
 			    	<!--  账户：18355529699 <br/> -->
-				    <?php if($this->loginedUserType == 'E') { ?>
+				    <?php if($this->loginedUserType == 'C') { ?>
 				    	法人姓名：<?php echo $this->memberEnterpriseRow['legalPersonName']; ?>
 				    <?php } else if($this->loginedUserType == 'P') {?>
 				    	用户姓名：<?php echo $this->memeberRow['name']; ?>
@@ -54,7 +54,7 @@
               <span class="bt_hs14">债权转让</span><br/>
               	等待付款(<span class="bt_js12">0</span>) 付款成功(<span class="bt_js12">0</span>) 退款(<span class="bt_js12">0</span>) </td>
             <?php }?> 
-            <?php if($this->loginedUserType == 'E') { ?>
+            <?php if($this->loginedUserType == 'C') { ?>
             <td width="66%" align="left" valign="top" style="padding:20px; line-height:25px;">
             <span class="bt_hs14">企业融资</span><br/>
              	 等待付款(<span class="bt_js12">0</span>) 付款成功(<span class="bt_js12">0</span>) 退款(<span class="bt_js12">0</span>) <br/>
@@ -70,70 +70,76 @@
       <tr>
         <td height="50"><table width="100%" border="0" align="center" cellpadding="0" cellspacing="0" style="border:1px #dedede solid;background:#f3f3f3;">
           <tr>
-            <td width="50%" height="30" align="right" class="bt_hs14">近期交易</td>
+            <td width="50%" height="30" align="right" class="bt_hs14">近期3笔订单交易</td>
             <td width="50%" align="right" style="padding-right:20px;"><a href="#">查看全部订单</a></td>
           </tr>
         </table></td>
       </tr>
       <tr>
         <td valign="top">
+        <form id="orderForm" name="orderForm" method="post" action="">
         <?php foreach ($this->orderRows as $orderRow) {?>
         <table width="100%" border="0" align="center" cellpadding="0" cellspacing="0" style="margin-top:15px; border-bottom:1px #e5e5e5 solid;">
           <tr>
             <td width="324" height="110">
             <table width="95%" border="0" align="center" cellpadding="0" cellspacing="0">
                 <tr>
-                  <td height="25" align="left" class="box_hs">订单金额：<?php echo $orderRow['orderAmount']; ?>元</td>
+                  <td height="25" align="left">订单金额：<span class="bt_js12"><?php echo $orderRow['orderAmount']; ?></span>元</td>
                 </tr>
                 <tr>
-                  <td height="25" align="left" class="box_hs">订单号：<?php echo $orderRow['orderSN']; ?></td>
+                  <td height="25" align="left">订单号：<?php echo $orderRow['orderSN']; ?></td>
                 </tr>
                 <tr>
                   <td height="40" align="left">产品名称：<a href="<?php echo $this->projectUrl(array('module'=>'default', 'controller'=>'borrowing', 'action'=>'view', 'code'=>$orderRow['borrowCode']));?>" class="nyls"><?php echo $orderRow['title']; ?></a></td>
                 </tr>
                 <tr>
-                  <td height="25" align="left" class="box_hs">下单时间：<?php echo date('Y-m-d H:i:s', $orderRow['addTime']); ?></td>
+                  <td height="25" align="left">下单时间：<?php echo date('Y-m-d H:i:s', $orderRow['addTime']); ?></td>
                 </tr>
                 <tr>
-                  <td height="25" align="left" class="box_hs">订单状态：<?php echo $orderRow['statusText']; ?></td>
+                  <td height="25" align="left">订单状态：<?php echo $orderRow['statusText']; ?></td>
                 </tr>
             </table>
             </td>
             <td width="243" align="center" valign="middle">
             	<table width="95%" border="0" align="center" cellpadding="0" cellspacing="0">
+					<tr>
+	                  <td height="25" align="left">预期收益：<span class="bt_js12"><?php echo $orderRow['benifit']; ?></span>元</td>
+	                </tr>
 	                <tr>
 	                  <td height="25" align="left">
-	                  	收益率：<span class="ny_bfb"><?php echo $orderRow['yearInterestRate']; ?>%</span>
+	                  	收益率：<span class="bt_js12"><?php echo $orderRow['yearInterestRate']; ?></span>%
 	                  </td>
 	                </tr>
 	                <tr>
-	                  <td height="25" align="left" class="box_hs">融资期限：<?php echo $orderRow['deadline'];?>天</td>
+	                  <td height="25" align="left">融资期限：<span class="bt_js12"><?php echo $orderRow['deadline'];?></span>天</td>
 	                </tr>
 	                <tr>
-	                  <td height="25" align="left" class="box_hs">融资截止日期：<?php echo date('Y-m-d', $orderRow['endTime']);?></td>
+	                  <td height="25" align="left">融资截止日期：<?php echo date('Y-m-d', $orderRow['endTime']);?></td>
 	                </tr>
 	                <tr>
-	                  <td height="25" align="left" class="box_hs">最迟起息日期：<?php echo date('Y-m-d', $orderRow['repayEndTime']);?></td>
+	                  <td height="25" align="left">最迟起息日期：<?php echo date('Y-m-d', $orderRow['repayEndTime']);?></td>
 	                </tr>
             	</table>
             </td>
             <td width="246">
             <table width="80%" border="0" align="right" cellpadding="3" cellspacing="0">
+                <?php if($orderRow['status'] == 10) {?>
                 <tr>
                   <td align="center"><input type="button" class="btn" name="goPay" value="付款" /></td>
                 </tr>
                 <tr>
-                  <td align="center"><input type="button" class="btn" name="goCancel" value="取消" /></td>
+                  <td align="center"><input type="button" class="btn" name="goCancel" value="取消" onclick="return doCancel('<?php echo $orderRow['orderSN']; ?>');" /></td>
                 </tr>
-                <!--  
+                <?php } else if($orderRow['status'] == 20) {?>
                 <tr>
-                  <td align="center"><input type="button" class="btn" name="goDetail" value="详情" /></td>
+                  <td align="center"><input type="button" class="btn" name="goCession" value="转让" /></td>
                 </tr>
-                -->
+                <?php } ?>
             </table>
             </td>
             </tr>
         </table>
+        </form>
         <?php } ?>
         <?php if(empty($this->orderRows)) {?>
         	<div style="text-align:center; line-height:40px;">暂无记录</div>
@@ -143,7 +149,17 @@
     </table></td>
   </tr>
 </table>
-
+<script type="text/javascript">
+	function doCancel(orderNo)
+	{
+		if(confirm("是否取消订单[" + orderNo + "]?")) {
+			document.forms[0].action = "<?php echo $this->projectUrl(array('module'=>'default', 'controller'=>'order', 'action'=>'cancel'));?>/orderNo/" + orderNo;
+			document.forms[0].submit();
+			return true;
+		}
+		return false;
+	}
+</script>
 <?php echo $this->render('footer.php');?>
 </body>
-</html>
+</html

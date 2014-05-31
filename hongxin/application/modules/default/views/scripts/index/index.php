@@ -153,21 +153,23 @@
 </table>
 <table width="1085" border="0" align="center" cellpadding="0" cellspacing="0" style="border:1px #dfdfdf solid; background:#f3f3f3; margin-top:10px;">
   <tr>
-    <td width="33%" height="350" align="center" valign="middle"><table width="96%" border="0" cellpadding="0" cellspacing="0" style="border:1px #dfdfdf solid; background:url(/files/default/images/mxcp.jpg) no-repeat 240px 10px;background-color:#ffffff;">
+    <td width="33%" height="350" align="center" valign="middle">
+    <table width="96%" border="0" cellpadding="0" cellspacing="0" style="border:1px #dfdfdf solid; background:url(/files/default/images/mxcp.jpg) no-repeat 240px 10px;background-color:#ffffff;">
+    <?php if($this->popRow['id'] > 0) {?>
       <tr>
-        <td height="40" align="left" class="bt_hs16" style="padding-top:20px; padding-left:20px;">赋银财富银票第0001期 </td>
+        <td height="40" align="left" class="bt_hs16" style="padding-top:20px; padding-left:20px;"><?php echo $this->popRow['title']; ?></td>
         </tr>
       <tr>
-        <td height="30" align="left" valign="middle"  style="padding-left:20px;"><span class="bt_hs14">年化收益率：</span><span class="hsbfb1">13.2</span><span class="hsbfb2">%</span></td>
+        <td height="30" align="left" valign="middle"  style="padding-left:20px;"><span class="bt_hs14">年化收益率：</span><span class="hsbfb1"><?php echo $this->popRow['yearInterestRate']; ?></span><span class="hsbfb2">%</span></td>
         </tr>
       <tr>
         <td height="30"><table width="88%" border="0" align="center" cellpadding="0" cellspacing="0">
           <tr height="10" >
             <td align="left" valign="middle">
     			<div class="barbox">
-					<div class="bartext">45%</div>
+					<div class="bartext"><?php echo $this->popRow['percent']; ?>%</div>
 	    			<div class="progressbar">
-					    <div class="orange" style="width: 45%;">
+					    <div class="orange" style="width: <?php echo $this->popRow['percent']; ?>%;">
 					        <span></span>
 					    </div>
 					</div>
@@ -179,45 +181,47 @@
       <tr>
         <td height="30"><table width="88%" border="0" align="center" cellpadding="0" cellspacing="0">
           <tr>
-            <td width="50%" height="25" align="left"><span class="hsbfb2">认筹：</span>100元起<br/></td>
-            <td width="50%" height="25" align="left"><span class="hsbfb2">停售：</span>2014-05-20<br/></td>
+            <td width="50%" height="25" align="left"><span class="hsbfb2">认筹：</span><?php echo $this->popRow['borrowUnit']; ?>元起<br/></td>
+            <td width="50%" height="25" align="left"><span class="hsbfb2">停售：</span><?php echo date('Y-m-d', $this->popRow['endTime']); ?><br/></td>
             </tr>
           <tr>
-            <td width="50%" height="25" align="left"><span class="hsbfb2">剩余：</span>56天</td>
-            <td width="50%" height="25" align="left"><span class="hsbfb2">已售：</span>300份</td>
+            <td width="50%" height="25" align="left"><span class="hsbfb2">剩余：</span><?php echo $this->popRow['deadline']; ?>天</td>
+            <td width="50%" height="25" align="left"><span class="hsbfb2">已售：</span><?php echo $this->popRow['borrowedCount']; ?>份</td>
             </tr>
           <tr>
-            <td width="50%" height="25" align="left"><span class="hsbfb2">总价：</span>29.677万</td>
+            <td width="50%" height="25" align="left"><span class="hsbfb2">总价：</span><?php echo $this->popRow['amount'] / 10000; ?>万</td>
             <td width="50%" height="25" align="left">&nbsp;</td>
             </tr>
           
         </table></td>
       </tr>
       <tr>
-        <td height="30" align="left" style="padding-left:20px;">还款来源到期由：<span class="hsbfb2">中工国商银行无条件兑付</span></td>
+        <td height="30" align="left" style="padding-left:20px;">还款来源到期由：<span class="hsbfb2"><?php echo $this->popRow['repaymentBank']; ?>无条件兑付</span></td>
       </tr>
       <tr>
         <td height="70" align="left"><table width="88%" border="0" align="center" cellpadding="0" cellspacing="0">
           <tr>
             <td width="50%" height="25" align="left" valign="middle"><table width="95%" border="0" align="left" cellpadding="0" cellspacing="0">
               <tr>
-                <td align="center" class="box_hs"><a href="#"><span>查看汇票</span></a></td>
+                <td align="center" class="box_hs"><a href="<?php echo $this->popRow['ticketCopyUrl']; ?>" target="_blank"><span>查看汇票</span></a></td>
                 </tr>
               
             </table>
               <br/></td>
             <td width="50%" height="25" align="right"><table width="95%" border="0" align="right" cellpadding="0" cellspacing="0">
               <tr>
-                <td align="center" class="box_hs1"><a href="#"><span>更多产品</span></a></td>
+                <td align="center" class="box_hs1"><a href="<?php echo $this->projectUrl(array('module'=>'default', 'controller'=>'borrowing', 'action'=>'index'));?>"><span>更多产品</span></a></td>
               </tr>
             </table></td>
           </tr>
           
         </table></td>
       </tr>
-      
-      
-    </table></td>
+    <?php } else {?>
+    	<tr><td  height="315" align="center">暂无记录</td></tr>
+    <?php } ?>
+    </table>
+    </td>
     <td width="33%" align="center" valign="middle"><table width="96%" border="0" cellpadding="0" cellspacing="0" style="border:1px #dfdfdf solid; background:url(/files/default/images/jjmp.jpg) no-repeat 240px 10px;background-color:#ffffff;">
       <tr>
         <td height="40" align="left" class="bt_hs16" style="padding-top:20px; padding-left:20px;">赋银财富银票第0001期 </td>

@@ -70,7 +70,7 @@
 				</tr>
 			</form>
 		</table>
-		<?php if ($this->loginedUserType == 'E') { ?>
+		<?php if ($this->loginedUserType == 'C') { ?>
 				<table width="100%" border="0" cellpadding="0" cellspacing="0" class="subTab">
 					<tr>
 						<td><h3>公司详细资料</h3></td>
@@ -188,7 +188,7 @@ if (lendersStatus == '1') {
 }
 <?php } ?>
 
-<?php if ($this->loginedUserType == 'E') { ?>
+<?php if ($this->loginedUserType == 'C') { ?>
 var borrowersStatus = '<?php echo $this->row['borrowersStatus'];?>';
 if (borrowersStatus == '1') {
 	$("#approveBtn").val('提交审核');
