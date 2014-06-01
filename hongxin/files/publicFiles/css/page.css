@@ -1,0 +1,44 @@
+.pageClass{
+	line-height:35px;
+	text-align:center;
+	font-size:14px;
+	color:#333333;
+	margin-top:5px;
+	margin-bottom:5px;
+	text-align:center;
+}
+.pageClass p{
+	display:inline;
+}
+.pageClass a{
+	border: 1px solid #dedeb8;height:20px;padding: 4px 5px; line-height:20px; background:#fff;
+	display:inline;
+	
+	padding-left:4px;
+	padding-right:4px;
+	
+	margin-left:4px;
+	margin-right:4px;
+
+	text-decoration:none;
+	color:#333333;
+}
+.pageClass span{
+	border: 1px solid #dedeb8;height:20px;padding: 4px 5px; line-height:20px; background:#fff;
+	display:inline;
+	
+	padding-left:4px;
+	padding-right:4px;
+	
+	margin-left:4px;
+	margin-right:4px;
+}
+.pageClass .pageItemList span{
+	background:#fff;
+	font-weight:bold;
+	color:#009900;
+}
+.pageClass a:HOVER{
+	background:#eee;
+	color:#009900;
+}

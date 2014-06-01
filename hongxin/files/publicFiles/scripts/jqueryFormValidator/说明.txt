@@ -1,0 +1,8 @@
+描述：
+表单检查插件。
+
+使用例如：
+<link rel="stylesheet" href="/files/publicFiles/scripts/jqueryFormValidator/css/validationEngine.jquery.css" type="text/css"/>
+<script language="javascript" src="/files/publicFiles/scripts/jqueryFormValidator/js/jquery.validationEngine-cn.js"></script>
+class="validate[required,length[5,20]]"
+
