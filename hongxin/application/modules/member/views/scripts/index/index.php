@@ -71,7 +71,7 @@
         <td height="50"><table width="100%" border="0" align="center" cellpadding="0" cellspacing="0" style="border:1px #dedede solid;background:#f3f3f3;">
           <tr>
             <td width="50%" height="30" align="right" class="bt_hs14">近期3笔订单交易</td>
-            <td width="50%" align="right" style="padding-right:20px;"><a href="#">查看全部订单</a></td>
+            <td width="50%" align="right" style="padding-right:20px;"><a href="<?php echo $this->projectUrl(array('module'=>'member', 'controller'=>'order', 'action'=>'index'));?>">查看全部订单</a></td>
           </tr>
         </table></td>
       </tr>
@@ -90,7 +90,7 @@
                   <td height="25" align="left">订单号：<?php echo $orderRow['orderSN']; ?></td>
                 </tr>
                 <tr>
-                  <td height="40" align="left">产品名称：<a href="<?php echo $this->projectUrl(array('module'=>'default', 'controller'=>'borrowing', 'action'=>'view', 'code'=>$orderRow['borrowCode']));?>" class="nyls"><?php echo $orderRow['title']; ?></a></td>
+                  <td height="30" align="left">产品名称：<a href="<?php echo $this->projectUrl(array('module'=>'default', 'controller'=>'borrowing', 'action'=>'view', 'code'=>$orderRow['borrowCode']));?>" class="nyls"><?php echo $orderRow['title']; ?></a></td>
                 </tr>
                 <tr>
                   <td height="25" align="left">下单时间：<?php echo date('Y-m-d H:i:s', $orderRow['addTime']); ?></td>

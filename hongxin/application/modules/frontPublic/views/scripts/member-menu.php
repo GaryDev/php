@@ -22,11 +22,13 @@
           <tr>
             <td height="30" class="bt_hs14">我的投资</td>
             </tr>
+          <!--  
           <tr>
             <td><a href="#">· 预约管理</a><br/></td>
             </tr>
+          -->
           <tr>
-            <td><a href="#">· 订单管理</a><br/></td>
+            <td><a href="<?php echo $this->projectUrl(array('module'=>'member', 'controller'=>'order', 'action'=>'index'));?>">· 订单管理</a><br/></td>
             </tr>
         </table>
 
@@ -34,9 +36,11 @@
             <tr>
               <td height="30" class="bt_hs14">债权转让</td>
             </tr>
+            <!--
             <tr>
               <td><a href="#">· 预约管理</a><br/></td>
             </tr>
+            -->
             <tr>
               <td><a href="#">· 订单管理</a><br/></td>
             </tr>

@@ -87,7 +87,7 @@ class OrderController extends CommonController
 			$field['status'] = 30;
 			$field['reason'] = '用户取消';
 			$this->_model->update($field, "`orderSN` = '{$orderNo}'");
-			echo $this->view->message('订单取消成功！', $this->view->projectUrl(array('action'=>'index'))) ;
+			echo $this->view->message('订单取消成功！', $this->view->projectUrl(array('controller'=>'member', 'action'=>'index'))) ;
 			exit;
 		}
 	}

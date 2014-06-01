@@ -45,11 +45,10 @@
 </table>
 <script language="javascript">
 
-function checkLogin(backUrl)
+function checkLogin(type)
 {
 	var signedin = false;
 	var url = '<?php echo $this->projectUrl(array('module'=>'member', 'controller'=>'user', 'action'=>'check-login'));?>' + '?rand=' + Math.random();
-	var loginUrl = '<?php echo $this->projectUrl(array('module'=>'member', 'controller'=>'user', 'action'=>'login'));?>';
 	$.ajax({
 		type: "POST",
 		url: url,
@@ -62,8 +61,13 @@ function checkLogin(backUrl)
 		}
 	});
 	if(!signedin) {
-		alert('请登录！');
-		window.location.href = backUrl ? loginUrl + "/backUrl" + backUrl : loginUrl;
+		var msg = '';
+		if(type == 1) {
+			msg = "请先登录，才能查看";
+		} else if(type == 2) {
+			msg = "请先登录，才能操作";
+		}
+		layer.msg(msg, 3, 5);
 	}
 	return signedin;
 }

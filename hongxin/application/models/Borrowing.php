@@ -99,6 +99,21 @@ class Application_Model_Borrowing extends Application_Model_Common
         $data = isset($row['id']) ? $row : array('id' => 0);
         return $data;
     }
+    
+    /**
+     * 获取是否可以申请
+     *
+     * @param string userName
+     * @return 1/0
+     */
+    public function getAlmostDone()
+    {
+    	$sql = "SELECT * FROM `{$this->getTableName()}` WHERE `amountUnit` > 0 AND `status` = '3' ORDER BY amountUnit LIMIT 1";
+    	$row = $this->getAdapter()->fetchRow($sql);
+    
+    	$data = isset($row['id']) ? $row : array('id' => 0);
+    	return $data;
+    }
 
     /**
      * 添加

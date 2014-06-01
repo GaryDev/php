@@ -33,6 +33,7 @@ class IndexController extends CommonController
         $repaymentModel = new Application_Model_Repayment();
         $borrowingModel = new Application_Model_Borrowing();
         $time = time();
+        $ticketUrl = $this->_configs['project']['ticketCopyBaseUrl'];
 
         //正在借款中的
         $borrowingSelect = $borrowingModel->select(false)
@@ -55,10 +56,22 @@ class IndexController extends CommonController
         if($popRow['id'] > 0) {
         	$popRow['borrowedCount'] = $popRow['amountMaxUnit'] - $popRow['amountUnit'];
         	$popRow['percent'] = floor($popRow['borrowedCount'] / $popRow['amountMaxUnit'] * 100);
-        	$ticketUrl = $this->_configs['project']['ticketCopyBaseUrl'];
         	if (!empty($popRow['ticketCopyPath'])) {
         		$popRow['ticketCopyUrl'] = $ticketUrl . $popRow['ticketCopyPath'];
         	}
+        	$popRow['remainDay'] = (int)((($popRow['endTime'] - time())/86400) + 1);
+        }
+        
+        // 即将满标
+        $doneRow = $borrowingModel->getAlmostDone();
+        if($doneRow['id'] > 0)
+        {
+        	$doneRow['borrowedCount'] = $doneRow['amountMaxUnit'] - $doneRow['amountUnit'];
+        	$doneRow['percent'] = floor($doneRow['borrowedCount'] / $doneRow['amountMaxUnit'] * 100);
+        	if (!empty($doneRow['ticketCopyPath'])) {
+        		$doneRow['ticketCopyUrl'] = $ticketUrl . $doneRow['ticketCopyPath'];
+        	}
+        	$doneRow['remainDay'] = (int)((($doneRow['endTime'] - time())/86400) + 1);
         }
 
         //网站活动
@@ -141,6 +154,7 @@ class IndexController extends CommonController
         $this->view->borrowingRows = $borrowingRows;
         $this->view->actRows = $actRows;
         $this->view->popRow = $popRow;
+        $this->view->doneRow = $doneRow;
         $this->view->archives1Rows = $archives1Rows;
         $this->view->archives2Rows = $archives2Rows;
         $this->view->archives3Rows = $archives3Rows;
