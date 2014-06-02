@@ -3,13 +3,56 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <link href="<?php echo $this->baseUrl;?>/files/default/css/base.css" media="screen" rel="stylesheet" type="text/css" />
-<link type="text/css" href="<?php echo $this->baseUrl;?>/files/publicFiles/scripts/jqueryColorbox/colorbox2.css" rel="stylesheet" />
 <script language="javascript" src="<?php echo $this->baseUrl;?>/files/publicFiles/scripts/jquery.js"></script>
 <script language="javascript" src="<?php echo $this->baseUrl;?>/files/publicFiles/scripts/public.js"></script>
-<script type="text/javascript" src="<?php echo $this->baseUrl;?>/files/publicFiles/scripts/jqueryColorbox/jquery.colorbox.js"></script>
+<link href="<?php echo $this->baseUrl;?>/files/publicFiles/scripts/jqueryUI/redmond/jquery-ui-1.10.4.custom.min.css" media="screen" rel="stylesheet" type="text/css" />
+<script language="javascript" src="<?php echo $this->baseUrl;?>/files/publicFiles/scripts/jqueryUI/jquery-ui-1.10.4.custom.min.js"></script>
 <title><?php echo $this->title;?></title>
 <meta name="keywords" content="<?php echo $this->keywords;?>" />
 <meta name="description" content="<?php echo $this->description;?>" />
+<script>
+	$(function() {
+		var orderUnit = <?php echo $this->row['borrowUnit'];?>;
+		var yearRate = <?php echo $this->row['yearInterestRate']; ?>;
+		var deadline = <?php echo $this->row['deadline'];?>;
+		var conf = {
+			range: "min",
+			min: 1,
+			max: parseInt($("#remaining").html()),
+			value: 1,
+			step: 1,
+			slide: function( event, ui ) {
+				$( "#orderQty" ).val( ui.value );
+				calculate(parseInt(ui.value));
+			}
+		};
+		$( "#slider" ).slider(conf);
+		
+		$("#orderQty").change(function(){
+			var value = this.value;
+			$("#slider").slider("value", parseInt(value));
+			calculate(parseInt(value));
+		});
+
+		$("button").button({
+			icons: {
+				primary: "ui-icon-arrowrefresh-1-e"
+			}
+		}).click(function(){
+			return false;
+		});
+
+		function calculate(qty) {
+			var amount = orderUnit * qty;
+			var benifit = amount * (yearRate/100) * (deadline/365);
+			benifit = Math.round(benifit*100)/100;
+			$("#amount").html(amount.toString());
+			$("#benifit").html(benifit.toString());
+		}
+		
+		calculate(1);
+	});
+</script>
 </head>
 
 <body>
@@ -29,13 +72,25 @@
 <table width="1085" border="0" align="center" cellpadding="10" cellspacing="0" style="border:1px #dedede solid;margin-top: 10px;">
 	<tr>
 		<td width="70%" valign="top">
-			<table width="90%" border="0" align="center" cellpadding="10" cellspacing="0" style="border:1px #dedede solid;margin-top: 10px;">
+			<table class="order-info" width="90%" border="0" align="center" cellpadding="10" cellspacing="0" style="border:1px #dedede solid;margin-top: 10px;">
 				<tr>
-					<th colspan="2">购买份数</th>
+					<th>购买份数</th>
+					<td>&nbsp;</td>
+					<td>&nbsp;</td>
 				</tr>
 				<tr>
 					<td width="15%">当前购买份额</td>
-					<td><input type="text" name="orderQty" />份</td>
+					<td width="55%"><div id="slider"></div></td>
+					<td><input type="text" id="orderQty" name="orderQty" value="1" style="text-align: right; width: 60px;" />份</td>
+					<td>&nbsp;</td>
+				</tr>
+				<tr>
+					<td colspan="2">投资金额: <label id="amount"></label>元</td>
+					<td colspan="2">预计收益: <label id="benifit"></label>元</td>
+				</tr>
+				<tr>
+					<td colspan="2">剩余投资份数: <label id="remaining"><?php echo $this->row['amountUnit'];?></label>份&nbsp;<button>刷新</button></td>
+					<td colspan="2">最大投资份数: <label><?php echo $this->row['amountMaxUnit'];?></label>份</td>
 				</tr>
 			</table>
 			<table width="90%" border="0" align="center" cellpadding="10" cellspacing="0" style="border:1px #dedede solid;margin-top: 10px;">

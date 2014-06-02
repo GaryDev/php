@@ -96,7 +96,7 @@ a.ny_list_d{display:block;background:url(../images/ny_jt2.jpg) no-repeat 92% cen
 
 table tr td p {margin: 8px;}
 
-.infobox .brief td label {
+.infobox .brief td label, .order-info td label {
 	color: #FF6B00;
 	font-size: 18px;
 	padding-right: 4px;

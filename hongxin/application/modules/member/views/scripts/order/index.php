@@ -6,6 +6,7 @@
 <link href="<?php echo $this->baseUrl;?>/files/publicFiles/scripts/date/calendar-blue.css" rel="stylesheet"  type="text/css" />
 <script language="javascript" src="<?php echo $this->baseUrl;?>/files/publicFiles/scripts/jquery.js"></script>
 <script language="javascript" src="<?php echo $this->baseUrl;?>/files/publicFiles/scripts/public.js"></script>
+<script language="javascript" src="<?php echo $this->baseUrl;?>/files/publicFiles/scripts/jqueryLayer/layer.min.js"></script>
 <link rel="stylesheet" href="<?php echo $this->baseUrl;?>/files/publicFiles/scripts/jqueryFormValidator/css/validationEngine.jquery.css" type="text/css" />
 <title>我的账户 - <?php echo $this->title;?></title>
 <meta name="keywords" content="<?php echo $this->keywords;?>" />
@@ -85,12 +86,21 @@
 <script type="text/javascript">
 	$(".cancel").click(function(){
 		var orderNo = $(this).attr("orderId");
-		if(confirm("是否取消订单[" + orderNo + "]?")) {
-			document.forms[0].action = "<?php echo $this->projectUrl(array('module'=>'default', 'controller'=>'order', 'action'=>'cancel'));?>/orderNo/" + orderNo;
-			document.forms[0].submit();
-			return true;
-		}
-		return false;
+		$.layer({
+		    area: ['auto','auto'],
+		    dialog: {
+		        msg: "是否取消订单[" + orderNo + "]?",
+		        btns: 2,                    
+		        type: 4,
+		        yes: function(){
+					document.forms[0].action = "<?php echo $this->projectUrl(array('module'=>'default', 'controller'=>'order', 'action'=>'cancel'));?>/orderNo/" + orderNo;
+					document.forms[0].submit();
+					return true;
+		        }, no: function(){
+		            return false;
+		        }
+		    }
+		});
 	});
 </script>
 
