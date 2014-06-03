@@ -16,7 +16,7 @@
 <body>
 <?php echo $this->render('top.php');?>
 <div class="mainbox">
-	<img src="<?php echo $this->baseUrl;?>/files/default/images/950x160.jpg" class="mtop10 lt" />
+	<img src="<?php echo $this->baseUrl;?>/files/default/images/banner-<?php echo $this->banner; ?>.jpg" class="mtop10 lt" />
 	<div class="nytit3 mtop10"><h3>用户登录</h3></div>
 	<div class="nytxt3">
 		<form id="userForm" name="userForm" method="post" action="">

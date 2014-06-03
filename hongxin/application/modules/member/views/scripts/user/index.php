@@ -49,8 +49,8 @@
 				<td align="right"></td>
 			</tr>
 		</table>
+		<form id="accountDetailForm" name="accountDetailForm" method="post" action="">
 		<table width="100%" border="0" cellpadding="0" cellspacing="0" class="table">
-			<form id="accountDetailForm" name="accountDetailForm" enctype="multipart/form-data" method="post" action="">
 				<tr>
 					<td width="15%">真实姓名：</td>
 					<td><input name="name" type="text" class="input" id="name" size="40" value="<?php echo htmlspecialchars($this->row['name']);?>" /></td>
@@ -63,13 +63,20 @@
 					<td width="15%">身份证号码：</td>
 					<td><input name="idCardNumber" type="text" class="input" id="idCardNumber" size="40" value="<?php echo htmlspecialchars($this->row['idCardNumber']);?>" /></td>
 				</tr>
+				<?php if ($this->loginedUserType == 'P'): ?>
 				<tr>
 					<td width="15%">&nbsp;</td>
-					<td><input name="submit" type="submit" id="submit1" value="保存" class="button" />
-							<input name="formClass" type="hidden" id="formClass" value="accountDetail" /></td>
+					<td>
+					<input name="submit" type="submit" id="submit1" value="保存" class="button" />
+					<?php if(empty($this->row['ysbId']) && (!empty($this->row['name']) && (!empty($this->row['idCardNumber'])))): ?>
+					<input name="identifyBtn" type="button" id="identifyBtn" value="去验证身份并开通支付账号" class="button" />
+					<?php endif; ?>
+					</td>
 				</tr>
-			</form>
+				<?php endif; ?>
 		</table>
+		<input name="formClass" type="hidden" id="formClass" value="accountDetail" />
+		</form>
 		<?php if ($this->loginedUserType == 'C') { ?>
 				<table width="100%" border="0" cellpadding="0" cellspacing="0" class="subTab">
 					<tr>
@@ -78,8 +85,8 @@
 					</tr>
 				</table>
 				<div id="enterpriseDiv">
-				<table width="100%" border="0" cellpadding="0" cellspacing="0" class="table">
 					<form id="enterpriseForm" name="enterpriseForm" enctype="multipart/form-data" method="post" action="">
+				<table width="100%" border="0" cellpadding="0" cellspacing="0" class="table">
 						<tr>
 							<td width="15%">公司类型：</td>
 							<td width="35%"><select name="industry" id="industry">
@@ -132,18 +139,25 @@ foreach($this->memberVars['industry'] as $key=>$value) {
 							<td colspan="3"><input name="submit4" type="submit" id="submit4" value="保存" class="button" />
 									<input name="formClass" type="hidden" id="formClass" value="enterprise" /></td>
 						</tr>
-					</form>
 				</table>
+				</form>
+				<form id="statusForm" name="statusForm" method="post" action="">
+					<table width="100%" border="0" cellpadding="0" cellspacing="0" class="table">
+					<tr>
+						<td><input type="submit" class="btn" id="approveBtn" value="提交审核"/></td>
+					</tr>
+					</table>
+					<input name="formClass" type="hidden" id="formClass" value="<?php echo $this->loginedUserType == 'C' ? 'borrowersStatus' : 'lendersStatus'; ?>" />
+				</form>
 				</div>
 		<?php } ?>
-		<form id="statusForm" name="statusForm" method="post" action="">
-		<input name="formClass" type="hidden" id="formClass" value="<?php echo $this->loginedUserType == 'E' ? 'borrowersStatus' : 'lendersStatus'; ?>" />
-		<table width="100%" border="0" cellpadding="0" cellspacing="0" class="table">
-				<tr>
-					<td><input type="submit" class="btn" id="approveBtn" value="提交审核"/></td>
-				</tr>
-		</table>
-		</form>
+		<?php if(empty($this->row['ysbId']) && (!empty($this->row['name']) && (!empty($this->row['idCardNumber'])))): ?>
+			<form id="identifyForm" name="identifyForm" method="post" action="<?php echo $this->ysburl; ?>" target="_blank">
+			<?php foreach ($this->params as $n=>$p): ?>
+				<input type="hidden" name="<?php echo $n; ?>" value="<?php echo $p; ?>" />
+			<?php endforeach; ?>
+			</form>
+		<?php endif;?>
     </td>
   </tr>  
 </table>
@@ -208,6 +222,10 @@ if (borrowersStatus == '1') {
 }
 $('input:text', $("#baseDiv, #enterpriseDiv")).css("width", "80%");
 <?php } ?>
+
+$("#identifyBtn").click(function(){
+	$("#identifyForm").submit();
+});
 </script>
 
 </body>

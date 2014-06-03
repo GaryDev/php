@@ -59,6 +59,8 @@ class Member_UserController extends Member_CommonController
         $this->view->memberSpouseRow = $memberSpouseRow;
         $this->view->memberGrade = $memberLoginModel->getCurrentMemberGrade($row['userName']);
         $this->view->memberAmount = $memberLoginModel->getCurrentMemberAmount($row['userName']);
+        
+        $this->_ysbIdentify();
 
         $formClass = $this->_request->get('formClass');
 
@@ -275,6 +277,46 @@ class Member_UserController extends Member_CommonController
             }
         }
     }
+    
+    public function identifyAction()
+    {
+    	// http://hongxin.cn/member/user/identify
+    	//if($this->_request->isPost()) {
+    		echo $this->view->message('审查成功', $this->view->projectUrl(array('action'=>'index'))) ;
+    		exit;
+    	//}
+    }
+    
+    private function _ysbIdentify()
+    {
+    	$memberLoginModel = new Application_Model_MemberLogin();
+    	$row = $memberLoginModel->getLoginedRow();
+    	
+    	$params = array(
+    			//'merchantId' => '1120130523134348001',
+        		'merchantId' => '1120070601142112001',
+        		//'merchantId' => '1120140210111823001',	
+    			'userType' => $row['userType'],
+    			'orderId' => randomSerial(),
+    			'orderTime' => date('YmdHis', time()),
+    			'name' => $row['name'],
+    			'idNum' => $row['idCardNumber'],
+    			'mobilePhoneNum' => $row['mobile'],
+    			'merchantKey' => '123456',
+    	);
+    	
+    	//$url = 'http://180.166.114.152:8081/p2pServer/p2p/registerAction.action';
+    	$url = 'http://180.166.114.152:8082/p2bServer-lgjr/p2p/registerAction.action';
+    	
+    	$urlparams = $params;
+    	array_walk($urlparams, create_function('&$v,$k', '$v = $k."=".$v ;'));
+    	$macKey = implode("&", $urlparams);
+    	$params['mac'] = md5($macKey);
+    	//echo $macKey; die();
+    	
+    	$this->view->params  = $params;
+    	$this->view->ysburl  = $url;
+    }
 
     /**
      * 头像上传
@@ -354,7 +396,14 @@ class Member_UserController extends Member_CommonController
      */
     public function loginAction()
     {
-        if ($this->_request->isPost()) {
+        $from = $this->_request->get('from');
+    	if(empty($from)) {
+        	$this->view->banner = 'member';
+        } else {
+        	$this->view->banner = $from;
+        }
+    	
+    	if ($this->_request->isPost()) {
             $userName = trim($this->_request->getPost('userName'));
             $password = trim($this->_request->getPost('password'));
             $timeToLive = intval($this->_request->getPost('timeToLive'));

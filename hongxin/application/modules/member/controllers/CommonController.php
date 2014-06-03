@@ -56,7 +56,7 @@ class Member_CommonController extends Zend_Controller_Action
         $this->view->keywords = $this->_configs['project']['siteKeywords'];
         $this->view->description = $this->_configs['project']['siteDescription'];
         $this->view->copyRight = $this->_configs['project']['copyRight'];
-
+        
         //设置已登录的用户名
         $this->view->loginedUserName = Application_Model_MemberLogin::getLoginedUserName();
         $this->view->loginedUserType = Application_Model_MemberLogin::getLoginedUserType();
@@ -84,7 +84,8 @@ class Member_CommonController extends Zend_Controller_Action
         if ($this->_isLoginCheck == 1) {
             $memberLoginModel = new Application_Model_MemberLogin();
             if ($memberLoginModel->getLoginStatus() != 0) {
-                redirect($this->view->projectUrl(array('module'=>'member', 'controller'=>'user', 'action'=>'login')));
+            	$from = $this->_request->getActionName() == 'apply' ? 'borrowing' : 'member';
+                redirect($this->view->projectUrl(array('module'=>'member', 'controller'=>'user', 'action'=>'login', 'from'=>$from)));
             }
             $memberVisitModel = new Application_Model_MemberVisit();
             $memberVisitModel->updateOnlineTime(Application_Model_MemberLogin::getLoginedUserName(), intval(Application_Model_MemberLogin::getLoginedUserVisitId()));

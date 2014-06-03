@@ -71,6 +71,10 @@ return array(
             'master' => 'cdlei'
         ),
         'zendCachePath' => PUBLIC_PATH . '/data/zendCache',
+    	'ysbURL' => array(
+			'frontend' => '',
+    		'backend' => ''
+        ),
 
         'memberVars' => array(
             'marriageStatus' => array('1'=>'未婚', '2'=>'已婚', '3'=>'离婚', '4'=>'丧偶'),

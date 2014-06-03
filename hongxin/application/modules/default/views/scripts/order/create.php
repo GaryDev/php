@@ -5,6 +5,7 @@
 <link href="<?php echo $this->baseUrl;?>/files/default/css/base.css" media="screen" rel="stylesheet" type="text/css" />
 <script language="javascript" src="<?php echo $this->baseUrl;?>/files/publicFiles/scripts/jquery.js"></script>
 <script language="javascript" src="<?php echo $this->baseUrl;?>/files/publicFiles/scripts/public.js"></script>
+<script language="javascript" src="<?php echo $this->baseUrl;?>/files/publicFiles/scripts/jqueryLayer/layer.min.js"></script>
 <link href="<?php echo $this->baseUrl;?>/files/publicFiles/scripts/jqueryUI/redmond/jquery-ui-1.10.4.custom.min.css" media="screen" rel="stylesheet" type="text/css" />
 <script language="javascript" src="<?php echo $this->baseUrl;?>/files/publicFiles/scripts/jqueryUI/jquery-ui-1.10.4.custom.min.js"></script>
 <title><?php echo $this->title;?></title>
@@ -39,6 +40,23 @@
 				primary: "ui-icon-arrowrefresh-1-e"
 			}
 		}).click(function(){
+			var $this = $(this);
+			$this.attr("disabled", true);
+			checkQty(function(data){
+				$("#remaining").html(data);
+				$this.attr("disabled", false);
+			});
+			return false;
+		});
+
+		$("#orderForm").submit(function(){
+			checkQty(function(data){
+				if(data < 1) {
+					layer.msg("剩余份额已不足", 2, 5);
+					return false;
+				}
+				return true;
+			});
 			return false;
 		});
 
@@ -48,6 +66,18 @@
 			benifit = Math.round(benifit*100)/100;
 			$("#amount").html(amount.toString());
 			$("#benifit").html(benifit.toString());
+		}
+
+		function checkQty(callback)
+		{
+			var url = '<?php echo $this->projectUrl(array('module'=>'default', 'controller'=>'borrowing', 'action'=>'get-qty'));?>' + '?rand=' + Math.random();
+			$.ajax({
+				type: "POST",
+				url: url,
+				data: "code=" + $("#code").html(),
+				async: false,
+				success: callback
+			});
 		}
 		
 		calculate(1);
@@ -60,7 +90,7 @@
 
 <div class="mainbox">
 
-<form method="post">
+<form method="post" id="orderForm">
 
 
 <table width="1085" border="0" align="center" cellpadding="10" cellspacing="0" style="border:1px #dedede solid;margin-top: 10px;">
@@ -108,7 +138,7 @@
 			</table>
 			<table width="90%" border="0" align="center" cellpadding="10" cellspacing="0" style="margin-top: 10px;">
 				<tr>
-					<td align="center"><input type="submit" class="btn" name="goBuyBtn" value="提交订单" /></td>
+					<td align="center"><input type="submit" class="btn" name="goBuyBtn" id="goBuyBtn" value="提交订单" /></td>
 				</tr>
 			</table>
 		</td>
@@ -118,7 +148,7 @@
     			<td><span class="nyls"><?php echo $this->row['title']; ?></span></td>
     		</tr>
     		<tr>
-    			<td>产品编号：<?php echo $this->row['code'];?></td>
+    			<td>产品编号：<label id="code"><?php echo $this->row['code'];?></label></td>
     		</tr>
     		<tr>
     			<td>融资金额：<label><?php echo $this->row['amount'] / 10000;?></label>万</td>

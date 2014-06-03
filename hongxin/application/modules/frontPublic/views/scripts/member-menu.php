@@ -63,6 +63,11 @@
             <tr>
               <td height="30" class="bt_hs14">会员资料</td>
             </tr>
+            <!--  
+            <tr>
+              <td><a href="<?php echo $this->projectUrl(array('module'=>'member', 'controller'=>'user', 'action'=>'identify'));?>">· 身份认证</a><br/></td>
+            </tr>
+            -->
             <tr>
               <td><a href="<?php echo $this->projectUrl(array('module'=>'member', 'controller'=>'user', 'action'=>'index'));?>">· 资料管理</a><br/></td>
             </tr>

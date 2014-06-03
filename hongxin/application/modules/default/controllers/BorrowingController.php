@@ -201,6 +201,15 @@ class BorrowingController extends CommonController
         //$this->view->borrowingNoPayRows = $borrowingNoPayRows;
         $this->view->title = "{$row['title']} - " . $this->view->title;
     }
+    
+    public function getQtyAction()
+    {
+    	$code = trim($this->_request->get('code'));
+    	$row = $this->_model->fetchRow("`code` = {$this->_model->getAdapter()->quote($code)}");
+    	$qty = intval($row['amountUnit']);
+    	echo Zend_Json::encode($qty);
+    	exit;
+    }
 
     /**
      * 投标
