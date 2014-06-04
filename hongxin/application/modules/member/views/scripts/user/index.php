@@ -63,17 +63,12 @@
 					<td width="15%">身份证号码：</td>
 					<td><input name="idCardNumber" type="text" class="input" id="idCardNumber" size="40" value="<?php echo htmlspecialchars($this->row['idCardNumber']);?>" /></td>
 				</tr>
-				<?php if ($this->loginedUserType == 'P'): ?>
 				<tr>
 					<td width="15%">&nbsp;</td>
 					<td>
 					<input name="submit" type="submit" id="submit1" value="保存" class="button" />
-					<?php if(empty($this->row['ysbId']) && (!empty($this->row['name']) && (!empty($this->row['idCardNumber'])))): ?>
-					<input name="identifyBtn" type="button" id="identifyBtn" value="去验证身份并开通支付账号" class="button" />
-					<?php endif; ?>
 					</td>
 				</tr>
-				<?php endif; ?>
 		</table>
 		<input name="formClass" type="hidden" id="formClass" value="accountDetail" />
 		</form>
@@ -183,22 +178,13 @@ $(".tabSwitch").each(function(){
 	}
 });
 <?php if ($this->loginedUserType == 'P') { ?>
-var lendersStatus = '<?php echo $this->row['lendersStatus'];?>';
-if (lendersStatus == '1') {
-	$("#approveBtn").val('提交审核');
+var status = '<?php echo $this->row['status'];?>';
+if (status == '1') {
+	$("input[type=submit]").show();
 	$('input, select').attr('disabled', false);
-} else if (lendersStatus == '2'){
-	//$("#approveBtn").attr('disabled', true);
-	$("input[type=submit]").attr('disabled', true);
-	$("#approveBtn").val('正在审核中');
+} else if (status == '2'){
+	$("input[type=submit]").hide();
 	$('input, select').attr('disabled', true);
-} else if (lendersStatus == '3'){
-	//$("#approveBtn").attr('disabled', true);
-	$("input[type=submit]").attr('disabled', true);
-	$("#approveBtn").val('已审核通过');
-	$('input, select').attr('disabled', true);
-} else if (lendersStatus == '4'){
-	$("#approveBtn").val('审核未通过');
 }
 <?php } ?>
 

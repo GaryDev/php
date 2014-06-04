@@ -32,6 +32,25 @@ class Application_Model_Order extends Application_Model_Common
 		return $result;
 	}
 	
+	public function getOrderCount($userName, $status, $type)
+	{
+		$borrowingModel = new Application_Model_Borrowing();
+		$orderSelect = $this->select(false)
+			->setIntegrityCheck(false)
+			->from(array('o'=>$this->getTableName()), array('COUNT(*) AS c'))
+			->joinInner(array('b'=>$borrowingModel->getTableName()), "`o`.`borrowCode` = `b`.`code`")
+			->where("`o`.`buyUser` = {$this->getAdapter()->quote($userName)}")
+			->where("`o`.`status` = {$status}")
+			->where("`b`.`type` = {$this->getAdapter()->quote($type)}")
+		;
+        $row = $this->getAdapter()->fetchRow($orderSelect);
+        if ($row['c'] > 0) {
+            return 1;
+        } else {
+            return 0;
+        }	
+	}
+	
 	/**
 	 *    生成订单号
 	 *

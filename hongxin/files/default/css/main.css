@@ -1,4 +1,3 @@
-/* 首页样式 */
 .mtop10{margin-top:10px;}
 .mainbox{width:1085px; margin:0 auto;}
 .head{width:1085px; margin:0 auto; padding:10px 0 0 0;}
@@ -111,10 +110,10 @@
 .nytxt2_r span.jind{width:180px; height:13px; background:url(../images/jd_bg.jpg) repeat-x; margin-top:3px;}
 .nytxt2_r span.jind code{height:13px; background:url(../images/jd.jpg) repeat-x; float:left;}
 
-.nytit3{width:948px;}
+.nytit3{width:1085px;}
 .nytit3 li{width:90px; float:left; font-weight:bold; font-size:14px; display:inline; margin-left:10px; text-align:center;}
 .nytit3 li.current{background:#6cf; color:#fff;}
-.nytxt3{width:924px; padding:5px 12px; line-height:24px;}
+.nytxt3{width:1061px; padding:5px 12px; line-height:24px;}
 .nytxt3 p{padding:5px 0;}
 .nylist1 li{line-height:30px; height:30px; border-bottom:1px dashed #ccc; overflow:hidden; padding:0 5px;}
 .nylist1 li span{float:left; width:215px; padding-left:10px; overflow:hidden;}
@@ -160,8 +159,8 @@
 .bginput1{width:230px; height:20px; line-height:20px; border:1px solid #ccc; padding:1px; float:left;}
 .color999{color:#999;}
 
-.nytit6{width:738px;}
-.nytxt6{padding:10px; width:718px;}
+.nytit6{width:905px;}
+.nytxt6{padding:10px; width:885px;}
 .nylist3,.nylist4{width:717px; float:left;}
 .nylist3 li,.nylist4 li{line-height:30px; height:30px; border-bottom:1px dashed #ccc; overflow:hidden; padding:0 5px; text-align:center;}
 .nylist3 li span{float:left; width:82px; padding:0 5px; overflow:hidden;}

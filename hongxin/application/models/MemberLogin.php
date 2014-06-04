@@ -42,8 +42,8 @@ class Application_Model_MemberLogin extends Application_Model_Member
         $row = $this->getLoginedRow();
         if (empty($row)) {
             $status = 1;
-        } else if ($row['status'] == 1) {
-            $status = 2;
+        //} else if ($row['status'] == 1) {
+        //    $status = 2;
         } else if ($row['status'] == 3) {
             $status = 3;
         } else {
@@ -129,8 +129,8 @@ class Application_Model_MemberLogin extends Application_Model_Member
         $row = $this->fetchRow("(`userName` = '". addslashes($userName) ."' || `mobile` = '". addslashes($userName) ."' || `email` = '". addslashes($userName) ."') AND `password` = '". md5($password) ."'");
         if (empty($row)) {
             $status = 1;
-        } else if ($row['status'] == 1) {
-            $status = 2;
+        //} else if ($row['status'] == 1) {
+        //    $status = 2;
         } else if ($row['status'] == 3) {
             $status = 3;
         } else {

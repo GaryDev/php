@@ -50,14 +50,14 @@
 		});
 
 		$("#orderForm").submit(function(){
-			checkQty(function(data){
+			var valid = checkQty(function(data){
 				if(data < 1) {
 					layer.msg("剩余份额已不足", 2, 5);
 					return false;
 				}
 				return true;
 			});
-			return false;
+			return valid;
 		});
 
 		function calculate(qty) {

@@ -282,9 +282,10 @@ class Member_UserController extends Member_CommonController
     {
     	// http://hongxin.cn/member/user/identify
     	//if($this->_request->isPost()) {
-    		echo $this->view->message('审查成功', $this->view->projectUrl(array('action'=>'index'))) ;
-    		exit;
+    	//	echo $this->view->message('审查成功', $this->view->projectUrl(array('action'=>'index'))) ;
+    	//	exit;
     	//}
+    	$this->_ysbIdentify();
     }
     
     private function _ysbIdentify()
@@ -299,8 +300,8 @@ class Member_UserController extends Member_CommonController
     			'userType' => $row['userType'],
     			'orderId' => randomSerial(),
     			'orderTime' => date('YmdHis', time()),
-    			'name' => $row['name'],
-    			'idNum' => $row['idCardNumber'],
+    			//'name' => $row['name'],
+    			//'idNum' => $row['idCardNumber'],
     			'mobilePhoneNum' => $row['mobile'],
     			'merchantKey' => '123456',
     	);
@@ -417,9 +418,9 @@ class Member_UserController extends Member_CommonController
             } else if ($status == 1) {
                 echo $this->view->message('用户名或密码错误！') ;
                 exit;
-            } else if ($status == 2) {
-                echo $this->view->message('你的帐号还没有激活！') ;
-                exit;
+            //} else if ($status == 2) {
+            //    echo $this->view->message('你的帐号还没有激活！') ;
+            //    exit;
             } else if ($status == 3) {
                 echo $this->view->message('你的帐号已经关闭，如有问题请与管理员联系！') ;
                 exit;
@@ -722,7 +723,7 @@ class Member_UserController extends Member_CommonController
     
     		$field['regTime'] = time();
     		$field['regIp'] = getClientIP();
-    		$field['status'] = 2;
+    		$field['status'] = 1;
     		$field['borrowersStatus'] = 1;
     		$field['lendersStatus'] = 1;
     		

@@ -29,18 +29,20 @@
           <tr>
             <td width="33%" height="100" align="left" valign="top" style="padding:20px; line-height:25px;">
 	            <span class="bt_hs14">账号信息</span><br/>
+	            <?php if($this->memeberRow['status'] == 1) {?>
+	            	未完成认证<a href="javascript:void(0);" id="identifyLink" class="nygl">[去认证]</a><br/>
+	            	<span style="color: red;">(未完成认证会员不能进行投资)</span><br/>
+	            <?php } else { ?>
+	            	银生宝账户：<?php echo $this->memeberRow['mobile']; ?>&nbsp;&nbsp;<a href="https://www.unspay.com/sessionInvalid.do" target="_blank" class="nygl">[管理]</a><br/>
+	            <?php } ?>
 			    <?php if($this->infoComplete == 'Y') {?>
-			    	<!--  账户：18355529699 <br/> -->
 				    <?php if($this->loginedUserType == 'C') { ?>
-				    	法人姓名：<?php echo $this->memberEnterpriseRow['legalPersonName']; ?>
+				    	法人姓名：<?php echo $this->memberEnterpriseRow['legalPersonName']; ?><br/>
 				    <?php } else if($this->loginedUserType == 'P') {?>
-				    	用户姓名：<?php echo $this->memeberRow['name']; ?>
+				    	投资人姓名：<?php echo $this->memeberRow['name']; ?><br/>
+				    	投资人身份证号：<?php echo substr_replace($this->memeberRow['idCardNumber'], '********', 6, 8); ?><br/>
 				    <?php }?>
-				    &nbsp;&nbsp;<a href="<?php echo $this->projectUrl(array('module'=>'member', 'controller'=>'user', 'action'=>'index'));?>" class="nygl">[管理]</a><br/>
-					联系方式：<?php echo substr_replace($this->memeberRow['mobile'], '****', 3, 4); ?><br/>
-			    <?php } else {?>
-			    	<br/><a href="<?php echo $this->projectUrl(array('module'=>'member', 'controller'=>'user', 'action'=>'index'));?>" style="color: red;">请完善个人资料以便后续操作</a><br/>
-			    <?php }?>
+			    <?php } ?>
 			    <?php if($this->loginedUserType == 'P') { ?>
 			        投资中资金：<span class="bt_js12">0</span>元<br/>
 			        预期投资收益：<span class="bt_js12">0</span>元<br/>
@@ -50,10 +52,10 @@
             <?php if($this->loginedUserType == 'P') { ?>
             <td width="66%" valign="top"  style="padding:20px; line-height:25px;">
             <span class="bt_hs14">我的投资</span><br/>
-              	等待付款(<span class="bt_js12">0</span>) 付款成功(<span class="bt_js12">0</span>) 退款(<span class="bt_js12">0</span>) <br/>
+              	等待付款(<span class="bt_js12"><?php echo $this->unpayCount[0]; ?></span>) 付款成功(<span class="bt_js12"><?php echo $this->paidCount[0]; ?></span>) 退款(<span class="bt_js12"><?php echo $this->returnCount[0]; ?></span>) <br/>
               <br/>
               <span class="bt_hs14">债权转让</span><br/>
-              	等待付款(<span class="bt_js12">0</span>) 付款成功(<span class="bt_js12">0</span>) 退款(<span class="bt_js12">0</span>) </td>
+              	等待付款(<span class="bt_js12"><?php echo $this->unpayCount[1]; ?></span>) 付款成功(<span class="bt_js12"><?php echo $this->paidCount[1]; ?></span>) 退款(<span class="bt_js12"><?php echo $this->returnCount[1]; ?></span>)</td>
             <?php }?> 
             <?php if($this->loginedUserType == 'C') { ?>
             <td width="66%" align="left" valign="top" style="padding:20px; line-height:25px;">
@@ -169,7 +171,32 @@
 		    }
 		});
 	}
+
+	var identifyhtml;
+	var identify = function(page) {
+		$.layer({
+	        type: 1,
+	        title: '身份验证',
+	        offset: [($(window).height() - 290)/2+'px', ''],
+	        border : [5, 0.5, '#666'],
+	        area: ['450px','290px'],
+	        shadeClose: false,
+	        page: page
+	    });
+	};
+	$("#identifyLink").click(function(){
+		var page = {};
+		if(identifyhtml) {
+			page.html = identifyhtml;
+		} else {
+			page.url = "<?php echo $this->projectUrl(array('module'=>'member', 'controller'=>'user', 'action'=>'identify'));?>";
+			page.ok = function(datas) {
+				identifyhtml = datas;
+			}
+		}
+		identify(page);
+	});
 </script>
 <?php echo $this->render('footer.php');?>
 </body>
-</html
+</html>

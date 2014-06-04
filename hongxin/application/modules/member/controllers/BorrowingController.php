@@ -260,7 +260,7 @@ class Member_BorrowingController extends Member_CommonController
         
         $memberType = Application_Model_MemberLogin::getLoginedUserType();
         if ($memberType != 'C') {
-            echo $this->view->message('您是个人会员，不能发布融资信息！', $this->view->projectUrl(array('controller'=>'user', 'action'=>'index')));
+            echo $this->view->message('您是个人会员，不能发布融资信息！', $this->view->projectUrl(array('module'=>'default', 'controller'=>'borrowing', 'action'=>'index')));
             exit;
         }
         

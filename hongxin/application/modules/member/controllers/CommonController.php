@@ -83,7 +83,8 @@ class Member_CommonController extends Zend_Controller_Action
     {
         if ($this->_isLoginCheck == 1) {
             $memberLoginModel = new Application_Model_MemberLogin();
-            if ($memberLoginModel->getLoginStatus() != 0) {
+            $status = $memberLoginModel->getLoginStatus();
+            if ($status != 0) {
             	$from = $this->_request->getActionName() == 'apply' ? 'borrowing' : 'member';
                 redirect($this->view->projectUrl(array('module'=>'member', 'controller'=>'user', 'action'=>'login', 'from'=>$from)));
             }
