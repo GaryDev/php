@@ -146,13 +146,6 @@ foreach($this->memberVars['industry'] as $key=>$value) {
 				</form>
 				</div>
 		<?php } ?>
-		<?php if(empty($this->row['ysbId']) && (!empty($this->row['name']) && (!empty($this->row['idCardNumber'])))): ?>
-			<form id="identifyForm" name="identifyForm" method="post" action="<?php echo $this->ysburl; ?>" target="_blank">
-			<?php foreach ($this->params as $n=>$p): ?>
-				<input type="hidden" name="<?php echo $n; ?>" value="<?php echo $p; ?>" />
-			<?php endforeach; ?>
-			</form>
-		<?php endif;?>
     </td>
   </tr>  
 </table>
@@ -208,10 +201,6 @@ if (borrowersStatus == '1') {
 }
 $('input:text', $("#baseDiv, #enterpriseDiv")).css("width", "80%");
 <?php } ?>
-
-$("#identifyBtn").click(function(){
-	$("#identifyForm").submit();
-});
 </script>
 
 </body>

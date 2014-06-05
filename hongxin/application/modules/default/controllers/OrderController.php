@@ -74,8 +74,14 @@ class OrderController extends CommonController
 		
 		$row = $this->_model->fetchRow($orderSelect);
 		
+		$memberRow = $memberLoginModel->getLoginedRow();
+		$params = assembleParams($memberRow, $this->_configs['project']['ysbVars'], 
+				$row['orderSN'], date('YmdHis', $row['addTime']),  'payment');
+		
 		$this->view->row = $row;
-		$this->view->LoginedRow = $memberLoginModel->getLoginedRow();
+		$this->view->LoginedRow = $memberRow;
+		$this->view->params  = $params;
+		$this->view->ysburl  = $this->_configs['project']['ysbVars']['url']['payment'];
 	}
 	
 	public function cancelAction()

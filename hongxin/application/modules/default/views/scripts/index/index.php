@@ -14,7 +14,7 @@
 	$(document).ready(function(){ 
         var sorter = $("#productTable").tablesorter({
         	headers: { 0: { sorter: false}, 5: {sorter: false} },
-	        debug: true
+	        debug: false;
         });
 	}); 
     function viewTicket(url){
@@ -24,7 +24,8 @@
 		return false;
     }
     function goQuery(){
-		if(checkLogin(2)) { 
+		if(checkLogin(2)) {
+			$("#qForm").submit();
 			return true;
 		}
 		return false;
@@ -85,28 +86,28 @@
     <td width="330" height="350"><table width="300" border="0" align="center" cellpadding="0" cellspacing="0" style="border:1px #dfdfdf solid; background:#fff;">
       <tr>
         <td height="320">
-        <form name="form1" method="post" action="">
+        <form id="qForm" name="qForm" method="post" action="<?php echo $this->projectUrl(array('module'=>'default', 'controller'=>'borrowing', 'action'=>'index'));?>" target="_blank">
           <table width="208" border="0" align="center" cellpadding="0" cellspacing="0">
             <tr>
               <td height="35" align="left" class="bt_hs22">个性化定制您的投资</td>
             </tr>
             <tr>
-              <td height="30" align="left" class="bt_hs14">期望收益</td>
+              <td height="30" align="left" class="bt_hs14">期望最低收益</td>
             </tr>
             <tr>
-              <td height="35" align="left"><input type="text" class="xlbd" />&nbsp;<span class="bt_hs14">%</span></td>
+              <td height="35" align="left"><input type="text" name="qYearRate" class="xlbd" />&nbsp;<span class="bt_hs14">%</span></td>
             </tr>
             <tr>
-              <td height="30" align="left" class="bt_hs14">期望金额</td>
+              <td height="30" align="left" class="bt_hs14">期望最低金额</td>
             </tr>
             <tr>
-              <td height="35" align="left"><input type="text" class="xlbd" />&nbsp;<span class="bt_hs14">万元</span></td>
+              <td height="35" align="left"><input type="text" name="qAmount" class="xlbd" />&nbsp;<span class="bt_hs14">元</span></td>
             </tr>
             <tr>
-              <td height="30" align="left" class="bt_hs14">期望期限</td>
+              <td height="30" align="left" class="bt_hs14">期望最低期限</td>
             </tr>
             <tr>
-              <td height="35" align="left"><input type="text" class="xlbd" />&nbsp;<span class="bt_hs14">个月</span></td>
+              <td height="35" align="left"><input type="text" name="qDeadLine" class="xlbd" />&nbsp;<span class="bt_hs14">天</span></td>
             </tr>
             <tr>
               <td height="60" align="left" valign="middle"><label>
@@ -114,6 +115,7 @@
               </label></td>
             </tr>
           </table>
+          <input type="hidden" name="qFrom" value="home" />
           </form>
         </td>
       </tr>

@@ -6,7 +6,7 @@
 <link type="text/css" href="<?php echo $this->baseUrl;?>/files/publicFiles/scripts/jqueryColorbox/colorbox2.css" rel="stylesheet" />
 <script language="javascript" src="<?php echo $this->baseUrl;?>/files/publicFiles/scripts/jquery.js"></script>
 <script language="javascript" src="<?php echo $this->baseUrl;?>/files/publicFiles/scripts/public.js"></script>
-<script type="text/javascript" src="<?php echo $this->baseUrl;?>/files/publicFiles/scripts/jqueryColorbox/jquery.colorbox.js"></script>
+<script language="javascript" src="<?php echo $this->baseUrl;?>/files/publicFiles/scripts/jqueryLayer/layer.min.js"></script>
 <title><?php echo $this->title;?></title>
 <meta name="keywords" content="<?php echo $this->keywords;?>" />
 <meta name="description" content="<?php echo $this->description;?>" />
@@ -76,7 +76,7 @@
     		</tr>
     		<tr>
     			<td colspan="3"><input type="button" class="btn" name="goBuyBtn" value="立即投资" 
-    			onclick='window.location.href = "<?php echo $this->projectUrl(array('module'=>'default', 'controller'=>'order', 'action'=>'create', 'code'=>$this->row['code']));?>";' /></td>
+    			onclick="goBuy('<?php echo $this->row["code"]?>');" /></td>
     		</tr>
     	</table>
     </td>
@@ -105,5 +105,15 @@
 </table>
 </div>
 <?php echo $this->render('footer.php');?>
+
+<script type="text/javascript">
+	function goBuy(code)
+	{
+		if(checkLogin(2))
+		{
+			window.location.href = "<?php echo $this->projectUrl(array('module'=>'default', 'controller'=>'order', 'action'=>'create'));?>/code/" + code;
+		}
+	}
+</script>
 </body>
 </html>

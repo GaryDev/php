@@ -54,8 +54,8 @@
 						<td><?php echo $this->orderStatus[$row['status']];?></td>
 						<td align="center">
 						<?php if($row['status'] == 10) {?>
-		                  <a href="#" class="link pay">付款</a>
-		                  <a href="#" class="link cancel" orderId="<?php echo $row['orderSN'];?>">取消</a>
+		                  <a href="#" class="link pay" orderId="<?php echo $row['id'];?>">付款</a>
+		                  <a href="#" class="link cancel" orderNo="<?php echo $row['orderSN'];?>">取消</a>
 		                <?php } else if($row['status'] == 20) {?>
 		                  <a href="#" class="link cession">转让</a>
 		                <?php } ?>
@@ -85,7 +85,7 @@
 
 <script type="text/javascript">
 	$(".cancel").click(function(){
-		var orderNo = $(this).attr("orderId");
+		var orderNo = $(this).attr("orderNo");
 		$.layer({
 		    area: ['auto','auto'],
 		    dialog: {
@@ -101,6 +101,11 @@
 		        }
 		    }
 		});
+	});
+
+	$(".pay").click(function(){
+		var orderId = $(this).attr("orderId");
+		popupWindow("订单支付","<?php echo $this->projectUrl(array('module'=>'member', 'controller'=>'order', 'action'=>'checkout'));?>/orderId/" + orderId);
 	});
 </script>
 

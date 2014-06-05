@@ -65,4 +65,29 @@ class Member_OrderController extends Member_CommonController
 		$this->view->pageUrl = $this->view->projectUrl($urls);
 		
 	}
+	
+	public function checkoutAction()
+	{
+		$id = trim($this->_request->get('orderId'));
+		$borrowingModel = new Application_Model_Borrowing();
+		$memberLoginModel = new Application_Model_MemberLogin();
+	
+		$orderSelect = $this->_model->select(false)
+		->setIntegrityCheck(false)
+		->from(array('o'=>$this->_model->getTableName()), array('*'))
+		->joinLeft(array('b'=>$borrowingModel->getTableName()), "`o`.`borrowCode` = `b`.`code`", array('title'))
+		->where("`o`.`id` = {$id}");
+	
+		$row = $this->_model->fetchRow($orderSelect);
+	
+		$memberRow = $memberLoginModel->getLoginedRow();
+		$params = assembleParams($memberRow, $this->_configs['project']['ysbVars'],
+				$row['orderSN'], date('YmdHis', $row['addTime']),  'payment');
+	
+		$this->view->row = $row;
+		$this->view->LoginedRow = $memberRow;
+		$this->view->params  = $params;
+		$this->view->ysburl  = $this->_configs['project']['ysbVars']['url']['payment'];
+	}
+	
 }

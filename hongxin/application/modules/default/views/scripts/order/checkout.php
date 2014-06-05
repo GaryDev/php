@@ -15,6 +15,7 @@
 <body>
 <?php echo $this->render('top.php');?>
 
+<form id="paymentForm" name="paymentForm" method="post" action="<?php echo $this->ysburl; ?>" target="_blank">
 <div class="mainbox">
 	<table width="1085" border="0" align="center" cellpadding="5" cellspacing="0" style="border:1px #dedede solid;margin-top: 10px;">
 		<tr>
@@ -70,10 +71,16 @@
 			<td>网银支付</td>
 		</tr>
 		<tr>
-			<td align="center"><input type="button" class="btn" name="goPay" value="立即支付" /></td>
+			<td align="center"><input type="submit" class="btn" name="goPay" value="立即支付" /></td>
 		</tr>
 	</table>
 </div>
+<?php foreach ($this->params as $n=>$p): ?>
+	<?php //if(!in_array($n, array('name', 'idNum'))): ?>
+		<input type="hidden" name="<?php echo $n; ?>" value="<?php echo $p; ?>" />
+	<?php //endif; ?>
+<?php endforeach; ?>
+</form>
 
 <?php echo $this->render('footer.php');?>
 </body>

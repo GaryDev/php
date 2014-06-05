@@ -73,16 +73,29 @@ class InfoController extends CommonController
     }*/
 
     /**
-     * 法律政策
+     * 隐私政策
      * 
      * @return void
      */
-    public function legalPolicyAction()
+    public function policyAction()
     {
-        $this->view->menuTitle = '法律政策 ';
+        $this->view->menuTitle = '隐私政策 ';
         $textModel = new Application_Model_Text();
         $this->view->content = $textModel->content(4);
         $this->renderScript('info/info.php');
+    }
+    
+    /**
+     * 会员注册协议
+     *
+     * @return void
+     */
+    public function agreementAction()
+    {
+    	$this->view->menuTitle = '会员注册协议 ';
+    	$textModel = new Application_Model_Text();
+    	$this->view->content = $textModel->content(3);
+    	$this->renderScript('info/info.php');
     }
 
     /**

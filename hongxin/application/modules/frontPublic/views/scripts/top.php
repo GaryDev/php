@@ -47,7 +47,7 @@
 
 function checkLogin(type)
 {
-	var signedin = false;
+	var status = 1;
 	var url = '<?php echo $this->projectUrl(array('module'=>'member', 'controller'=>'user', 'action'=>'check-login'));?>' + '?rand=' + Math.random();
 	$.ajax({
 		type: "POST",
@@ -55,21 +55,25 @@ function checkLogin(type)
 		dataType: "html",
 		async: false,
 		success: function(data){
-			if (data == 0) {
-				signedin = true;
-			}
+			status = data;
 		}
 	});
-	if(!signedin) {
+	if(status != 0) {
 		var msg = '';
 		if(type == 1) {
 			msg = "请先登录，才能查看";
 		} else if(type == 2) {
 			msg = "请先登录，才能操作";
+			if(status == 2) {
+				msg = "企业用户不能进行投资操作";
+			} else if(status = -1) {
+				popupIdentify("<?php echo $this->projectUrl(array('module'=>'member', 'controller'=>'user', 'action'=>'identify'));?>");
+				return false;
+			}
 		}
 		layer.msg(msg, 3, 5);
 	}
-	return signedin;
+	return (status == 0);
 }
 
 <?php

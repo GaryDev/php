@@ -42,6 +42,7 @@ class BorrowingController extends CommonController
         $wheres = array();
         $vars = array();
 
+        $vars['qFrom'] = trim($this->_request->get('qFrom'));
         $vars['qBank'] = trim($this->_request->get('qBank'));
         $vars['qDeadLine'] = trim($this->_request->get('qDeadLine'));
         $vars['qYearRate'] = trim($this->_request->get('qYearRate'));
@@ -49,46 +50,62 @@ class BorrowingController extends CommonController
         
         $wheres[] = "`b`.`status` IN ('3')";
         
-        if ($vars['qBank'] != '') {
-            $wheres[] = "`b`.`repaymentBank` = {$this->_model->getAdapter()->quote($vars['qBank'])}";
-        }
-        
-        if (in_array($vars['qDeadLine'], array('1', '2', '3', '4', '5'))) {
-            if ($vars['qDeadLine'] == '1') {
-                $wheres[] = "`b`.`deadline` < 30";
-            } else if ($vars['qDeadLine'] == '2') {
-                $wheres[] = "`b`.`deadline` >= 30 AND `b`.`deadline` < 90";
-            } else if ($vars['qDeadLine'] == '3') {
-                $wheres[] = "`b`.`deadline` >= 90 AND `b`.`deadline` < 180";
-            } else if ($vars['qDeadLine'] == '4') {
-                $wheres[] = "`b`.`deadline` >= 180 AND `b`.`deadline` < 365";
-            } else if ($vars['qDeadLine'] == '5') {
-                $wheres[] = "`b`.`deadline` >= 365";
-            }
-        }
-        
-        if (in_array($vars['qYearRate'], array('1', '2', '3'))) {
-        	if ($vars['qYearRate'] == '1') {
-        		$wheres[] = "`b`.`yearInterestRate` < 5";
-        	} else if ($vars['qYearRate'] == '2') {
-        		$wheres[] = "`b`.`yearInterestRate` >= 5 AND `b`.`yearInterestRate` < 10";
-        	} else if ($vars['qYearRate'] == '3') {
-        		$wheres[] = "`b`.`yearInterestRate` >= 10";
+        if($vars['qFrom'] == 'self') {
+	        if ($vars['qBank'] != '') {
+	            $wheres[] = "`b`.`repaymentBank` = {$this->_model->getAdapter()->quote($vars['qBank'])}";
+	        }
+	        
+	        if (in_array($vars['qDeadLine'], array('1', '2', '3', '4', '5'))) {
+	            if ($vars['qDeadLine'] == '1') {
+	                $wheres[] = "`b`.`deadline` < 30";
+	            } else if ($vars['qDeadLine'] == '2') {
+	                $wheres[] = "`b`.`deadline` >= 30 AND `b`.`deadline` < 90";
+	            } else if ($vars['qDeadLine'] == '3') {
+	                $wheres[] = "`b`.`deadline` >= 90 AND `b`.`deadline` < 180";
+	            } else if ($vars['qDeadLine'] == '4') {
+	                $wheres[] = "`b`.`deadline` >= 180 AND `b`.`deadline` < 365";
+	            } else if ($vars['qDeadLine'] == '5') {
+	                $wheres[] = "`b`.`deadline` >= 365";
+	            }
+	        }
+	        
+	        if (in_array($vars['qYearRate'], array('1', '2', '3'))) {
+	        	if ($vars['qYearRate'] == '1') {
+	        		$wheres[] = "`b`.`yearInterestRate` < 5";
+	        	} else if ($vars['qYearRate'] == '2') {
+	        		$wheres[] = "`b`.`yearInterestRate` >= 5 AND `b`.`yearInterestRate` < 10";
+	        	} else if ($vars['qYearRate'] == '3') {
+	        		$wheres[] = "`b`.`yearInterestRate` >= 10";
+	        	}
+	        }
+	        
+	        if (in_array($vars['qAmount'], array('1', '2', '3', '4', '5'))) {
+	        	if ($vars['qAmount'] == '1') {
+	        		$wheres[] = "`b`.`amount` < 100000";
+	        	} else if ($vars['qAmount'] == '2') {
+	        		$wheres[] = "`b`.`amount` >= 100000 AND `b`.`amount` < 300000";
+	        	} else if ($vars['qAmount'] == '3') {
+	        		$wheres[] = "`b`.`amount` >= 300000 AND `b`.`amount` < 500000";
+	        	} else if ($vars['qAmount'] == '4') {
+	        		$wheres[] = "`b`.`amount` >= 500000 AND `b`.`amount` < 1000000";
+	        	} else if ($vars['qAmount'] == '5') {
+	        		$wheres[] = "`b`.`amount` >= 1000000";
+	        	}
+	        }
+        } else if($vars['qFrom'] == 'home') {
+        	
+        	if (!empty($vars['qDeadLine'])) {
+        		$wheres[] = "`b`.`deadline` >= {$vars['qDeadLine']}";
         	}
-        }
-        
-        if (in_array($vars['qAmount'], array('1', '2', '3', '4', '5'))) {
-        	if ($vars['qAmount'] == '1') {
-        		$wheres[] = "`b`.`amount` < 100000";
-        	} else if ($vars['qAmount'] == '2') {
-        		$wheres[] = "`b`.`amount` >= 100000 AND `b`.`amount` < 300000";
-        	} else if ($vars['qAmount'] == '3') {
-        		$wheres[] = "`b`.`amount` >= 300000 AND `b`.`amount` < 500000";
-        	} else if ($vars['qAmount'] == '4') {
-        		$wheres[] = "`b`.`amount` >= 500000 AND `b`.`amount` < 1000000";
-        	} else if ($vars['qAmount'] == '5') {
-        		$wheres[] = "`b`.`amount` >= 1000000";
+        	
+        	if (!empty($vars['qYearRate'])) {
+        		$wheres[] = "`b`.`yearInterestRate` >= {$vars['qYearRate']}";
         	}
+        	
+        	if (!empty($vars['qAmount'])) {
+        		$wheres[] = "`b`.`amount` >= {$vars['qAmount']}";
+        	}
+        	        	
         }
 
         $orderby = "`b`.`addTime` DESC";
@@ -112,6 +129,7 @@ class BorrowingController extends CommonController
         $sql = "SELECT `b`.*, `m`.`avatarPath`, `m`.`name` AS `memberName`, get_borrowed_json(`b`.`code`) AS `borrowedJson` FROM `{$this->_model->getTableName()}` AS `b`" 
              . " LEFT JOIN `{$memberModel->getTableName()}` AS `m` ON `b`.`userName` = `m`.`userName`"
              . " {$where} ORDER BY {$orderby}";
+        
         $dbPaginator = new Application_Model_DbPaginator($sql, $pageSize, $pageNo);
         $recordCount = $dbPaginator->getRecodCount();
 

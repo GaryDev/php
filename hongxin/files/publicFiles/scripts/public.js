@@ -264,3 +264,30 @@ function bookmark(title, url)
 		window.sidebar.addPanel(title, url, "");
 	}
 }
+
+var layerhtml;
+function layerWindow(title, page) {
+	$.layer({
+        type: 1,
+        title: title,
+        offset: [($(window).height() - 290)/2+'px', ''],
+        border : [5, 0.5, '#666'],
+        area: ['450px','290px'],
+        shadeClose: false,
+        page: page
+    });
+};
+
+function popupWindow(title, url)
+{
+	var page = {};
+	//if(layerhtml) {
+	//	page.html = layerhtml;
+	//} else {
+		page.url = url;
+		page.ok = function(datas) {
+			layerhtml = datas;
+		}
+	//}
+	layerWindow(title, page);
+}

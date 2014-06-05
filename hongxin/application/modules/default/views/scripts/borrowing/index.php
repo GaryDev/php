@@ -78,6 +78,7 @@
     </td>
   </tr>
 </table>
+<input type="hidden" name="qFrom" value="self" />
 </form>
 </div>
 <div class="cl"></div>

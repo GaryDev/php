@@ -3,7 +3,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <link href="<?php echo $this->baseUrl;?>/files/default/css/base.css" media="screen" rel="stylesheet" type="text/css" />
-<script language="javascript" src="<?php echo $this->baseUrl;?>/files/publicFiles/scripts/jquery.js"></script>
+<script language="javascript" src="<?php echo $this->baseUrl;?>/files/publicFiles/scripts/jquery-1.3.js"></script>
 <script language="javascript" src="<?php echo $this->baseUrl;?>/files/publicFiles/scripts/public.js"></script>
 <link rel="stylesheet" href="<?php echo $this->baseUrl;?>/files/publicFiles/scripts/jqueryFormValidator/css/validationEngine.jquery.css" type="text/css" />
 <script type="text/javascript" src="<?php echo $this->baseUrl;?>/files/publicFiles/scripts/jqueryFormValidator/js/jquery.validationEngine-cn.js"></script>
@@ -66,7 +66,7 @@
 					<td class="bgtd1"></td>
 					<td colspan="2" class="bgtd2">
 						<label><input type="checkbox" name="agreement" id="agreement" class="validate[required]" checked="checked" />
-我同意 <a href="#">会员注册协议</a> 和 <a href="#">隐私政策</a> 条款</label>
+我同意 <a href="<?php echo $this->projectUrl(array('module'=>'default', 'controller'=>'info', 'action'=>'agreement'));?>" target="_blank">会员注册协议</a> 和 <a href="<?php echo $this->projectUrl(array('module'=>'default', 'controller'=>'info', 'action'=>'policy'));?>" target="_blank">隐私政策</a> 条款</label>
 						<!--  <div style="height:200px; width:100%; overflow-y:scroll; overflow-x:hidden; border:#ccc solid 1px; padding:5px;"><?php echo $this->agreement;?></div>-->
 					</td>
 				</tr>
@@ -87,9 +87,9 @@
 function checkUserIsExists(userName){
 	checkResult = {'isRight':true, 'message':''};
 	
-	var reg = /^(\w|[\u4E00-\u9FA5])*$/; 
+	var reg = /^1[358][0-9]{9}$/; 
 	if (!userName.match(reg)) { 
-		checkResult = {'isRight':false, 'message':'* 用户名只允许为英文，数字和汉字的混合。'};
+		checkResult = {'isRight':false, 'message':'* 用户名只允许为手机号码。'};
 	} else if (userName != '') {
 		var url = '<?php echo $this->projectUrl(array('module'=>'member', 'controller'=>'user', 'action'=>'account-is-exists', 'accountType'=>'userName'));?>' + '?rand=' + Math.random();
 		$.ajax({
@@ -172,16 +172,16 @@ function checkSmsCode(mcode){
 	return checkResult;
 }
 
-var wait=60;
+var wait=120;
 function time(o)
 {
 	if (wait == 0) {
 		o.removeAttribute("disabled");			
 		o.value="获取验证码";
-		wait = 60;
+		wait = 120;
 	} else {
 		if($("#userName").val() != "" && $("#userName").val().match(/^1[358][0-9]{9}$/)) {
-			if(wait == 60) {
+			if(wait == 120) {
 				var url = '<?php echo $this->projectUrl(array('module'=>'member', 'controller'=>'user', 'action'=>'sendsms'));?>' + '?rand=' + Math.random();
 				$.ajax({
 					type: "POST",

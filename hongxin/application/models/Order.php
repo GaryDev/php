@@ -45,7 +45,7 @@ class Application_Model_Order extends Application_Model_Common
 		;
         $row = $this->getAdapter()->fetchRow($orderSelect);
         if ($row['c'] > 0) {
-            return 1;
+            return $row['c'];
         } else {
             return 0;
         }	

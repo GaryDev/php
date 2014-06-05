@@ -71,9 +71,16 @@ return array(
             'master' => 'cdlei'
         ),
         'zendCachePath' => PUBLIC_PATH . '/data/zendCache',
-    	'ysbURL' => array(
-			'frontend' => '',
-    		'backend' => ''
+
+    	'ysbVars' => array(
+    		'merchantId' => '1120070601142112001',
+    		'merchantKey' => '123456',
+			'url' => array(
+    			'register' => 'http://180.166.114.152:8082/p2bServer-lgjr/p2p/registerAction.action',
+				'payment' => '',
+				'withdraw' => '',
+				'queryBalance' => '',
+    		),
         ),
 
         'memberVars' => array(

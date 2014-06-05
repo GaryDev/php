@@ -128,7 +128,7 @@
             <table width="80%" border="0" align="right" cellpadding="3" cellspacing="0">
                 <?php if($orderRow['status'] == 10) {?>
                 <tr>
-                  <td align="center"><input type="button" class="btn" name="goPay" value="付款" /></td>
+                  <td align="center"><input type="button" class="btn" name="goPay" value="付款" onclick="return doPayment('<?php echo $orderRow['id']; ?>');" /></td>
                 </tr>
                 <tr>
                   <td align="center"><input type="button" class="btn" name="goCancel" value="取消" onclick="return doCancel('<?php echo $orderRow['orderSN']; ?>');" /></td>
@@ -172,29 +172,14 @@
 		});
 	}
 
-	var identifyhtml;
-	var identify = function(page) {
-		$.layer({
-	        type: 1,
-	        title: '身份验证',
-	        offset: [($(window).height() - 290)/2+'px', ''],
-	        border : [5, 0.5, '#666'],
-	        area: ['450px','290px'],
-	        shadeClose: false,
-	        page: page
-	    });
-	};
+	function doPayment(orderId)
+	{
+		popupWindow("订单支付","<?php echo $this->projectUrl(array('module'=>'member', 'controller'=>'order', 'action'=>'checkout'));?>/orderId/" + orderId);
+		return false;
+	}
+
 	$("#identifyLink").click(function(){
-		var page = {};
-		if(identifyhtml) {
-			page.html = identifyhtml;
-		} else {
-			page.url = "<?php echo $this->projectUrl(array('module'=>'member', 'controller'=>'user', 'action'=>'identify'));?>";
-			page.ok = function(datas) {
-				identifyhtml = datas;
-			}
-		}
-		identify(page);
+		popupWindow("身份验证","<?php echo $this->projectUrl(array('module'=>'member', 'controller'=>'user', 'action'=>'identify'));?>");
 	});
 </script>
 <?php echo $this->render('footer.php');?>
