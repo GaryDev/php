@@ -276,15 +276,62 @@ class Member_UserController extends Member_CommonController
         }
     }
     
+    public function identifyNotifyAction()
+    {
+    	if($this->_request->isPost()) {
+	    	$memberLoginModel = new Application_Model_MemberLogin();
+	    	$userName = Application_Model_MemberLogin::getLoginedUserName();
+	    	$field = array(
+	    		'name' => $this->_request->get('name'),
+	    		'idCardNumber' => $this->_request->get('idNum'),
+	    	);
+	    	$memberLoginModel->update($field, "`userName` = '{$userName}'");
+	    	redirect($this->view->projectUrl(array('controller'=> 'index', 'action'=>'index')));
+    	}
+    	exit;
+    }
+    
     public function identifyAction()
     {
-    	$memberLoginModel = new Application_Model_MemberLogin();
-    	$row = $memberLoginModel->getLoginedRow();
-    	$params = assembleParams($row, $this->_configs['project']['ysbVars']);
-    	
-    	$this->view->row = $row;
-    	$this->view->params  = $params;
-    	$this->view->ysburl  = $this->_configs['project']['ysbVars']['url']['register'];
+    	if($this->_request->isPost()) {
+    		$response = array(
+    			'rspCode' => $this->_request->get('rspCode'),
+    			'rspMsg' => $this->_request->get('rspMsg'),
+    			'orderId' => $this->_request->get('orderId'),
+    			'userId' => $this->_request->get('userId'),
+    			'ysbUserId' => $this->_request->get('ysbUserId'),
+    			'merchantKey' => $this->_configs['project']['ysbVars']['merchantKey'],
+    		);
+    		$backUrl = $this->view->projectUrl(array('controller'=> 'member', 'action'=>'index'));
+    		if($this->_request->get('mac') == ysbMac($response))
+    		{
+    			if($response['rspCode'] == '0000') {
+    				$memberLoginModel = new Application_Model_MemberLogin();
+    				$userName = Application_Model_MemberLogin::getLoginedUserName();
+    				$field = array(
+    					'ysbUserId' => $response['ysbUserId'],
+    					'status' => '2',
+    				);
+    				$memberLoginModel->update($field, "`userName` = '{$userName}'");
+    				echo $this->view->message('身份验证成功！', $backUrl, 1, 'window.opener=null;window.close();');
+    				exit;
+    			} else {
+    				echo $this->view->message('身份验证失败。请重试！', $backUrl);
+    				exit;
+    			}
+    		} else {
+    			echo $this->view->message('Mac校验出错。请重试！', $backUrl);
+    			exit;
+    		}
+    	} else {
+	    	$memberLoginModel = new Application_Model_MemberLogin();
+	    	$row = $memberLoginModel->getLoginedRow();
+	    	$params = ysbRegisterParam($row, $this->_configs['project']['ysbVars']);
+	    	
+	    	$this->view->row = $row;
+	    	$this->view->params  = $params;
+	    	$this->view->ysburl  = $this->_configs['project']['ysbVars']['url']['register'];
+    	}
     }
 
     /**
@@ -670,6 +717,23 @@ class Member_UserController extends Member_CommonController
     		}
     	}
     	echo Zend_Json::encode($status);
+    	exit;
+    }
+    
+    public function getMacAction()
+    {
+    	$params = array(
+    		'merchantId' => $this->_request->get('merchantId'),
+    		'userType' => $this->_request->get('userType'),
+    		'orderId' => $this->_request->get('orderId'),
+    		'orderTime' => $this->_request->get('orderTime'),
+    		'name' => $this->_request->get('name'),
+    		'idNum' => $this->_request->get('idNum'),
+    		'mobilePhoneNum' => $this->_request->get('mobilePhoneNum'),
+    		'merchantKey' => $this->_request->get('merchantKey'),
+    	);
+    	$mac = ysbMac($params);
+    	echo Zend_Json::encode($mac);
     	exit;
     }
     

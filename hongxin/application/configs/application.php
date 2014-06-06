@@ -77,7 +77,8 @@ return array(
     		'merchantKey' => '123456',
 			'url' => array(
     			'register' => 'http://180.166.114.152:8082/p2bServer-lgjr/p2p/registerAction.action',
-				'payment' => '',
+				'payment' => 'http://180.166.114.152:8082/p2bServer-lgjr/p2p/rechargeReqAction.action',
+				'freeze' => 'http://180.166.114.152:8082/p2bServer-lgjr/p2p/freezeMoneyAction.action',
 				'withdraw' => '',
 				'queryBalance' => '',
     		),

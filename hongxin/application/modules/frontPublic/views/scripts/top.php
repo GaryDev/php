@@ -67,7 +67,7 @@ function checkLogin(type)
 			if(status == 2) {
 				msg = "企业用户不能进行投资操作";
 			} else if(status = -1) {
-				popupIdentify("<?php echo $this->projectUrl(array('module'=>'member', 'controller'=>'user', 'action'=>'identify'));?>");
+				popupWindow("身份验证","<?php echo $this->projectUrl(array('module'=>'member', 'controller'=>'user', 'action'=>'identify'));?>");
 				return false;
 			}
 		}

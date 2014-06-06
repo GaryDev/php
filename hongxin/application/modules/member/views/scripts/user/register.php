@@ -176,7 +176,7 @@ var wait=120;
 function time(o)
 {
 	if (wait == 0) {
-		o.removeAttribute("disabled");			
+		o.removeAttribute("disabled");
 		o.value="获取验证码";
 		wait = 120;
 	} else {
@@ -190,7 +190,7 @@ function time(o)
 					async: false,
 					success: function(data){ } 
 				});
-				o.focus();
+				document.getElementById("smscode").focus();
 			}
 			o.setAttribute("disabled", true);
 			o.value=wait + "秒后重新获取";

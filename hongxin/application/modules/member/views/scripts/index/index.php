@@ -174,7 +174,8 @@
 
 	function doPayment(orderId)
 	{
-		popupWindow("订单支付","<?php echo $this->projectUrl(array('module'=>'member', 'controller'=>'order', 'action'=>'checkout'));?>/orderId/" + orderId);
+		popupWindow("订单支付","<?php //echo $this->projectUrl(array('module'=>'member', 'controller'=>'order', 'action'=>'checkout'));?>/orderId/" + orderId);
+		//window.open("<?php //echo $this->projectUrl(array('module'=>'default', 'controller'=>'order', 'action'=>'checkout'));?>/orderId/" + orderId, "_blank");
 		return false;
 	}
 

@@ -92,7 +92,7 @@
               <td height="35" align="left" class="bt_hs22">个性化定制您的投资</td>
             </tr>
             <tr>
-              <td height="30" align="left" class="bt_hs14">期望最低收益</td>
+              <td height="30" align="left" class="bt_hs14">期望最低收益率</td>
             </tr>
             <tr>
               <td height="35" align="left"><input type="text" name="qYearRate" class="xlbd" />&nbsp;<span class="bt_hs14">%</span></td>

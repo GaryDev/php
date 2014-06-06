@@ -81,13 +81,21 @@ class Member_OrderController extends Member_CommonController
 		$row = $this->_model->fetchRow($orderSelect);
 	
 		$memberRow = $memberLoginModel->getLoginedRow();
-		$params = assembleParams($memberRow, $this->_configs['project']['ysbVars'],
-				$row['orderSN'], date('YmdHis', $row['addTime']),  'payment');
+		$params = ysbPaymentParam($memberRow, $this->_configs['project']['ysbVars'], $row);
 	
 		$this->view->row = $row;
 		$this->view->LoginedRow = $memberRow;
 		$this->view->params  = $params;
 		$this->view->ysburl  = $this->_configs['project']['ysbVars']['url']['payment'];
+	}
+	
+	private function _freezeMoney()
+	{
+		try {
+		
+		} catch (Exception $e) {
+			die('ERROR: ' . $e->getMessage());
+		}
 	}
 	
 }
