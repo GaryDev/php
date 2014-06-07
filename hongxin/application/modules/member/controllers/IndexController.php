@@ -64,6 +64,10 @@ class Member_IndexController extends Member_CommonController
         
         $normalBalance = $this->_queryBalance($row, 1);
         $freezeBalance = $this->_queryBalance($row, 2);
+        $balance = array(
+        	'normal' => isset($normalBalance) ? $normalBalance : 0.00,
+        	'freeze' => isset($freezeBalance) ? $freezeBalance : 0.00,
+        );
         
         $unpayRCount = $orderModel->getOrderCount($row['userName'], 10, 'recommend');
         $paidRCount = $orderModel->getOrderCount($row['userName'], 20, 'recommend');
@@ -77,7 +81,7 @@ class Member_IndexController extends Member_CommonController
         $this->view->memeberRow = $row;
         $this->view->memberEnterpriseRow = $memberEnterpriseRow;
         $this->view->orderRows = $orderRows;
-        $this->view->balance = array('normal'=>$normalBalance, 'freeze'=>$freezeBalance);
+        $this->view->balance = $balance;
         $this->view->unpayCount = array($unpayRCount, $unpayCCount);
         $this->view->paidCount = array($paidRCount, $paidCCount);
         $this->view->returnCount = array($returnRCount, $returnCCount);

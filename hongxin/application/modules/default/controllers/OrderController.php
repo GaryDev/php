@@ -109,6 +109,7 @@ class OrderController extends CommonController
     					do {
     						$freezeSeq = $this->_freezeMoney($orderRow);
     						if(!empty($freezeSeq) && $freezeSeq > 0) {
+    							var_dump($freezeSeq);die('$freezeSeq');
     							$this->_model->update(array('ysbFreezeSeq' => $freezeSeq), "`orderSN` = '{$response['orderId']}'");
     							echo $this->view->message('订单支付成功！', $backUrl, 1, 'window.opener=null;window.close();');
     							exit;
@@ -118,6 +119,7 @@ class OrderController extends CommonController
     					if(!$freeze_success) {
     						$rspCode = $this->_refundMoney($orderRow);
     						if(!empty($rspCode) && $rspCode == '0000') {
+    							var_dump($rspCode);die('$rspCode');
     							$this->_model->update(array('refundFlag' => 1), "`orderSN` = '{$response['orderId']}'");
     							echo $this->view->message('订单支付失败。充值资金已退回！', $backUrl, 3, 'window.opener=null;window.close();');
     							exit;

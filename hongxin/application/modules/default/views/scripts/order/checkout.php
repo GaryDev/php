@@ -3,10 +3,9 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <link href="<?php echo $this->baseUrl;?>/files/default/css/base.css" media="screen" rel="stylesheet" type="text/css" />
-<link type="text/css" href="<?php echo $this->baseUrl;?>/files/publicFiles/scripts/jqueryColorbox/colorbox2.css" rel="stylesheet" />
 <script language="javascript" src="<?php echo $this->baseUrl;?>/files/publicFiles/scripts/jquery.js"></script>
 <script language="javascript" src="<?php echo $this->baseUrl;?>/files/publicFiles/scripts/public.js"></script>
-<script type="text/javascript" src="<?php echo $this->baseUrl;?>/files/publicFiles/scripts/jqueryColorbox/jquery.colorbox.js"></script>
+<script language="javascript" src="<?php echo $this->baseUrl;?>/files/publicFiles/scripts/jqueryLayer/layer.min.js"></script>
 <title><?php echo $this->title;?></title>
 <meta name="keywords" content="<?php echo $this->keywords;?>" />
 <meta name="description" content="<?php echo $this->description;?>" />
@@ -71,7 +70,7 @@
 			<td>网银支付</td>
 		</tr>
 		<tr>
-			<td align="center"><input type="submit" class="btn" name="goPay" value="立即支付" /></td>
+			<td align="center"><input type="submit" class="btn" id="goPay" name="goPay" value="立即支付" /></td>
 		</tr>
 	</table>
 </div>
@@ -81,6 +80,33 @@
 	<?php //endif; ?>
 <?php endforeach; ?>
 </form>
+
+<div id="divComplete" style="width:350px; padding-left: 50px; padding-top: 50px; display:none;">
+	<table width="100%" border="0" cellpadding="10" cellspacing="0" class="table">
+		<tr height="50">
+			<td style="font-size: 20px" align="center">支付进行中，请勿关闭此窗口</td>
+		</tr>
+		<tr height="50">
+			<td align="center"><input id="notifyBtn" type="button" value="已完成支付" class="button" /></td>
+		</tr>
+	</table>
+</div>
+
+<script type="text/javascript">
+	$("#goPay").click(function(){
+		popupWindow("订单支付", "#divComplete");
+		$(".xubox_close").hide();
+		$("#paymentForm").submit();
+		return false;
+	});
+
+	$("#notifyBtn").click(function(){
+		var frm = $("#paymentForm")[0];
+		frm.action = '<?php echo $this->projectUrl(array('module'=>'default', 'controller'=>'order', 'action'=>'payment'));?>';
+		frm.target = "_self";
+		frm.submit();
+	});
+</script>
 
 <?php echo $this->render('footer.php');?>
 </body>

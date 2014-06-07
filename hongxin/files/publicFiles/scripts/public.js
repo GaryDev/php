@@ -284,7 +284,11 @@ function popupWindow(title, url)
 	//if(layerhtml) {
 	//	page.html = layerhtml;
 	//} else {
-		page.url = url;
+		if(url.substring(0, 1) == "#") {
+			page.dom = url;
+		} else {
+			page.url = url;
+		}
 		page.ok = function(datas) {
 			layerhtml = datas;
 		}
