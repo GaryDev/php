@@ -41,14 +41,25 @@ class Application_Model_Order extends Application_Model_Common
 			->joinInner(array('b'=>$borrowingModel->getTableName()), "`o`.`borrowCode` = `b`.`code`")
 			->where("`o`.`buyUser` = {$this->getAdapter()->quote($userName)}")
 			->where("`o`.`status` = {$status}")
-			->where("`b`.`type` = {$this->getAdapter()->quote($type)}")
-		;
+			->where("`b`.`type` = {$this->getAdapter()->quote($type)}");
         $row = $this->getAdapter()->fetchRow($orderSelect);
         if ($row['c'] > 0) {
             return $row['c'];
         } else {
             return 0;
         }	
+	}
+	
+	public function getOrderMemberInfo($orderSn) {
+		$memberModel = new Application_Model_Member();
+		$orderSelect = $this->select(false)
+			->setIntegrityCheck(false)
+			->from(array('o'=>$this->getTableName()), array('*'))
+			->joinInner(array('s'=>$memberModel->getTableName()), "`o`.`sellUser` = `s`.`userName`", array('ysbUserId as sellerId'))
+			->joinInner(array('b'=>$memberModel->getTableName()), "`o`.`buyUser` = `b`.`userName`", array('ysbUserId as buyerId'))
+			->where("`o`.`orderSN` = {$this->getAdapter()->quote($orderSn)}");
+		$row = $this->getAdapter()->fetchRow($orderSelect);
+		return $row;
 	}
 	
 	/**

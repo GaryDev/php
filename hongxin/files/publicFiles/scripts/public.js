@@ -291,3 +291,14 @@ function popupWindow(title, url)
 	//}
 	layerWindow(title, page);
 }
+
+function compareDate(begin, end)
+{
+	if(begin!="" && end!="") {
+		var startArr = begin.split("-");
+		var start = new Date(startArr[0], startArr[1], startArr[2]);
+		var endArr = end.split("-");
+		var end = new Date(endArr[0], endArr[1], endArr[2]);
+	}
+	return true;
+}

@@ -92,19 +92,19 @@
               <td height="35" align="left" class="bt_hs22">个性化定制您的投资</td>
             </tr>
             <tr>
-              <td height="30" align="left" class="bt_hs14">期望最低收益率</td>
+              <td height="30" align="left" class="bt_hs14">期望收益率</td>
             </tr>
             <tr>
               <td height="35" align="left"><input type="text" name="qYearRate" class="xlbd" />&nbsp;<span class="bt_hs14">%</span></td>
             </tr>
             <tr>
-              <td height="30" align="left" class="bt_hs14">期望最低金额</td>
+              <td height="30" align="left" class="bt_hs14">期望金额</td>
             </tr>
             <tr>
               <td height="35" align="left"><input type="text" name="qAmount" class="xlbd" />&nbsp;<span class="bt_hs14">元</span></td>
             </tr>
             <tr>
-              <td height="30" align="left" class="bt_hs14">期望最低期限</td>
+              <td height="30" align="left" class="bt_hs14">期望期限</td>
             </tr>
             <tr>
               <td height="35" align="left"><input type="text" name="qDeadLine" class="xlbd" />&nbsp;<span class="bt_hs14">天</span></td>

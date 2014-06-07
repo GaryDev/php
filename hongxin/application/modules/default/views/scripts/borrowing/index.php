@@ -119,6 +119,7 @@ foreach($this->rows as $row) {
       </tr>
     </table></td>
     <td width="200">
+    <?php if($row['percent'] < '100') { ?>
     <table width="104" border="0" align="center" cellpadding="0" cellspacing="8">
       <tr>
         <td align="center"><input type="button" class="btn logincheck" name="goBuyBtn" value="立即投资" 
@@ -139,7 +140,11 @@ foreach($this->rows as $row) {
 			</div>
         </td>
       </tr>
-    </table></td>
+    </table>
+    <?php } else { ?>
+    	<div style="text-align:center; line-height:40px;font-size:20px;">融资完成，即将起息</div>
+    <?php } ?>
+    </td>
   </tr>
 </table>
 <?php } ?>

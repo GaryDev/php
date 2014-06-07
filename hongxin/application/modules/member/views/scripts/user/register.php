@@ -48,7 +48,7 @@
 					<td class="bgtd1">注册类型：</td>
 					<td class="bgtd2">
 					<label><input type="radio" name="userType" id="userType" value="P" checked="checked" />个人</label>
-					<label><input type="radio" name="userType" id="userType" value="E" />企业</label>
+					<label><input type="radio" name="userType" id="userType" value="C" />企业</label>
 					</td>
 				</tr>
 				<tr>

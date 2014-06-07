@@ -74,10 +74,16 @@
     			<td>最迟还款日期：<?php echo date('Y-m-d',$this->row['repayEndTime']);?></td>
     			<td>&nbsp;</td>
     		</tr>
+    		<?php if($this->row['percent'] < '100') { ?>
     		<tr>
     			<td colspan="3"><input type="button" class="btn" name="goBuyBtn" value="立即投资" 
     			onclick="goBuy('<?php echo $this->row["code"]?>');" /></td>
     		</tr>
+    		<?php } else { ?>
+    		<tr>
+    			<td colspan="3"><div style="text-align:center; line-height:40px;font-size:20px;">融资完成，即将起息</div></td>
+    		</tr>
+    		<?php } ?>
     	</table>
     </td>
   </tr>

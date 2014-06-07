@@ -48,7 +48,7 @@ class BorrowingController extends CommonController
         $vars['qYearRate'] = trim($this->_request->get('qYearRate'));
         $vars['qAmount'] = trim($this->_request->get('qAmount'));
         
-        $wheres[] = "`b`.`status` IN ('3')";
+        $wheres[] = "`b`.`status` IN ('3') AND endTime >= unix_timestamp(current_date())";
         
         if($vars['qFrom'] == 'self') {
 	        if ($vars['qBank'] != '') {

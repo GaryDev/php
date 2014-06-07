@@ -79,8 +79,8 @@ return array(
     			'register' => 'http://180.166.114.152:8082/p2bServer-lgjr/p2p/registerAction.action',
 				'payment' => 'http://180.166.114.152:8082/p2bServer-lgjr/p2p/rechargeReqAction.action',
 				'freeze' => 'http://180.166.114.152:8082/p2bServer-lgjr/p2p/freezeMoneyAction.action',
-				'withdraw' => '',
-				'queryBalance' => '',
+				'refund' => 'http://180.166.114.152:8082/p2bServer-lgjr/p2p/refundAction.action',
+				'queryBalance' => 'http://180.166.114.152:8082/p2bServer-lgjr/p2p/queryBalanceAction.action',
     		),
         ),
 

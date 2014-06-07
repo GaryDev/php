@@ -54,9 +54,16 @@ class Member_IndexController extends Member_CommonController
         	->limit(3);
         $orderRows = $orderModel->fetchAll($orderSelect);
         foreach($orderRows as $key=>$orderRow) {
-        	$orderRow['statusText'] = $orderTypes[$orderRow['status']];
+        	$text = $orderTypes[$orderRow['status']];
+        	if(!empty($orderRow['reason'])) {
+        		$text = $text . '(' . $orderRow['reason'] . ')';
+        	}
+        	$orderRow['statusText'] = $text;
         	$orderRows[$key] = $orderRow;
         }
+        
+        $normalBalance = $this->_queryBalance($row, 1);
+        $freezeBalance = $this->_queryBalance($row, 2);
         
         $unpayRCount = $orderModel->getOrderCount($row['userName'], 10, 'recommend');
         $paidRCount = $orderModel->getOrderCount($row['userName'], 20, 'recommend');
@@ -70,8 +77,27 @@ class Member_IndexController extends Member_CommonController
         $this->view->memeberRow = $row;
         $this->view->memberEnterpriseRow = $memberEnterpriseRow;
         $this->view->orderRows = $orderRows;
+        $this->view->balance = array('normal'=>$normalBalance, 'freeze'=>$freezeBalance);
         $this->view->unpayCount = array($unpayRCount, $unpayCCount);
         $this->view->paidCount = array($paidRCount, $paidCCount);
         $this->view->returnCount = array($returnRCount, $returnCCount);
     }
+    
+    private function _queryBalance($row, $type) {
+    	$balance = 0.00;
+    	$params = ysbQueryBalanceParam($row, $this->_configs['project']['ysbVars'], $type);
+    	$client = new Zend_Http_Client();
+    	$response = $client->setUri($this->_configs['project']['ysbVars']['url']['queryBalance'])
+				    	->setMethod(Zend_Http_Client::POST)
+				    	->setParameterPost($params)
+				    	->request();
+    	if($response->isSuccessful()) {
+    		$result = Zend_Json::decode($response->getBody());
+    		if($result['rspCode'] == '0000') {
+    			$balance = $result['data']['accountinfo'][0]['accountBalance'];
+    		}
+    	}
+    	return $balance;
+    }
+    
 }

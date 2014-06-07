@@ -93,7 +93,12 @@ class Application_Model_Borrowing extends Application_Model_Common
      */
     public function getPopstar()
     {
-        $sql = "SELECT * FROM `{$this->getTableName()}` WHERE `popStar` = 'Y' AND `status` = '3'";
+        $sql = "SELECT * 
+                  FROM `{$this->getTableName()}` 
+                 WHERE `popStar` = 'Y' 
+                   AND `status` = '3' 
+                   AND endTime >= unix_timestamp(current_date())
+                   AND type = 'recommend'";
         $row = $this->getAdapter()->fetchRow($sql);
 
         $data = isset($row['id']) ? $row : array('id' => 0);
@@ -108,7 +113,34 @@ class Application_Model_Borrowing extends Application_Model_Common
      */
     public function getAlmostDone()
     {
-    	$sql = "SELECT * FROM `{$this->getTableName()}` WHERE `amountUnit` > 0 AND `status` = '3' ORDER BY amountUnit LIMIT 1";
+    	$sql = "SELECT * 
+    	          FROM `{$this->getTableName()}` 
+    	         WHERE `amountUnit` > 0 
+    	           AND `status` = '3' 
+    	           AND endTime >= unix_timestamp(current_date())
+    	           AND type = 'recommend' 
+    	         ORDER BY amountUnit LIMIT 1";
+    	$row = $this->getAdapter()->fetchRow($sql);
+    
+    	$data = isset($row['id']) ? $row : array('id' => 0);
+    	return $data;
+    }
+    
+    /**
+     * 获取是否可以申请
+     *
+     * @param string userName
+     * @return 1/0
+     */
+    public function getTopCession()
+    {
+    	$sql = "SELECT * 
+    	          FROM `{$this->getTableName()}` 
+    	         WHERE `amountUnit` > 0 
+    	           AND `status` = '3'
+    	           AND endTime >= unix_timestamp(current_date())
+    	           AND type = 'credit' 
+    	         ORDER BY amountUnit LIMIT 1";
     	$row = $this->getAdapter()->fetchRow($sql);
     
     	$data = isset($row['id']) ? $row : array('id' => 0);

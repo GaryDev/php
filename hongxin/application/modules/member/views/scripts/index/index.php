@@ -47,7 +47,8 @@
 			        投资中资金：<span class="bt_js12">0</span>元<br/>
 			        预期投资收益：<span class="bt_js12">0</span>元<br/>
 			    <?php }?>
-			         账户余额：<span class="bt_js12">0.00</span>元
+			         账户余额：<span class="bt_js12"><?php echo $this->balance['normal'];?></span>元(正常)
+			             &nbsp;&nbsp;<span class="bt_js12"><?php echo $this->balance['freeze'];?></span>元(冻结)
 		    </td>
             <?php if($this->loginedUserType == 'P') { ?>
             <td width="66%" valign="top"  style="padding:20px; line-height:25px;">
@@ -133,10 +134,6 @@
                 <tr>
                   <td align="center"><input type="button" class="btn" name="goCancel" value="取消" onclick="return doCancel('<?php echo $orderRow['orderSN']; ?>');" /></td>
                 </tr>
-                <?php } else if($orderRow['status'] == 20) {?>
-                <tr>
-                  <td align="center"><input type="button" class="btn" name="goCession" value="转让" /></td>
-                </tr>
                 <?php } ?>
             </table>
             </td>
@@ -174,7 +171,7 @@
 
 	function doPayment(orderId)
 	{
-		popupWindow("订单支付","<?php //echo $this->projectUrl(array('module'=>'member', 'controller'=>'order', 'action'=>'checkout'));?>/orderId/" + orderId);
+		popupWindow("订单支付","<?php echo $this->projectUrl(array('module'=>'member', 'controller'=>'order', 'action'=>'checkout'));?>/orderId/" + orderId);
 		//window.open("<?php //echo $this->projectUrl(array('module'=>'default', 'controller'=>'order', 'action'=>'checkout'));?>/orderId/" + orderId, "_blank");
 		return false;
 	}

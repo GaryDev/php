@@ -42,7 +42,7 @@ class IndexController extends CommonController
                  ->joinLeft(array('m'=>$memberModel->getTableName()), "`b`.`userName` = `m`.`userName`", "avatarPath")
                  ->order('b.yearInterestRate DESC')
                  ->order('b.amountUnit ASC')
-                 ->where("`b`.`status` = '3' AND b.amountUnit > 0 ")
+                 ->where("`b`.`status` = '3' AND b.amountUnit > 0 AND endTime >= unix_timestamp(current_date())")
                  ->limit(7);
         $borrowingRows = $borrowingModel->fetchAll($borrowingSelect);
         foreach($borrowingRows as $key=>$row) {
@@ -72,6 +72,18 @@ class IndexController extends CommonController
         		$doneRow['ticketCopyUrl'] = $ticketUrl . $doneRow['ticketCopyPath'];
         	}
         	$doneRow['remainDay'] = (int)((($doneRow['endTime'] - time())/86400) + 1);
+        }
+        
+        // 债权转让
+        $cessionRow = $borrowingModel->getTopCession();
+        if($cessionRow['id'] > 0)
+        {
+        	$cessionRow['borrowedCount'] = $cessionRow['amountMaxUnit'] - $cessionRow['amountUnit'];
+        	$cessionRow['percent'] = floor($cessionRow['borrowedCount'] / $cessionRow['amountMaxUnit'] * 100);
+        	if (!empty($cessionRow['ticketCopyPath'])) {
+        		$cessionRow['ticketCopyUrl'] = $ticketUrl . $cessionRow['ticketCopyPath'];
+        	}
+        	$cessionRow['remainDay'] = (int)((($cessionRow['endTime'] - time())/86400) + 1);
         }
 
         //网站活动

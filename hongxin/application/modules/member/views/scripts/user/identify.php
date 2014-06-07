@@ -64,9 +64,8 @@
 
 	$("#notifyBtn").click(function(){
 		var frm = $("#identifyForm")[0];
-		frm.action = '<?php echo $this->projectUrl(array('module'=>'member', 'controller'=>'user', 'action'=>'identify-notify'));?>';
+		frm.action = '<?php echo $this->projectUrl(array('module'=>'member', 'controller'=>'user', 'action'=>'identify'));?>';
 		frm.target = "_self";
 		frm.submit();
-		//location.reload(true);
 	});
 </script>

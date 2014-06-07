@@ -42,6 +42,12 @@
             </tr>
             -->
             <tr>
+              <td><a href="<?php echo $this->projectUrl(array('module'=>'member', 'controller'=>'cession', 'action'=>'apply'));?>">· 债权转让申请</a><br/></td>
+            </tr>
+            <tr>
+              <td><a href="<?php echo $this->projectUrl(array('module'=>'member', 'controller'=>'cession', 'action'=>'in-progress'));?>">· 我的转让申请</a><br/></td>
+            </tr>
+            <tr>
               <td><a href="#">· 订单管理</a><br/></td>
             </tr>
           </table>

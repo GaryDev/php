@@ -264,7 +264,7 @@ class Application_Model_Config
         );
         */
         $models['borrowingUnitMin'] = array(
-            'title' => '最小投资份数',//标题
+            'title' => '融资单位',//标题
             'description' => '单位：份',//描述
             'dataType' => 'number',//数据类型 string/number
             'maxlength' => 50, //长度

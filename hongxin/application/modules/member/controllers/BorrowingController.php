@@ -260,7 +260,7 @@ class Member_BorrowingController extends Member_CommonController
         
         $memberType = Application_Model_MemberLogin::getLoginedUserType();
         if ($memberType != 'C') {
-            echo $this->view->message('您是个人会员，不能发布融资信息！', $this->view->projectUrl(array('module'=>'default', 'controller'=>'borrowing', 'action'=>'index')));
+            echo $this->view->message('您不是企业会员，不能发布融资信息！', $this->view->projectUrl(array('module'=>'default', 'controller'=>'borrowing', 'action'=>'index')));
             exit;
         }
         
@@ -324,7 +324,7 @@ class Member_BorrowingController extends Member_CommonController
             $yearInterestRate = is_numeric(trim($this->_request->get('yearInterestRate'))) ? trim($this->_request->get('yearInterestRate')) : 0;
             $field['yearInterestRate'] = $yearInterestRate;
             $field['borrowUnit'] = $this->_configs['project']['borrowingUnitMin'];
-            $field['amountMinUnit'] = $field['borrowUnit'];	// 最小投资份数
+            $field['amountMinUnit'] = 1;	// 最小投资份数
             $field['amountMaxUnit'] = $field['amount'] / $field['borrowUnit']; // 最大投资份数
             $field['amountUnit'] = $field['amountMaxUnit'];
             $field['startTime'] = time();												// 募集开始时间
