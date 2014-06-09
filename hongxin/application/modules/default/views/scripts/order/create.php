@@ -15,7 +15,7 @@
 	$(function() {
 		var orderUnit = <?php echo $this->row['borrowUnit'];?>;
 		var yearRate = <?php echo $this->row['yearInterestRate']; ?>;
-		var deadline = <?php echo $this->row['deadline'];?>;
+		var benifitDay = <?php echo $this->benifitDay;?>;
 		var conf = {
 			range: "min",
 			min: 1,
@@ -62,7 +62,7 @@
 
 		function calculate(qty) {
 			var amount = orderUnit * qty;
-			var benifit = amount * (yearRate/100) * (deadline/365);
+			var benifit = amount * (yearRate/100) * (benifitDay/365);
 			benifit = Math.round(benifit*100)/100;
 			$("#amount").html(amount.toString());
 			$("#benifit").html(benifit.toString());

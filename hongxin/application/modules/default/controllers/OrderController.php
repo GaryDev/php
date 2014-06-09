@@ -31,8 +31,10 @@ class OrderController extends CommonController
 			echo $this->view->message('份额不足，请返回重试！', $this->view->projectUrl(array('module'=>'default', 'controller'=>'borrowing', 'action'=>'view', 'code'=>$code)));
 			exit;
 		}*/
+		$benifitDay = (int)((($row['ticketEndTime'] - $row['endTime'])/86400));
 		
 		$this->view->row = $row;
+		$this->view->benifitDay = $benifitDay;
 		$this->view->LoginedRow = $memberLoginModel->getLoginedRow();
 		
 		if ($this->_request->isPost())
@@ -48,12 +50,20 @@ class OrderController extends CommonController
 			$field['orderUnit'] = $row['borrowUnit'];
 			$field['orderQty'] = $filter->filter(trim($this->_request->get('orderQty')));
 			$field['orderAmount'] = $field['orderUnit'] * $field['orderQty'];
-			$field['benifit'] = $field['orderAmount'] * ($row['yearInterestRate']/100) * ($row['deadline']/365);
+			//$field['benifit'] = $field['orderAmount'] * ($row['yearInterestRate']/100) * ($row['deadline']/365);
+			$field['benifit'] = $field['orderAmount'] * ($row['yearInterestRate']/100) * ($benifitDay/365);
 			
 			$id = $this->_model->add($field);
 			if($id > 0)
 			{
-				$borrowingModel->changeAmountUnit($code, $row['amountUnit'] - $field['orderQty']);
+				$remaining = $row['amountUnit'] - $field['orderQty'];
+				$borrowingModel->changeAmountUnit($code, $remaining);
+				if($remaining == 0) {
+					$borrowRow = $borrowingModel->fetchRow("`code` = '{$code}'");
+					$benifitDay = (int)((($borrowRow['ticketEndTime'] - time())/86400));
+					$expr = 'orderAmount * ('.$borrowRow['yearInterestRate'].'/100) * ('.$benifitDay.'/365)';
+					$this->_model->update(array('benifit'=>new Zend_Db_Expr($expr)), "`borrowCode` = '{$code}' AND status IN(10, 20)");
+				}
 			}
 			echo $this->view->message('订单提交成功！', $this->view->projectUrl(array('action'=>'checkout', 'orderId'=>$id))) ;
 			exit;
@@ -99,36 +109,38 @@ class OrderController extends CommonController
     		$backUrl = $this->view->projectUrl(array('controller'=> 'member', 'action'=>'index'));
     		if($this->_request->get('mac') == ysbMac($response))
     		{
-    			//var_dump($response);die('Mac ==');
+    			//var_dump('-----------------充值响应---------------');
+    			//var_dump($response);
     			if($response['rspCode'] == '0000') {
     				if($response['responseMode'] == 1) {
-    					//var_dump($response);die('responseMode == 1');
+    					//var_dump($response);//die('responseMode == 1');
     					$orderRow = $this->_model->getOrderMemberInfo($response['orderId']);
     					$retry = 1;
     					$freeze_success = false;
     					do {
     						$freezeSeq = $this->_freezeMoney($orderRow);
+    						//die();
     						if(!empty($freezeSeq) && $freezeSeq > 0) {
-    							var_dump($freezeSeq);die('$freezeSeq');
+    							//var_dump($freezeSeq);die('$freezeSeq');
     							$this->_model->update(array('ysbFreezeSeq' => $freezeSeq), "`orderSN` = '{$response['orderId']}'");
-    							echo $this->view->message('订单支付成功！', $backUrl, 1, 'window.opener=null;window.close();');
+    							echo $this->view->message('资金冻结成功！', $backUrl, 1, 'window.opener=null;window.close();');
     							exit;
     						}
     						$retry = $retry + 1;
-    					} while($retry > 3);
+    					} while($retry <= 3);
     					if(!$freeze_success) {
     						$rspCode = $this->_refundMoney($orderRow);
     						if(!empty($rspCode) && $rspCode == '0000') {
-    							var_dump($rspCode);die('$rspCode');
+    							//var_dump($rspCode);die('$rspCode');
     							$this->_model->update(array('refundFlag' => 1), "`orderSN` = '{$response['orderId']}'");
-    							echo $this->view->message('订单支付失败。充值资金已退回！', $backUrl, 3, 'window.opener=null;window.close();');
+    							echo $this->view->message('资金冻结失败。充值资金已退回！', $backUrl, 3, 'window.opener=null;window.close();');
     							exit;
     						}
     					}
     				}
     				exit;
     			} else {
-    				echo $this->view->message('订单支付失败。请重试！', $backUrl, 3, 'window.opener=null;window.close();');
+    				echo $this->view->message('资金冻结失败。请重试！', $backUrl, 3, 'window.opener=null;window.close();');
     				exit;
     			}
     		} else {
@@ -143,7 +155,6 @@ class OrderController extends CommonController
 	{
 		if($this->_request->isPost()) {
 			$orderNo = trim($this->_request->get('orderId'));
-			//var_dump($orderNo);die('paymentAction');
 			$row = $this->_model->fetchRow("`orderSN` = '{$orderNo}'");
 			if($row['ysbFreezeSeq'] > 0) {
 				$this->_model->update(array('status' => 20), "`orderSN` = '{$orderNo}'");
@@ -172,6 +183,8 @@ class OrderController extends CommonController
 	{
 		$freezeSeq = NULL;
 		$params = ysbFreezeParam($this->_configs['project']['ysbVars'], $orderRow);
+		//var_dump('-----------------冻结参数---------------');
+		//var_dump($params);
 		$client = new Zend_Http_Client();
 		$response = $client->setUri($this->_configs['project']['ysbVars']['url']['freeze'])
 					->setMethod(Zend_Http_Client::POST)
@@ -179,17 +192,26 @@ class OrderController extends CommonController
 					->request();
 		if($response->isSuccessful()) {
 			$result = Zend_Json::decode($response->getBody());
-			//var_dump($result);die('_freezeMoney');
+			//var_dump('-----------------冻结响应---------------');
+			//var_dump($result);
 			if(key_exists('rspCode', $result) && $result['rspCode'] == '0000') {
-				$mac = $result['mac']; unset($result['mac']);
-				if($mac == ysbMac($result)) {
+				$verify = array(
+					'rspCode' => $result['rspCode'],
+					'rspMsg' => $result['rspMsg'],
+					'merchantId' => $result['merchantId'],
+					'orderId' => $result['orderId'],
+					'curType' => $result['curType'],
+					'amount' => $result['amount'],
+					'freezeSeq' => $result['freezeSeq'],
+					'merchantKey' => $this->_configs['project']['ysbVars']['merchantKey'],
+				);
+				if($result['mac'] == ysbMac($verify)) {
 					$freezeSeq = $result['freezeSeq'];
 				} else {
 					echo $this->view->message('Mac校验出错。请重试！', '', 3, 'window.opener=null;window.close();');
 					exit;
+					//die('_freezeMoney');
 				}
-			} else {
-				var_dump($result); die('_freezeMoney');
 			}
 		}
 		return $freezeSeq;
@@ -199,6 +221,8 @@ class OrderController extends CommonController
 	{
 		$rspCode = NULL;
 		$params = ysbFreezeParam($this->_configs['project']['ysbVars'], $orderRow);
+		//var_dump('-----------------退款---------------');
+		//var_dump($params);
 		$client = new Zend_Http_Client();
 		$response = $client->setUri($this->_configs['project']['ysbVars']['url']['refund'])
 					->setMethod(Zend_Http_Client::POST)
@@ -206,16 +230,26 @@ class OrderController extends CommonController
 					->request();
 		if($response->isSuccessful()) {
 			$result = Zend_Json::decode($response->getBody());
+			//var_dump($result);
 			if(key_exists('rspCode', $result) && $result['rspCode'] == '0000') {
-				$mac = $result['mac']; unset($result['mac']);
-				if($mac == ysbMac($result)) {
+				$verify = array(
+					'rspCode' => $result['rspCode'],
+					'rspMsg' => $result['rspMsg'],
+					'merchantId' => $result['merchantId'],
+					'userId' => $orderRow['buyerId'],
+					'orderId' => $result['orderId'],
+					'oriOrderId' => $orderRow['orderSN'],
+					'curType' => $result['curType'],
+					'amount' => $result['amount'],
+					'merchantKey' => $this->_configs['project']['ysbVars']['merchantKey'],
+				);
+				if($result['mac'] == ysbMac($verify)) {
 					$rspCode = $result['rspCode'];
 				} else {
 					echo $this->view->message('Mac校验出错。请重试！', '', 3, 'window.opener=null;window.close();');
 					exit;
+					//die('_refundMoney');
 				}
-			} else {
-				var_dump($result);die('_refundMoney');
 			}
 		}
 		return $rspCode;

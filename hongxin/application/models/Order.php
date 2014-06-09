@@ -32,22 +32,30 @@ class Application_Model_Order extends Application_Model_Common
 		return $result;
 	}
 	
-	public function getOrderCount($userName, $status, $type)
+	public function getOrderTotal($userName, $status, $type, $fetchType='count')
 	{
+		if($fetchType == 'sum') {
+			$fetch = array('Sum(orderAmount) AS ta, Sum(benifit) AS tb');
+		} else {
+			$fetch = array('COUNT(*) AS c');
+		}
 		$borrowingModel = new Application_Model_Borrowing();
 		$orderSelect = $this->select(false)
 			->setIntegrityCheck(false)
-			->from(array('o'=>$this->getTableName()), array('COUNT(*) AS c'))
+			->from(array('o'=>$this->getTableName()), $fetch)
 			->joinInner(array('b'=>$borrowingModel->getTableName()), "`o`.`borrowCode` = `b`.`code`")
 			->where("`o`.`buyUser` = {$this->getAdapter()->quote($userName)}")
-			->where("`o`.`status` = {$status}")
-			->where("`b`.`type` = {$this->getAdapter()->quote($type)}");
+			->where("`o`.`status` = {$status}");
+		if(!empty($type)) {
+			$orderSelect->where("`b`.`type` = {$this->getAdapter()->quote($type)}");
+		}
         $row = $this->getAdapter()->fetchRow($orderSelect);
-        if ($row['c'] > 0) {
-            return $row['c'];
+        if($fetchType == 'sum') {
+        	$return = array($row['ta'], $row['tb']);
         } else {
-            return 0;
-        }	
+        	$return = $row['c'];
+        }
+        return $return;
 	}
 	
 	public function getOrderMemberInfo($orderSn) {

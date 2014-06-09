@@ -215,6 +215,7 @@
       </tr>
       <tr>
         <td height="70" align="left"><table width="88%" border="0" align="center" cellpadding="0" cellspacing="0">
+          <?php if($this->popRow['percent'] < '100') { ?>
           <tr>
             <td width="50%" height="25" align="left" valign="middle"><table width="95%" border="0" align="left" cellpadding="0" cellspacing="0">
               <tr>
@@ -229,7 +230,11 @@
               </tr>
             </table></td>
           </tr>
-          
+          <?php } else { ?>
+    		<tr>
+    			<td width="100%"><div style="text-align:center; line-height:40px;font-size:20px;">融资完成，即将起息</div></td>
+    		</tr>
+    	<?php } ?>
         </table></td>
       </tr>
     <?php } else {?>
@@ -283,6 +288,7 @@
       </tr>
       <tr>
         <td height="70" align="left"><table width="88%" border="0" align="center" cellpadding="0" cellspacing="0">
+            <?php if($this->doneRow['percent'] < '100') { ?>
             <tr>
               <td width="50%" height="25" align="left" valign="middle"><table width="95%" border="0" align="left" cellpadding="0" cellspacing="0">
                   <tr>
@@ -296,6 +302,11 @@
                   </tr>
               </table></td>
             </tr>
+          <?php } else { ?>
+    		<tr>
+    			<td width="100%"><div style="text-align:center; line-height:40px;font-size:20px;">融资完成，即将起息</div></td>
+    		</tr>
+    	<?php } ?>
         </table></td>
       </tr>
 	  <?php } else {?>

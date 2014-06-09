@@ -29,38 +29,34 @@
 		<div class="nytxt6 search">
 			<form id="applyForm" name="applyForm" enctype="multipart/form-data" method="post" action="">
 				<table width="100%" border="0" align="left" class="table">
-					<!--  
 					<tr>
-						<td align="left">融资标题：</td>
-						<td align="left"><input name="title" type="text" class="input" id="title" size="40"/> <span class="desc">简单说明融资用途</span></td>
+						<td align="left" width="15%">可以转让的债权：</td>
+						<td align="left">
+							<select name="cessionName" style="width: 20%;">
+								<option value="">请选择</option>
+							</select>
+						</td>
 					</tr>
-					-->
 					<tr>
-						<td align="left" width="15%">转让金额：</td>
+						<td align="left">转让方式：</td>
+						<td align="left">
+							<label><input type="radio" name="cessionType" id="cessionType" value="+" />加价</label>
+							<label><input type="radio" name="cessionType" id="cessionType" value="-" checked="checked" />减价</label>
+						</td>
+					</tr>
+					<tr>
+						<td align="left">转让金额上限：</td>
 						<td align="left"><input name="amount" type="text" class="input" id="amount" value="0" size="15"/>元 </td>
 					</tr>
 					<tr>
-						<td align="left">年利率：</td>
-						<td align="left"><input name="yearInterestRate" type="text" class="input" id="yearInterestRate" size="15"/>
-							% <span style="color: #000;">（指导年利率<span id="maxYearRate" style="color: red; font-weight: bold;"><?php echo $this->maxYearRate;?></span>%）</span></td>
+						<td align="left">转让金：</td>
+						<td align="left"><input name="fee" type="text" class="input" id="fee" value="0" size="15"/>元 </td>
 					</tr>
 					<tr>
-						<td align="left">融资截止日期：</td>
+						<td align="left">转让截止日期：</td>
 						<td align="left">
 						<input name="applyEndDate" type="text" class="input" readonly="readonly" id="applyEndDate" value="" size="15"/>
 						<script type="text/javascript">Calendar.setup({"ifFormat":"%Y-%m-%d","firstDay":0,"showsTime":false,"showOthers":false,"inputField":"applyEndDate","button":"applyEndDate"});</script></td>
-					</tr>
-					<tr>
-						<td align="left">票据截止日期：</td>
-						<td align="left">
-						<input name="ticketEndDate" type="text" class="input" readonly="readonly" id="ticketEndDate" value="" size="15"/>
-						<script type="text/javascript">Calendar.setup({"ifFormat":"%Y-%m-%d","firstDay":0,"showsTime":false,"showOthers":false,"inputField":"ticketEndDate","button":"ticketEndDate"});</script></td>
-					</tr>
-					<tr>
-						<td align="left">最迟还款日期：</td>
-						<td align="left">
-						<input name="repayEndTime" type="text" class="input" readonly="readonly" id="repayEndTime" value="" size="15"/>
-						<script type="text/javascript">Calendar.setup({"ifFormat":"%Y-%m-%d","firstDay":0,"showsTime":false,"showOthers":false,"inputField":"repayEndTime","button":"repayEndTime"});</script></td>
 					</tr>
 					<tr>
 						<td align="left">&nbsp;</td>

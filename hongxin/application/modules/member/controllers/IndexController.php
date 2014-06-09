@@ -62,26 +62,38 @@ class Member_IndexController extends Member_CommonController
         	$orderRows[$key] = $orderRow;
         }
         
-        $normalBalance = $this->_queryBalance($row, 1);
-        $freezeBalance = $this->_queryBalance($row, 2);
-        $balance = array(
-        	'normal' => isset($normalBalance) ? $normalBalance : 0.00,
-        	'freeze' => isset($freezeBalance) ? $freezeBalance : 0.00,
-        );
+        //$this->_queryBalance($row, 0);
+        try {
+        	$normalBalance = $this->_queryBalance($row, 1);
+        	$freezeBalance = $this->_queryBalance($row, 2);
+        	$balance = array(
+        			'normal' => isset($normalBalance) ? $normalBalance : 0.00,
+        			'freeze' => isset($freezeBalance) ? $freezeBalance : 0.00,
+        	);
+        } catch (Exception $e) {
+            $balance = array(
+        			'normal' => 0.00,
+        			'freeze' => 0.00,
+        	);
+        }
         
-        $unpayRCount = $orderModel->getOrderCount($row['userName'], 10, 'recommend');
-        $paidRCount = $orderModel->getOrderCount($row['userName'], 20, 'recommend');
-        $returnRCount = $orderModel->getOrderCount($row['userName'], 40, 'recommend');
+        $totalOrder = $orderModel->getOrderTotal($row['userName'], 20, NULL, 'sum');
         
-        $unpayCCount = $orderModel->getOrderCount($row['userName'], 10, 'credit');
-        $paidCCount = $orderModel->getOrderCount($row['userName'], 20, 'credit');
-        $returnCCount = $orderModel->getOrderCount($row['userName'], 40, 'credit');
+        $unpayRCount = $orderModel->getOrderTotal($row['userName'], 10, 'recommend');
+        $paidRCount = $orderModel->getOrderTotal($row['userName'], 20, 'recommend');
+        $returnRCount = $orderModel->getOrderTotal($row['userName'], 40, 'recommend');
+        
+        $unpayCCount = $orderModel->getOrderTotal($row['userName'], 10, 'credit');
+        $paidCCount = $orderModel->getOrderTotal($row['userName'], 20, 'credit');
+        $returnCCount = $orderModel->getOrderTotal($row['userName'], 40, 'credit');
 
         $this->view->infoComplete = $infoComplete;
         $this->view->memeberRow = $row;
         $this->view->memberEnterpriseRow = $memberEnterpriseRow;
         $this->view->orderRows = $orderRows;
         $this->view->balance = $balance;
+        $this->view->totalOrderAmount = $totalOrder[0];
+        $this->view->totalBenifit = $totalOrder[1];
         $this->view->unpayCount = array($unpayRCount, $unpayCCount);
         $this->view->paidCount = array($paidRCount, $paidCCount);
         $this->view->returnCount = array($returnRCount, $returnCCount);
@@ -90,6 +102,8 @@ class Member_IndexController extends Member_CommonController
     private function _queryBalance($row, $type) {
     	$balance = 0.00;
     	$params = ysbQueryBalanceParam($row, $this->_configs['project']['ysbVars'], $type);
+    	//var_dump('-----------------余额查询参数---------------');
+    	//var_dump($params);
     	$client = new Zend_Http_Client();
     	$response = $client->setUri($this->_configs['project']['ysbVars']['url']['queryBalance'])
 				    	->setMethod(Zend_Http_Client::POST)
@@ -97,6 +111,9 @@ class Member_IndexController extends Member_CommonController
 				    	->request();
     	if($response->isSuccessful()) {
     		$result = Zend_Json::decode($response->getBody());
+    		//var_dump('-----------------查询响应---------------');
+    		//var_dump($result);
+    		//if($type == 0) die();
     		if($result['rspCode'] == '0000') {
     			$balance = $result['data']['accountinfo'][0]['accountBalance'];
     		}

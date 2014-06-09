@@ -44,11 +44,10 @@
 				    <?php }?>
 			    <?php } ?>
 			    <?php if($this->loginedUserType == 'P') { ?>
-			        投资中资金：<span class="bt_js12">0</span>元<br/>
-			        预期投资收益：<span class="bt_js12">0</span>元<br/>
+			        投资中资金：<span class="bt_js12"><?php echo $this->totalOrderAmount;?></span>元<br/>
+			        预期投资收益：<span class="bt_js12"><?php echo $this->totalBenifit;?></span>元<br/>
 			    <?php }?>
-			         账户余额：<span class="bt_js12"><?php echo $this->balance['normal'];?></span>元(正常)
-			             &nbsp;&nbsp;<span class="bt_js12"><?php echo $this->balance['freeze'];?></span>元(冻结)
+			         账户余额：<span class="bt_js12"><?php echo $this->balance['normal'];?></span>元
 		    </td>
             <?php if($this->loginedUserType == 'P') { ?>
             <td width="66%" valign="top"  style="padding:20px; line-height:25px;">
@@ -129,7 +128,7 @@
             <table width="80%" border="0" align="right" cellpadding="3" cellspacing="0">
                 <?php if($orderRow['status'] == 10) {?>
                 <tr>
-                  <td align="center"><input type="button" class="btn" name="goPay" value="付款" onclick="return doPayment('<?php echo $orderRow['id']; ?>');" /></td>
+                  <td align="center"><input type="button" class="btn" name="goPay" value="资金冻结" onclick="return doPayment('<?php echo $orderRow['id']; ?>');" /></td>
                 </tr>
                 <tr>
                   <td align="center"><input type="button" class="btn" name="goCancel" value="取消" onclick="return doCancel('<?php echo $orderRow['orderSN']; ?>');" /></td>
@@ -171,7 +170,7 @@
 
 	function doPayment(orderId)
 	{
-		popupWindow("订单支付","<?php echo $this->projectUrl(array('module'=>'member', 'controller'=>'order', 'action'=>'checkout'));?>/orderId/" + orderId);
+		popupWindow("资金冻结","<?php echo $this->projectUrl(array('module'=>'member', 'controller'=>'order', 'action'=>'checkout'));?>/orderId/" + orderId);
 		//window.open("<?php //echo $this->projectUrl(array('module'=>'default', 'controller'=>'order', 'action'=>'checkout'));?>/orderId/" + orderId, "_blank");
 		return false;
 	}

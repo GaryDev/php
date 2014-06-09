@@ -555,7 +555,7 @@ class Member_UserController extends Member_CommonController
     	$status = 0;
     	if(!isset($_SESSION['smstime']) || !isset($_SESSION['smscode'])) {
     		$status = -1;
-    	} else if (isset($_SESSION['smstime']) && (strtotime ( $_SESSION ['smstime'] ) + 60) < time ()) {
+    	} else if (isset($_SESSION['smstime']) && (strtotime ( $_SESSION ['smstime'] ) + 120) < time ()) {
 			session_destroy ();
 			unset ( $_SESSION );
 			$status = 1;
