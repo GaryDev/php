@@ -75,12 +75,16 @@ return array(
     	'ysbVars' => array(
     		'merchantId' => '1120070601142112001',
     		'merchantKey' => '123456',
+    		'smsId' => 42,
+    		'smsPlatform' => 'uns_fyjr',
+    		'smsPlatformPwd' => '546279',
 			'url' => array(
-    			'register' => 'http://180.166.114.152:8082/p2bServer-lgjr/p2p/registerAction.action',
-				'payment' => 'http://180.166.114.152:8082/p2bServer-lgjr/p2p/rechargeReqAction.action',
-				'freeze' => 'http://180.166.114.152:8082/p2bServer-lgjr/p2p/freezeMoneyAction.action',
-				'refund' => 'http://180.166.114.152:8082/p2bServer-lgjr/p2p/refundAction.action',
-				'queryBalance' => 'http://180.166.114.152:8082/p2bServer-lgjr/p2p/queryBalanceAction.action',
+				'sms' => 'http://211.147.83.237/Smsg/sms/send',
+    			'register' => 'http://180.166.114.155:8082/p2bServer-lgjr/p2p/registerAction.action',
+				'payment' => 'http://180.166.114.155:8082/p2bServer-lgjr/p2p/rechargeReqAction.action',
+				'freeze' => 'http://180.166.114.155:8082/p2bServer-lgjr/p2p/freezeMoneyAction.action',
+				'refund' => 'http://180.166.114.155:8082/p2bServer-lgjr/p2p/refundAction.action',
+				'queryBalance' => 'http://180.166.114.155:8082/p2bServer-lgjr/p2p/queryBalanceAction.action',
     		),
         ),
 

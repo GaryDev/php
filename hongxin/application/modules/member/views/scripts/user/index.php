@@ -3,8 +3,10 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <link href="<?php echo $this->baseUrl;?>/files/default/css/base.css" media="screen" rel="stylesheet" type="text/css" />
-<script language="javascript" src="<?php echo $this->baseUrl;?>/files/publicFiles/scripts/jquery.js"></script>
+<script language="javascript" src="<?php echo $this->baseUrl;?>/files/publicFiles/scripts/jquery-1.3.js"></script>
 <script language="javascript" src="<?php echo $this->baseUrl;?>/files/publicFiles/scripts/public.js"></script>
+<link rel="stylesheet" href="<?php echo $this->baseUrl;?>/files/publicFiles/scripts/jqueryFormValidator/css/validationEngine.jquery.css" type="text/css" />
+<script type="text/javascript" src="<?php echo $this->baseUrl;?>/files/publicFiles/scripts/jqueryFormValidator/js/jquery.validationEngine-cn.js"></script>
 <!--时间选择器-->
 <script src="<?php echo $this->baseUrl;?>/files/publicFiles/scripts/date/calendar.js"></script>
 <script src="<?php echo $this->baseUrl;?>/files/publicFiles/scripts/date/lang/cn_utf8.js"></script>
@@ -29,20 +31,18 @@
 				<td align="right"></td>
 			</tr>
 		</table>
-		<form id="accountForm" name="accountForm" method="post" action="">
-			<table width="100%" border="0" cellspacing="0" cellpadding="0" class="table">
-				<tr>
-					<td width="15%">用户名：</td>
-					<td><?php echo $this->row['userName']?></td>
-				</tr>
-				<!--  
-				<tr>
-					<td>邮件：</td>
-					<td><?php echo htmlspecialchars($this->row['email']);?></td>
-				</tr>
-				-->
-			</table>
-		</form>
+		<table width="100%" border="0" cellspacing="0" cellpadding="0" class="table">
+			<tr>
+				<td width="15%">用户名：</td>
+				<td><?php echo $this->row['userName']?></td>
+			</tr>
+			<!--  
+			<tr>
+				<td>邮件：</td>
+				<td><?php echo htmlspecialchars($this->row['email']);?></td>
+			</tr>
+			-->
+		</table>
 		<table width="100%" border="0" cellpadding="0" cellspacing="0" class="subTab">
 			<tr>
 				<td><h3>个人基本资料</h3></td>
@@ -53,15 +53,15 @@
 		<table width="100%" border="0" cellpadding="0" cellspacing="0" class="table">
 				<tr>
 					<td width="15%">真实姓名：</td>
-					<td><input name="name" type="text" class="input" id="name" size="40" value="<?php echo htmlspecialchars($this->row['name']);?>" /></td>
+					<td><input name="userName" type="text" class="validate[required] input" id="userName" size="40" value="<?php echo htmlspecialchars($this->row['name']);?>" /></td>
 				</tr>
 				<tr>
 					<td width="15%">手机号码：</td>
-					<td><input name="mobile" type="text" class="input" id="mobile" size="40" value="<?php echo htmlspecialchars($this->row['mobile']);?>" /></td>
+					<td><input name="mobile" type="text" class="validate[required,custom(mobileTelephone)] input" id="mobile" size="40" value="<?php echo htmlspecialchars($this->row['mobile']);?>" /></td>
 				</tr>
 				<tr>
 					<td width="15%">身份证号码：</td>
-					<td><input name="idCardNumber" type="text" class="input" id="idCardNumber" size="40" value="<?php echo htmlspecialchars($this->row['idCardNumber']);?>" /></td>
+					<td><input name="idCardNumber" type="text" class="validate[required] input" id="idCardNumber" size="40" value="<?php echo htmlspecialchars($this->row['idCardNumber']);?>" /></td>
 				</tr>
 				<tr>
 					<td width="15%">&nbsp;</td>
@@ -96,7 +96,7 @@ foreach($this->memberVars['industry'] as $key=>$value) {
 								</select>
 							</td>
 							<td width="15%">公司名称：</td>
-							<td width="35%"><input type="text" class="input" name="name" id="name" value="<?php echo isset($this->memberEnterpriseRow['name']) ? htmlspecialchars($this->memberEnterpriseRow['name']) : '';?>" /></td>
+							<td width="35%"><input type="text" class="validate[required] input" name="companyName" id="companyName" value="<?php echo isset($this->memberEnterpriseRow['name']) ? htmlspecialchars($this->memberEnterpriseRow['name']) : '';?>" /></td>
 						</tr>
 						<tr>
 							<td width="15%">成立日期：</td>
@@ -115,7 +115,7 @@ foreach($this->memberVars['industry'] as $key=>$value) {
 						-->
 						<tr>
 							<td width="15%">法人姓名：</td>
-							<td width="35%"><input type="text" class="input" name="legalPersonName" id="legalPersonName" value="<?php echo isset($this->memberEnterpriseRow['legalPersonName']) ? htmlspecialchars($this->memberEnterpriseRow['legalPersonName']) : '';?>" /></td>
+							<td width="35%"><input type="text" class="validate[required] input" name="legalPersonName" id="legalPersonName" value="<?php echo isset($this->memberEnterpriseRow['legalPersonName']) ? htmlspecialchars($this->memberEnterpriseRow['legalPersonName']) : '';?>" /></td>
 							<td width="15%">法人身份证：</td>
 							<td width="35%">(扫描件)<input type="file" name="legalPersonIDCardCopy" id="legalPersonIDCardCopy" /></td>
 							<!--  
@@ -200,6 +200,10 @@ if (borrowersStatus == '1') {
 	$("#approveBtn").val('审核未通过');
 }
 $('input:text', $("#baseDiv, #enterpriseDiv")).css("width", "80%");
+$("#statusForm").submit(function(){
+	alert($(".formError").size());
+	return false;
+})
 <?php } ?>
 </script>
 

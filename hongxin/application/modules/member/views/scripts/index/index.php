@@ -30,8 +30,11 @@
             <td width="33%" height="100" align="left" valign="top" style="padding:20px; line-height:25px;">
 	            <span class="bt_hs14">账号信息</span><br/>
 	            <?php if($this->memeberRow['status'] == 1) {?>
+	            	<?php if($this->loginedUserType == 'C' && $this->infoComplete != 'Y') {?>
+	            	未完善企业资料<a href="javascript:void(0);" id="cinfoLink" class="nygl">[去完善]</a><br/>
+	            	<?php } ?>
 	            	未完成认证<a href="javascript:void(0);" id="identifyLink" class="nygl">[去认证]</a><br/>
-	            	<span style="color: red;">(未完成认证会员不能进行投资)</span><br/>
+	            	<span style="color: red;"><?php echo $this->loginedUserType == 'C' ? '(未完成认证会员不能进行融资)' : '(未完成认证会员不能进行投资)' ?></span><br/>
 	            <?php } else { ?>
 	            	银生宝账户：<?php echo $this->memeberRow['mobile']; ?>&nbsp;&nbsp;<a href="https://www.unspay.com/sessionInvalid.do" target="_blank" class="nygl">[管理]</a><br/>
 	            <?php } ?>
@@ -177,6 +180,10 @@
 
 	$("#identifyLink").click(function(){
 		popupWindow("身份验证","<?php echo $this->projectUrl(array('module'=>'member', 'controller'=>'user', 'action'=>'identify'));?>");
+	});
+
+	$("#cinfoLink").click(function(){
+		location.href = "<?php echo $this->projectUrl(array('module'=>'member', 'controller'=>'user', 'action'=>'index'));?>";
 	});
 </script>
 <?php echo $this->render('footer.php');?>

@@ -31,12 +31,12 @@
       <tr>
         <td align="center"><a id="index" href="<?php echo $this->projectUrl(array('module'=>'default', 'controller'=>'index', 'action'=>'index'));?>" class="menu"><span class="menu_on">首页</span></a></td>
         <td align="center"><a id="safe" href="<?php echo $this->projectUrl(array('module'=>'default', 'controller'=>'info', 'action'=>'safe'));?>" class="menu">安全保障</a></td>
-        <td align="center"><a id="lease" href="<?php echo $this->projectUrl(array('module'=>'member', 'controller'=>'borrowing', 'action'=>'apply'));?>" class="menu">我要融资</a></td>
         <td align="center"><a id="borrowing" href="<?php echo $this->projectUrl(array('module'=>'default', 'controller'=>'borrowing', 'action'=>'index'));?>" class="menu">我要投资</a></td>
+        <td align="center"><a id="lease" href="<?php echo $this->projectUrl(array('module'=>'member', 'controller'=>'borrowing', 'action'=>'apply'));?>" class="menu">我要融资</a></td>
         <td align="center"><a id="cession" href="#" class="menu">债券转让</a></td>
         <td align="center"><a id="notice" href="<?php echo $this->projectUrl(array('module'=>'default', 'controller'=>'info', 'action'=>'notice'));?>" class="menu">信息公告</a></td>
         <td align="center"><a id="guide" href="<?php echo $this->projectUrl(array('module'=>'default', 'controller'=>'guide', 'action'=>'index'));?>" class="menu">新手指引</a></td>
-        <td align="center"><a id="member" href="<?php echo $this->projectUrl(array('module'=>'member', 'controller'=>'index', 'action'=>'index'));?>" class="menu">会员中心</a></td>
+        <td align="center"><a id="member" href="<?php echo $this->projectUrl(array('module'=>'member', 'controller'=>'index', 'action'=>'index'));?>" class="menu">我的鉴丰</a></td>
         <td align="center"><a id="about" href="<?php echo $this->projectUrl(array('module'=>'default', 'controller'=>'info', 'action'=>'about'));?>" class="menu">关于我们</a></td>
         <td align="center"><a id="contact" href="<?php echo $this->projectUrl(array('module'=>'default', 'controller'=>'info', 'action'=>'contact'));?>" class="menu">联系我们</a></td>
       </tr>
@@ -66,7 +66,7 @@ function checkLogin(type)
 			msg = "请先登录，才能操作";
 			if(status == 2) {
 				msg = "企业用户不能进行投资操作";
-			} else if(status = -1) {
+			} else if(status == -1) {
 				popupWindow("身份验证","<?php echo $this->projectUrl(array('module'=>'member', 'controller'=>'user', 'action'=>'identify'));?>");
 				return false;
 			}

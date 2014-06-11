@@ -53,7 +53,7 @@ class Application_Model_Order extends Application_Model_Common
         if($fetchType == 'sum') {
         	$return = array($row['ta'], $row['tb']);
         } else {
-        	$return = $row['c'];
+        	$return = empty($row) ? 0 : $row['c'];
         }
         return $return;
 	}

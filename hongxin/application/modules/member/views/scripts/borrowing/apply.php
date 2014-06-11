@@ -6,7 +6,7 @@
 <link href="<?php echo $this->baseUrl;?>/files/publicFiles/scripts/date/calendar-blue.css" rel="stylesheet"  type="text/css" />
 <script language="javascript" src="<?php echo $this->baseUrl;?>/files/publicFiles/scripts/jquery.js"></script>
 <script language="javascript" src="<?php echo $this->baseUrl;?>/files/publicFiles/scripts/public.js"></script>
-<link rel="stylesheet" href="<?php echo $this->baseUrl;?>/files/publicFiles/scripts/jqueryFormValidator/css/validationEngine.jquery.css" type="text/css" />
+<script language="javascript" src="<?php echo $this->baseUrl;?>/files/publicFiles/scripts/jqueryLayer/layer.min.js"></script>
 <!--时间选择器-->
 <script src="<?php echo $this->baseUrl;?>/files/publicFiles/scripts/date/calendar.js"></script>
 <script src="<?php echo $this->baseUrl;?>/files/publicFiles/scripts/date/lang/cn_utf8.js"></script>
@@ -36,8 +36,8 @@
 					</tr>
 					-->
 					<tr>
-						<td align="left">融资金额：</td>
-						<td align="left"><input name="amount" type="text" class="input" id="amount" value="0" size="15"/>元 </td>
+						<td width="15%" align="left">票面金额：</td>
+						<td align="left"><input name="ticketAmount" type="text" class="input" id="ticketAmount" value="" size="15"/>元 </td>
 					</tr>
 					<tr>
 						<td align="left">银行承兑汇票扫描件：</td>
@@ -45,20 +45,23 @@
 					</tr>
 					<tr>
 						<td align="left">年利率：</td>
-						<td align="left"><input name="yearInterestRate" type="text" class="input" id="yearInterestRate" size="15"/>
-							% <span style="color: #000;">（指导年利率<span id="maxYearRate" style="color: red; font-weight: bold;"><?php echo $this->maxYearRate;?></span>%）</span></td>
+						<td align="left"><input name="yearInterestRate" type="text" class="input" value="<?php echo $this->maxYearRate; ?>" id="yearInterestRate" size="15"/><span id="percent">%</span></td>
 					</tr>
 					<tr>
 						<td align="left">融资截止日期：</td>
 						<td align="left">
 						<input name="applyEndDate" type="text" class="input" readonly="readonly" id="applyEndDate" value="" size="15"/>
-						<script type="text/javascript">Calendar.setup({"ifFormat":"%Y-%m-%d","firstDay":0,"showsTime":false,"showOthers":false,"inputField":"applyEndDate","button":"applyEndDate"});</script></td>
+						<script type="text/javascript">Calendar.setup({"ifFormat":"%Y-%m-%d","firstDay":0,"showsTime":false,"showOthers":false,"inputField":"applyEndDate","button":"applyEndDate", "onUpdate":function(){ calculateAmount(); }});</script></td>
 					</tr>
 					<tr>
 						<td align="left">票据截止日期：</td>
 						<td align="left">
 						<input name="ticketEndDate" type="text" class="input" readonly="readonly" id="ticketEndDate" value="" size="15"/>
-						<script type="text/javascript">Calendar.setup({"ifFormat":"%Y-%m-%d","firstDay":0,"showsTime":false,"showOthers":false,"inputField":"ticketEndDate","button":"ticketEndDate"});</script></td>
+						<script type="text/javascript">Calendar.setup({"ifFormat":"%Y-%m-%d","firstDay":0,"showsTime":false,"showOthers":false,"inputField":"ticketEndDate","button":"ticketEndDate", "onUpdate":function(){ calculateAmount(); }});</script></td>
+					</tr>
+					<tr>
+						<td width="15%" align="left">融资金额：</td>
+						<td align="left"><input name="amount" type="text" class="input" id="amount" onfocus="this.blur();" value="" size="15" readonly="readonly" style="border: 0;"/>元 </td>
 					</tr>
 					<tr>
 						<td align="left">最迟还款日期：</td>
@@ -79,8 +82,7 @@
 					</tr>
 					<tr>
 						<td align="left">融资说明：</td>
-						<td align="left"><textarea name="notes" cols="60" rows="5" class="input" id="notes"></textarea>
-						<br/><span class="desc">（请详细填写融资用途，可以更快的帮您获得借款。最大800字）</span></td>
+						<td align="left"><textarea name="notes" cols="60" rows="5" class="input" id="notes"></textarea></td>
 					</tr>
 					<tr>
 						<td align="left">&nbsp;</td>
@@ -101,14 +103,24 @@ $("#applyForm").submit(function()
 		alert('请填写融资标题。');
 		$("#title").focus();
 		return false;
-	} else*/ if (parseFloat($.trim($("#amount").val())) == 0) {
-		alert('请填写融资金额。');
+	} else*/ if ($.trim($("#ticketAmount").val()) == "" || parseFloat($.trim($("#ticketAmount").val())) == 0) {
+		alert('请填写票面金额。');
 		$("#amount").focus();
 		return false;
-	} else if (parseFloat($.trim($("#amount").val())) <= 0 || isNaN($.trim($("#amount").val()))) {
-		alert('融资金额填写错误。');
+	} else if (parseFloat($.trim($("#ticketAmount").val())) <= 0 || isNaN($.trim($("#ticketAmount").val()))) {
+		alert('票面金额填写错误。');
 		$("#amount").focus();
 		return false;
+	}
+	if($("#ticketCopy").val() == "") {
+		alert('请选择银行承兑汇票扫描件。');
+		return false;
+	} else {
+		var extension = /\.[^\.]+/.exec($("#ticketCopy").val());
+		if("|.jpg|.png|.jpeg|.gif|".indexOf("|" + extension + "|") == -1) {
+			alert('银行承兑汇票扫描件格式不正确。');
+			return false;
+		}
 	}
 	if (checkYearInterestRate() == false) {
 		return false;
@@ -120,16 +132,44 @@ $("#applyForm").submit(function()
 /*验证年利率*/
 function checkYearInterestRate()
 {
-	if($.trim($("#yearInterestRate").val()) == '') return true;
+	if($.trim($("#yearInterestRate").val()) == '') {
+		alert('请填写年利率。');
+		return false;
+	}
 	if (parseFloat($.trim($("#yearInterestRate").val())) <= 0 || isNaN($.trim($("#yearInterestRate").val()))) {
 		alert('年利率填写错误。');
 		$("#yearInterestRate").focus();
 		return false;
 	}
-	$("#yearInterestRate").val(parseFloat($.trim($("#yearInterestRate").val())));
 }
 
-$("#yearInterestRate").blur(checkYearInterestRate);
+function calculateAmount() {
+	if($.trim($("#ticketAmount").val()) == "" || $.trim($("#yearInterestRate").val()) == "" ||
+	   $.trim($("#ticketEndDate").val()) == "" || $.trim($("#applyEndDate").val()) == "") {
+	   $("#amount").val("");
+	   return false;
+	}
+	var amount = parseFloat($.trim($("#ticketAmount").val()));
+	var yearRate = parseFloat($.trim($("#yearInterestRate").val()));
+	var benifitDay = diffDate($.trim($("#ticketEndDate").val()), $.trim($("#applyEndDate").val()));
+	var benifit = amount * (1-(yearRate/100)) * (benifitDay/365);
+	benifit = Math.round(benifit*100)/100;
+	$("#amount").val(benifit);
+}
+
+$("#ticketAmount").change(function(){ calculateAmount(); });
+//$("#ticketEndDate").change(function(){ calculateAmount(); });
+//$("#applyEndDate").change(function(){ calculateAmount(); });
+
+$("#yearInterestRate").focusin(function(){
+	layer.tips('利率精确到小数点后一位，<br/>范围5%-10%之间。融资最<br/>低利率由您的融资期限确<br/>定，一般来说融资利率越<br/>高，筹款速度越快。', 
+			$("#percent") , {guide: 1, style: ['background-color:#FDFD79; color:#000;', '#FDFD79']});
+	$(".xubox_main").parent().css("top", "256px");
+}).focusout(function(){
+	$(".xubox_tips").hide();
+}).change(function(){
+	calculateAmount();
+});
 </script>
 </body>
 </html>

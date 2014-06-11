@@ -92,8 +92,8 @@ class Member_IndexController extends Member_CommonController
         $this->view->memberEnterpriseRow = $memberEnterpriseRow;
         $this->view->orderRows = $orderRows;
         $this->view->balance = $balance;
-        $this->view->totalOrderAmount = $totalOrder[0];
-        $this->view->totalBenifit = $totalOrder[1];
+        $this->view->totalOrderAmount = empty($totalOrder[0]) ? 0.00 : $totalOrder[0];
+        $this->view->totalBenifit = empty($totalOrder[1]) ? 0.00 : $totalOrder[1];
         $this->view->unpayCount = array($unpayRCount, $unpayCCount);
         $this->view->paidCount = array($paidRCount, $paidCCount);
         $this->view->returnCount = array($returnRCount, $returnCCount);

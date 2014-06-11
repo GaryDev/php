@@ -44,9 +44,9 @@
             <td align="center">用户名</td>
             <td align="center">用户状态</td>
             <td align="center">审核状态</td>
-            <td align="center">邮件</td>
+            <!--  <td align="center">邮件</td> -->
             <td align="center">注册时间</td>
-            <?php if ($this->vars['type'] == 'E') { ?><td width="10%" align="center">操作</td><?php }?>
+            <?php if ($this->vars['type'] == 'C') { ?><td width="10%" align="center">操作</td><?php }?>
         </tr>
 <?php
 foreach ($this->rows as $key=>$row) {
@@ -54,15 +54,15 @@ foreach ($this->rows as $key=>$row) {
         <tr class="dataLine">
             <td width="8%" align="center"><input name="selectId[]" type="checkbox" id="selectId<?php echo $key;?>" value="<?php echo $row['id'];?>" /></td>
             <td align="center"><?php echo $row['userName'];?></td>
-            <td align="center"><?php if ($row['status'] == 1) {echo '<span style="color:red;">未激活</span>';} else if ($row['status'] == 2){echo '已激活';} else if ($row['status'] == 3){echo '<span style="color:#ccc;">帐号关闭</span>';} ?></td>
-            <?php if ($this->vars['type'] == 'E') { ?>
+            <td align="center"><?php if ($row['status'] == 1) {echo '<span style="color:red;">未认证</span>';} else if ($row['status'] == 2){echo '已认证';} else if ($row['status'] == 3){echo '<span style="color:#ccc;">帐号关闭</span>';} ?></td>
+            <?php if ($this->vars['type'] == 'C') { ?>
             <td align="center"><?php if ($row['borrowersStatus'] == 1) {echo '<span style="color:#000;">未提交</span>';} else if ($row['borrowersStatus'] == 2){echo '审核中';} else if ($row['borrowersStatus'] == 3){echo '<span style="color:green;">审核通过</span>';} else if ($row['borrowersStatus'] == 4){echo '<span style="color:red;">审核未通过</span>';} ?></td>
             <?php } else if ($this->vars['type'] == 'P') { ?>
             <td align="center"><?php if ($row['lendersStatus'] == 1) {echo '<span style="color:#000;">未提交</span>';} else if ($row['lendersStatus'] == 2){echo '审核中';} else if ($row['lendersStatus'] == 3){echo '<span style="color:green;">审核通过</span>';} else if ($row['lendersStatus'] == 4){echo '<span style="color:red;">审核未通过</span>';} ?></td>
             <?php } ?>
-            <td align="center"><?php echo $row['email'];?></td>
+            <!--<td align="center"><?php echo $row['email'];?></td> -->
             <td align="center"><?php echo date('Y-m-d H:i', $row['regTime']);?></td>
-            <?php if ($this->vars['type'] == 'E') { ?>
+            <?php if ($this->vars['type'] == 'C') { ?>
 	            <td width="10%" align="center">
 	            <!--  
 	            <a href="<?php echo $this->projectUrl(array('action'=>'view', 'id'=>$row['id'], 'backUrl'=>urlencode($this->pageUrl)));?>">查看</a>&nbsp;

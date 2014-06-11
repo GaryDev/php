@@ -14,7 +14,7 @@
 	$(document).ready(function(){ 
         var sorter = $("#productTable").tablesorter({
         	headers: { 0: { sorter: false}, 5: {sorter: false} },
-	        debug: false;
+	        debug: false
         });
 	}); 
     function viewTicket(url){

@@ -66,7 +66,7 @@ class Member_UserController extends Member_CommonController
         if ($this->_request->isPost() && $formClass == 'accountDetail') {
             $field = array();
             $filter = new Zend_Filter_StripTags();
-            $field['name'] = $filter->filter(trim($this->_request->getPost('name')));
+            $field['name'] = $filter->filter(trim($this->_request->getPost('userName')));
             $field['mobile'] = $filter->filter(trim($this->_request->getPost('mobile')));
             $field['idCardNumber'] = $filter->filter(trim($this->_request->getPost('idCardNumber')));
             $field['idCardAddress'] = $filter->filter(trim($this->_request->getPost('idCardAddress')));
@@ -82,7 +82,7 @@ class Member_UserController extends Member_CommonController
             $filter = new Zend_Filter_StripTags();
             $field['userName'] = $row['userName'];
             $field['industry'] = $filter->filter(trim($this->_request->getPost('industry')));
-            $field['name'] = $filter->filter(trim($this->_request->getPost('name')));
+            $field['name'] = $filter->filter(trim($this->_request->getPost('companyName')));
             $field['createTime'] = $filter->filter(trim($this->_request->getPost('createTime')));
             $field['telephone'] = $filter->filter(trim($this->_request->getPost('telephone')));
             $field['premises'] = $filter->filter(trim($this->_request->getPost('premises')));
@@ -154,11 +154,16 @@ class Member_UserController extends Member_CommonController
     			if($response['rspCode'] == '0000') {
     				$memberLoginModel = new Application_Model_MemberLogin();
     				$userName = Application_Model_MemberLogin::getLoginedUserName();
+    				$userType = Application_Model_MemberLogin::getLoginedUserType();
     				$field = array(
     						'ysbUserId' => $response['userId'],
     						'status' => '2',
-    						'lendersStatus' => '3',
     				);
+    				if($userType == 'C') {
+    					$field['borrowersStatus'] = '3';
+    				} elseif($userType == 'P') {
+    					$field['lendersStatus'] = '3';
+    				}
     				$memberLoginModel->update($field, "`userName` = '{$userName}'");
     				echo $this->view->message('身份验证成功！', $backUrl, 1, 'window.opener=null;window.close();');
     				exit;
@@ -543,10 +548,31 @@ class Member_UserController extends Member_CommonController
     public function sendsmsAction()
     {
     	$mobile = trim($this->_request->get('mobile'));
-    	$code = '888888'; //rand(100000, 999999);
+    	$code = rand(100000, 999999);
+    	$this->_sendsms($mobile, $code);
     	$_SESSION['smscode'] = $code;
     	$_SESSION['smstime'] = date("Y-m-d H:i:s");
     	exit;
+    }
+    
+    private function _sendsms($mobile, $code)
+    {
+    	$params = array(
+    		'adminId'=> $this->_configs['project']['ysbVars']['smsId'],
+    		'platform'=> $this->_configs['project']['ysbVars']['smsPlatform'],
+    		'platformPwd'=> $this->_configs['project']['ysbVars']['smsPlatformPwd'],
+    		'ssrc' => 0,
+    		'mobiles' => $mobile,
+    		'msg' => '短信验证码：'.$code,
+    	);
+    	$client = new Zend_Http_Client();
+    	$response = $client->setUri($this->_configs['project']['ysbVars']['url']['sms'])
+	    	->setMethod(Zend_Http_Client::POST)
+	    	->setParameterPost($params)
+	    	->request();
+    	if($response->isSuccessful()) {
+    		$result = Zend_Json::decode($response->getBody());
+    	}
     }
     
     public function checkSmscodeAction()

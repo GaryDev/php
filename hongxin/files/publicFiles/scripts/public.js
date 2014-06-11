@@ -306,3 +306,15 @@ function compareDate(begin, end)
 	}
 	return true;
 }
+
+function diffDate(d1, d2) {
+	try{    
+		s1 = new Date(d1.replace(/-/g, "/"));
+		s2 = new Date(d2.replace(/-/g, "/"));
+		var days = s1.getTime() - s2.getTime();
+		var diff = parseInt(days / (1000 * 60 * 60 * 24));
+	   return diff;
+	}catch(e){
+	   return false;
+	}
+}

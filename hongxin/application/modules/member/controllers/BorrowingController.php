@@ -331,7 +331,8 @@ class Member_BorrowingController extends Member_CommonController
             $field['endTime'] = strtotime($filter->filter(trim($this->_request->get('applyEndDate')))); // 募集截止时间
             $field['ticketEndTime'] = strtotime($filter->filter(trim($this->_request->get('ticketEndDate'))));	//项目到期时间
             $field['repayEndTime'] = strtotime($filter->filter(trim($this->_request->get('repayEndTime'))));	//最迟还款日期
-            $field['deadline'] = (int)((($field['ticketEndTime'] - $field['startTime'])/86400) + 1);	   // 期限
+            //$field['deadline'] = (int)((($field['ticketEndTime'] - $field['startTime'])/86400) + 1);	   // 期限
+			$field['deadline'] = (int)((($field['endTime'] - $field['startTime'])/86400) + 1);
             $field['notes'] = $filter->filter(trim($this->_request->get('notes')));
             $field['ticketCopyPath'] = $this->__uploadFile('ticketCopy', 'ticketCopy', $memberRow, array('imgWidth' => 210, 'imgHeight' => 280));
             $field['status'] = '1';

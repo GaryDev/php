@@ -194,8 +194,14 @@ class Application_Model_MemberLogin extends Application_Model_Member
     				$infoComplete = 'N';
     			}
     			break;
-    		case 'E':
-    			if(empty($row['name']) || empty($row['mobile']) || empty($memberEnterpriseRow['legalPersonName'])) {
+    		case 'C':
+    			if(empty($row['name']) || 
+    				empty($row['idCardNumber']) || 
+    				empty($memberEnterpriseRow['legalPersonName']) ||
+    				empty($memberEnterpriseRow['businessLicenseCopyPath']) ||
+    				empty($memberEnterpriseRow['organizationCodeCopyPath']) ||
+    				empty($memberEnterpriseRow['legalPersonIDCardCopyPath'])
+            	) {
     				$infoComplete = 'N';
     			}
     			break;
