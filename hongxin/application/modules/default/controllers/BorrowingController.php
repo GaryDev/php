@@ -142,6 +142,11 @@ class BorrowingController extends CommonController
         foreach($rows as $key=>$row) {
             $row['borrowedCount'] = $row['amountMaxUnit'] - $row['amountUnit'];
             $row['percent'] = floor($row['borrowedCount'] / $row['amountMaxUnit'] * 100);
+        	if($row['borrowedCount'] > 0 && $row['percent'] < 1) {
+            	$row['percent'] = 1;
+            } else if($row['percent'] > 100) {
+            	$row['percent'] = 99;
+            }
             $rows[$key] = $row;
         }
 
@@ -191,6 +196,11 @@ class BorrowingController extends CommonController
         
         $row['borrowedCount'] = $row['amountMaxUnit'] - $row['amountUnit'];
         $row['percent'] = floor($row['borrowedCount'] / $row['amountMaxUnit'] * 100);
+        if($row['borrowedCount'] > 0 && $row['percent'] < 1) {
+        	$row['percent'] = 1;
+        } else if($row['borrowedCount'] > 0 && $row['percent'] > 100) {
+        	$row['percent'] = 99;
+        }
         
         /*
         $borrowedInfo = Zend_Json::decode($row['borrowedJson']);

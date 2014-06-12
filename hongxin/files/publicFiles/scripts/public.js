@@ -311,8 +311,15 @@ function compareDate(begin, end)
 		var start = new Date(startArr[0], startArr[1], startArr[2]);
 		var endArr = end.split("-");
 		var end = new Date(endArr[0], endArr[1], endArr[2]);
+		if(Date.parse(start) > Date.parse(end)) {
+			return -1;
+		} else if(Date.parse(start) < Date.parse(end)) {
+			return 1;
+		} else {
+			return 0;
+		}
 	}
-	return true;
+	return null;
 }
 
 function diffDate(d1, d2) {
@@ -325,4 +332,24 @@ function diffDate(d1, d2) {
 	}catch(e){
 	   return false;
 	}
+}
+
+Date.prototype.format =function(format)
+{
+	var o = {
+	"M+" : this.getMonth()+1, //month
+	"d+" : this.getDate(), //day
+	"h+" : this.getHours(), //hour
+	"m+" : this.getMinutes(), //minute
+	"s+" : this.getSeconds(), //second
+	"q+" : Math.floor((this.getMonth()+3)/3), //quarter
+	"S" : this.getMilliseconds() //millisecond
+	}
+	if(/(y+)/.test(format)) format=format.replace(RegExp.$1,
+	(this.getFullYear()+"").substr(4- RegExp.$1.length));
+	for(var k in o)if(new RegExp("("+ k +")").test(format))
+	format = format.replace(RegExp.$1,
+	RegExp.$1.length==1? o[k] :
+	("00"+ o[k]).substr((""+ o[k]).length));
+	return format;
 }

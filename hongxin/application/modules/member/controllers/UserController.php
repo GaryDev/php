@@ -73,12 +73,14 @@ class Member_UserController extends Member_CommonController
             $field['idCardAddress'] = $filter->filter(trim($this->_request->getPost('idCardAddress')));
             
             $memberLoginModel->update($field, "`userName` = '{$row['userName']}'");
-            //echo $this->view->message('个人基本资料修改成功！') ;
-            //exit;
+            if($row['userType'] == 'P') {
+	            echo $this->view->message('个人基本资料修改成功！') ;
+	            exit;
+            }
         }
 
         //公司详细资料
-        if ($this->_request->isPost() /*&& $formClass == 'enterprise'*/) {
+        if ($this->_request->isPost() && $row['userType'] == 'C' /*&& $formClass == 'enterprise'*/) {
             $field = array();
             $filter = new Zend_Filter_StripTags();
             $field['userName'] = $row['userName'];
@@ -120,7 +122,7 @@ class Member_UserController extends Member_CommonController
         }
 
         //资料审查
-        if ($this->_request->isPost() /*&& $formClass == 'borrowersStatus'*/) {
+        if ($this->_request->isPost()  && $row['userType'] == 'C' /*&& $formClass == 'borrowersStatus'*/) {
             $field = array();
             if ($row['borrowersStatus'] == '1' || $row['borrowersStatus'] == '4') {
                 $field['borrowersStatus'] = '2';

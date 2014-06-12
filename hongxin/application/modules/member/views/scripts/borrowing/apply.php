@@ -37,7 +37,7 @@
 					-->
 					<tr>
 						<td width="15%" align="left">票面金额：</td>
-						<td align="left"><input name="ticketAmount" type="text" class="input" id="ticketAmount" value="" size="15"/>元 </td>
+						<td align="left"><input name="ticketAmount" type="text" class="validate[required,onlyNumber] input" id="ticketAmount" value="" size="15"/>元 </td>
 					</tr>
 					<tr>
 						<td align="left">银行承兑汇票扫描件：</td>
@@ -122,7 +122,34 @@ $("#applyForm").submit(function()
 	if (checkYearInterestRate() == false) {
 		return false;
 	}
-
+	if($("#applyEndDate").val() == "") {
+		alert('请选择融资截止日期。');
+		return false;
+	}
+	if(compareDate(new Date().format('yyyy-MM-dd'), $("#applyEndDate").val()) != 1) {
+		alert('融资截止日期必须大于当前日期。');
+		return false;
+	}	
+	if($("#ticketEndDate").val() == "") {
+		alert('请选择票据截止日期。');
+		return false;
+	}
+	if(compareDate($("#applyEndDate").val(), $("#ticketEndDate").val()) != 1) {
+		alert('票据截止日期必须大于融资截止日期。');
+		return false;
+	}
+	if($("#repayEndTime").val() == "") {
+		alert('请选择最迟还款日期。');
+		return false;
+	}
+	if(compareDate($("#ticketEndDate").val(), $("#repayEndTime").val()) != 1) {
+		alert('最迟还款日期必须大于票据截止日期。');
+		return false;
+	}
+	if($("#repayBank option:selected").val() == "") {
+		alert('请选择到期承诺还款银行。');
+		return false;
+	}
 	return true;
 });
 
@@ -149,7 +176,10 @@ function calculateAmount() {
 	var amount = parseFloat($.trim($("#ticketAmount").val()));
 	var yearRate = parseFloat($.trim($("#yearInterestRate").val()));
 	var benifitDay = diffDate($.trim($("#ticketEndDate").val()), $.trim($("#applyEndDate").val()));
-	var benifit = amount * (1-(yearRate/100)) * (benifitDay/365);
+	var benifit = 0;
+	if(benifitDay > 0) {
+		benifit = amount * (1-(yearRate/100)) * (benifitDay/365);
+	}
 	benifit = Math.round(benifit*100)/100;
 	$("#amount").val(benifit);
 }

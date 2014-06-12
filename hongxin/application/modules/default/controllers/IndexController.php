@@ -48,6 +48,11 @@ class IndexController extends CommonController
         foreach($borrowingRows as $key=>$row) {
         	$row['borrowedCount'] = $row['amountMaxUnit'] - $row['amountUnit'];
             $row['percent'] = floor($row['borrowedCount'] / $row['amountMaxUnit'] * 100);
+            if($row['borrowedCount'] > 0 && $row['percent'] < 1) {
+            	$row['percent'] = 1;
+            } else if($row['borrowedCount'] > 0 && $row['percent'] > 100) {
+            	$row['percent'] = 99;
+            }
             $borrowingRows[$key] = $row;
         }
         

@@ -66,7 +66,7 @@
 				<tr>
 					<td width="15%">&nbsp;</td>
 					<td>
-					<!--<input name="submit" type="submit" id="submit1" value="保存" class="button" onclick="$('#formClass').val('accountDetail');" />-->
+					<input name="submit" type="submit" id="submit1" value="保存" class="button" onclick="$('#formClass').val('accountDetail');" />
 					</td>
 				</tr>
 		</table><!--
@@ -173,7 +173,7 @@ $(".tabSwitch").each(function(){
 	}
 });
 <?php if ($this->loginedUserType == 'P') { ?>
-var status = '<?php echo $this->row['status'];?>';
+var status = '<?php echo $this->row['lendersStatus'];?>';
 if (status == '1') {
 	$("input[type=submit]").show();
 	$('input, select').attr('disabled', false);
