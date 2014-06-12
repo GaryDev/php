@@ -115,12 +115,9 @@ $("#applyForm").submit(function()
 	if($("#ticketCopy").val() == "") {
 		alert('请选择银行承兑汇票扫描件。');
 		return false;
-	} else {
-		var extension = /\.[^\.]+/.exec($("#ticketCopy").val());
-		if("|.jpg|.png|.jpeg|.gif|".indexOf("|" + extension + "|") == -1) {
-			alert('银行承兑汇票扫描件格式不正确。');
-			return false;
-		}
+	} else if(!validateFileExt($("#ticketCopy").val())) {
+		alert('银行承兑汇票扫描件格式不正确。');
+		return false;
 	}
 	if (checkYearInterestRate() == false) {
 		return false;

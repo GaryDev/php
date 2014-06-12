@@ -45,42 +45,42 @@
 		</table>
 		<table width="100%" border="0" cellpadding="0" cellspacing="0" class="subTab">
 			<tr>
-				<td><h3>个人基本资料</h3></td>
-				<td align="right"></td>
+				<td><h3>个人基本资料<span style="color: red;">（*为必填项）</span></h3></td>
+				<td align="left">&nbsp;</td>
 			</tr>
 		</table>
-		<form id="accountDetailForm" name="accountDetailForm" method="post" action="">
+		<form id="mainForm" name="mainForm" method="post" enctype="multipart/form-data" action="">
 		<table width="100%" border="0" cellpadding="0" cellspacing="0" class="table">
 				<tr>
-					<td width="15%">真实姓名：</td>
+					<td width="15%"><font class="required-star">*</font>&nbsp;真实姓名：</td>
 					<td><input name="userName" type="text" class="validate[required] input" id="userName" size="40" value="<?php echo htmlspecialchars($this->row['name']);?>" /></td>
 				</tr>
 				<tr>
-					<td width="15%">手机号码：</td>
+					<td width="15%"><font class="required-star">*</font>&nbsp;手机号码：</td>
 					<td><input name="mobile" type="text" class="validate[required,custom(mobileTelephone)] input" id="mobile" size="40" value="<?php echo htmlspecialchars($this->row['mobile']);?>" /></td>
 				</tr>
 				<tr>
-					<td width="15%">身份证号码：</td>
+					<td width="15%"><font class="required-star">*</font>&nbsp;身份证号码：</td>
 					<td><input name="idCardNumber" type="text" class="validate[required] input" id="idCardNumber" size="40" value="<?php echo htmlspecialchars($this->row['idCardNumber']);?>" /></td>
 				</tr>
 				<tr>
 					<td width="15%">&nbsp;</td>
 					<td>
-					<input name="submit" type="submit" id="submit1" value="保存" class="button" />
+					<!--<input name="submit" type="submit" id="submit1" value="保存" class="button" onclick="$('#formClass').val('accountDetail');" />-->
 					</td>
 				</tr>
-		</table>
+		</table><!--
 		<input name="formClass" type="hidden" id="formClass" value="accountDetail" />
-		</form>
+		</form>-->
 		<?php if ($this->loginedUserType == 'C') { ?>
 				<table width="100%" border="0" cellpadding="0" cellspacing="0" class="subTab">
 					<tr>
-						<td><h3>公司详细资料</h3></td>
+						<td><h3>公司详细资料<span style="color: red;">（*为必填项）</span></h3></td>
 						<td align="right"><div class="tabSwitch" tabFor="enterpriseDiv">展开</div></td>
 					</tr>
 				</table>
 				<div id="enterpriseDiv">
-					<form id="enterpriseForm" name="enterpriseForm" enctype="multipart/form-data" method="post" action="">
+				<!--  <form id="enterpriseForm" name="enterpriseForm" enctype="multipart/form-data" method="post" action=""> -->
 				<table width="100%" border="0" cellpadding="0" cellspacing="0" class="table">
 						<tr>
 							<td width="15%">公司类型：</td>
@@ -95,7 +95,7 @@ foreach($this->memberVars['industry'] as $key=>$value) {
 ?>
 								</select>
 							</td>
-							<td width="15%">公司名称：</td>
+							<td width="15%"><font class="required-star">*</font>&nbsp;公司名称：</td>
 							<td width="35%"><input type="text" class="validate[required] input" name="companyName" id="companyName" value="<?php echo isset($this->memberEnterpriseRow['name']) ? htmlspecialchars($this->memberEnterpriseRow['name']) : '';?>" /></td>
 						</tr>
 						<tr>
@@ -114,38 +114,40 @@ foreach($this->memberVars['industry'] as $key=>$value) {
 						</tr>
 						-->
 						<tr>
-							<td width="15%">法人姓名：</td>
+							<td width="15%"><font class="required-star">*</font>&nbsp;法人姓名：</td>
 							<td width="35%"><input type="text" class="validate[required] input" name="legalPersonName" id="legalPersonName" value="<?php echo isset($this->memberEnterpriseRow['legalPersonName']) ? htmlspecialchars($this->memberEnterpriseRow['legalPersonName']) : '';?>" /></td>
-							<td width="15%">法人身份证：</td>
-							<td width="35%">(扫描件)<input type="file" name="legalPersonIDCardCopy" id="legalPersonIDCardCopy" /></td>
+							<td width="15%"><font class="required-star">*</font>&nbsp;法人身份证：</td>
+							<td width="35%">(扫描件)<input type="file" name="legalPersonIDCardCopy" id="legalPersonIDCardCopy" value="<?php echo $this->memberEnterpriseRow['legalPersonIDCardCopyPath']; ?>" /></td>
 							<!--  
 							<td width="15%">法人身份证号码：</td>
 							<td width="35%"><input type="text" class="input" name="legalPersonIDCard" id="legalPersonIDCard" value="<?php echo isset($this->memberEnterpriseRow['legalPersonIDCard']) ? htmlspecialchars($this->memberEnterpriseRow['legalPersonIDCard']) : '';?>" /></td></td>
 							-->
 						</tr>
 						<tr>
-							<td width="15%">营业执照：</td>
-							<td width="35%">(扫描件)<input type="file" name="businessLicenseCopy" id="businessLicenseCopy" /></td>
-							<td width="15%">组织机构代码证：</td>
-							<td width="35%">(扫描件)<input type="file" name="organizationCodeCopy" id="organizationCodeCopy" /></td>
+							<td width="15%"><font class="required-star">*</font>&nbsp;营业执照：</td>
+							<td width="35%">(扫描件)<input type="file" name="businessLicenseCopy" id="businessLicenseCopy" value="<?php echo $this->memberEnterpriseRow['businessLicenseCopyPath']; ?>" /></td>
+							<td width="15%"><font class="required-star">*</font>&nbsp;组织机构代码证：</td>
+							<td width="35%">(扫描件)<input type="file" name="organizationCodeCopy" id="organizationCodeCopy" value="<?php echo $this->memberEnterpriseRow['organizationCodeCopyPath']; ?>" /></td>
 						</tr>
 						<tr>
 							<td width="15%">&nbsp;</td>
-							<td colspan="3"><input name="submit4" type="submit" id="submit4" value="保存" class="button" />
-									<input name="formClass" type="hidden" id="formClass" value="enterprise" /></td>
+							<td colspan="3"><!--<input name="submit4" type="submit" id="submit4" value="保存" class="button" onclick="$('#formClass').val('enterprise');" />
+							<!--  		<input name="formClass" type="hidden" id="formClass" value="enterprise" />--></td>
 						</tr>
 				</table>
+				<!--  
 				</form>
 				<form id="statusForm" name="statusForm" method="post" action="">
+				-->
 					<table width="100%" border="0" cellpadding="0" cellspacing="0" class="table">
 					<tr>
-						<td><input type="submit" class="btn" id="approveBtn" value="提交审核"/></td>
+						<td><input type="submit" class="btn" id="approveBtn" value="提交审核 " onclick="$('#formClass').val('borrowersStatus');" /></td>
 					</tr>
 					</table>
-					<input name="formClass" type="hidden" id="formClass" value="<?php echo $this->loginedUserType == 'C' ? 'borrowersStatus' : 'lendersStatus'; ?>" />
-				</form>
+					<input name="formClass" type="hidden" id="formClass" value="" />
 				</div>
 		<?php } ?>
+		</form>
     </td>
   </tr>  
 </table>
@@ -200,10 +202,39 @@ if (borrowersStatus == '1') {
 	$("#approveBtn").val('审核未通过');
 }
 $('input:text', $("#baseDiv, #enterpriseDiv")).css("width", "80%");
-$("#statusForm").submit(function(){
-	alert($(".formError").size());
-	return false;
-})
+
+$("#mainForm").submit(function(){
+	<?php if (empty($this->memberEnterpriseRow['legalPersonIDCardCopyPath'])): ?>
+	if($("#legalPersonIDCardCopy").val() == "") {
+		alert('请选择法人身份证扫描件。');
+		return false;
+	} else if(!validateFileExt($("#legalPersonIDCardCopy").val())) {
+		alert('法人身份证扫描件格式不正确。');
+		return false;
+	}
+	<?php endif; ?>
+	<?php if (empty($this->memberEnterpriseRow['businessLicenseCopyPath'])): ?>
+	if($("#businessLicenseCopy").val() == "") {
+		alert('请选择营业执照扫描件。');
+		return false;
+	} else if(!validateFileExt($("#businessLicenseCopy").val())) {
+		alert('营业执照扫描件格式不正确。');
+		return false;
+	}
+	<?php endif; ?>
+	<?php if (empty($this->memberEnterpriseRow['organizationCodeCopyPath'])): ?>
+	if($("#organizationCodeCopy").val() == "") {
+		alert('请选择组织机构代码证扫描件。');
+		return false;
+	} else if(!validateFileExt($("#organizationCodeCopy").val())) {
+		alert('组织机构代码证扫描件格式不正确。');
+		return false;
+	}
+	<?php endif; ?>
+	//return ($(".formError").size() == 0);
+	//alert($.fn.submitValidation);
+	return true;
+});
 <?php } ?>
 </script>
 

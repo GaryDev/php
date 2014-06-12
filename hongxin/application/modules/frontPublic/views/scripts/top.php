@@ -33,7 +33,7 @@
         <td align="center"><a id="safe" href="<?php echo $this->projectUrl(array('module'=>'default', 'controller'=>'info', 'action'=>'safe'));?>" class="menu">安全保障</a></td>
         <td align="center"><a id="borrowing" href="<?php echo $this->projectUrl(array('module'=>'default', 'controller'=>'borrowing', 'action'=>'index'));?>" class="menu">我要投资</a></td>
         <td align="center"><a id="lease" href="<?php echo $this->projectUrl(array('module'=>'member', 'controller'=>'borrowing', 'action'=>'apply'));?>" class="menu">我要融资</a></td>
-        <td align="center"><a id="cession" href="#" class="menu">债券转让</a></td>
+        <td align="center"><a id="cession" href="#" class="menu">债权转让</a></td>
         <td align="center"><a id="notice" href="<?php echo $this->projectUrl(array('module'=>'default', 'controller'=>'info', 'action'=>'notice'));?>" class="menu">信息公告</a></td>
         <td align="center"><a id="guide" href="<?php echo $this->projectUrl(array('module'=>'default', 'controller'=>'guide', 'action'=>'index'));?>" class="menu">新手指引</a></td>
         <td align="center"><a id="member" href="<?php echo $this->projectUrl(array('module'=>'member', 'controller'=>'index', 'action'=>'index'));?>" class="menu">我的鉴丰</a></td>

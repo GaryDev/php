@@ -49,7 +49,7 @@
 				</tr>
 				<tr>
 					<td></td>
-					<td><input name="submit" value=" 登录 " tabindex="5" type="submit"></td>
+					<td><input name="submit" value=" 登录 " tabindex="5" type="submit" class="btn" /></td>
 				</tr>
 			</table>
 		</form>
@@ -58,7 +58,7 @@
 <div class="cl"></div>
 <?php echo $this->render('footer.php');?>
 <script language="javascript">
-var userInfo = '用户名/手机号/E-mail';
+var userInfo = '请输入手机号';
 $("#userName").val(userInfo);
 $("#userName").focus(function(){
 	if (this.value == userInfo) {

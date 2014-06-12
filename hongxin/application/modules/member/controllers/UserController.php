@@ -61,9 +61,10 @@ class Member_UserController extends Member_CommonController
         $this->view->memberAmount = $memberLoginModel->getCurrentMemberAmount($row['userName']);
         
         $formClass = $this->_request->get('formClass');
+        //if ($this->_request->isPost()) {var_dump($formClass); die();}
 
         //个人基本资料
-        if ($this->_request->isPost() && $formClass == 'accountDetail') {
+        if ($this->_request->isPost() /*&& $formClass == 'accountDetail'*/) {
             $field = array();
             $filter = new Zend_Filter_StripTags();
             $field['name'] = $filter->filter(trim($this->_request->getPost('userName')));
@@ -72,12 +73,12 @@ class Member_UserController extends Member_CommonController
             $field['idCardAddress'] = $filter->filter(trim($this->_request->getPost('idCardAddress')));
             
             $memberLoginModel->update($field, "`userName` = '{$row['userName']}'");
-            echo $this->view->message('个人基本资料修改成功！') ;
-            exit;
+            //echo $this->view->message('个人基本资料修改成功！') ;
+            //exit;
         }
 
         //公司详细资料
-        if ($this->_request->isPost() && $formClass == 'enterprise') {
+        if ($this->_request->isPost() /*&& $formClass == 'enterprise'*/) {
             $field = array();
             $filter = new Zend_Filter_StripTags();
             $field['userName'] = $row['userName'];
@@ -90,18 +91,22 @@ class Member_UserController extends Member_CommonController
             $field['leaseEndTime'] = $filter->filter(trim($this->_request->getPost('leaseEndTime')));
             $field['taxRegistrationCertificate'] = $filter->filter(trim($this->_request->getPost('taxRegistrationCertificate')));
             $field['businessLicenseNumber'] = $filter->filter(trim($this->_request->getPost('businessLicenseNumber')));
+            
             $field['businessLicenseCopyPath'] = $this->__uploadFile('businessLicenseCopy', 'certificateCopy', $row,
             									array('path' => empty($memberEnterpriseRow) ? '' : $memberEnterpriseRow['businessLicenseCopyPath'],
             										'imgWidth' => 600, 'imgHeight' => 400));
             $field['organizationCode'] = $filter->filter(trim($this->_request->getPost('organizationCode')));
+            
             $field['organizationCodeCopyPath'] = $this->__uploadFile('organizationCodeCopy', 'certificateCopy', $row,
             		array('path' => empty($memberEnterpriseRow) ? '' : $memberEnterpriseRow['organizationCodeCopyPath'],
             				'imgWidth' => 400, 'imgHeight' => 300));
+
             $field['licenseNumberBankAccount'] = $filter->filter(trim($this->_request->getPost('licenseNumberBankAccount')));
             $field['turnoverLastYear'] = $filter->filter(trim($this->_request->getPost('turnoverLastYear')));
             $field['employeesNumber'] = $filter->filter(trim($this->_request->getPost('employeesNumber')));
             $field['legalPersonName'] = $filter->filter(trim($this->_request->getPost('legalPersonName')));
             $field['legalPersonIDCard'] = $filter->filter(trim($this->_request->getPost('legalPersonIDCard')));
+            
             $field['legalPersonIDCardCopyPath'] = $this->__uploadFile('legalPersonIDCardCopy', 'certificateCopy', $row,
             		array('path' => empty($memberEnterpriseRow) ? '' : $memberEnterpriseRow['legalPersonIDCardCopyPath'],
             				'imgWidth' => 400, 'imgHeight' => 300));
@@ -110,12 +115,12 @@ class Member_UserController extends Member_CommonController
             } else {
                 $memberEnterpriseModel->update($field, "`userName` = '{$row['userName']}'");
             }
-            echo $this->view->message('公司详细资料修改成功！') ;
-            exit;
+            //echo $this->view->message('公司详细资料修改成功！') ;
+            //exit;
         }
 
         //资料审查
-        if ($this->_request->isPost() && $formClass == 'borrowersStatus') {
+        if ($this->_request->isPost() /*&& $formClass == 'borrowersStatus'*/) {
             $field = array();
             if ($row['borrowersStatus'] == '1' || $row['borrowersStatus'] == '4') {
                 $field['borrowersStatus'] = '2';
@@ -125,16 +130,6 @@ class Member_UserController extends Member_CommonController
             }
         }
 
-        //资料审查
-        if ($this->_request->isPost() && $formClass == 'lendersStatus') {
-            $field = array();
-            if ($row['lendersStatus'] == '1' || $row['lendersStatus'] == '4') {
-                $field['lendersStatus'] = '2';
-                $memberLoginModel->update($field, "`userName` = '{$row['userName']}'");
-                echo $this->view->message('提交成功，我们会尽快审查你的资料。') ;
-                exit;
-            }
-        }
     }
     
     public function identifyNotifyAction()
@@ -481,10 +476,10 @@ class Member_UserController extends Member_CommonController
     public function mailModifyPasswordAction()
     {
         $userName = trim($this->_request->get('userName'));
-        $time = intval($this->_request->get('time'));
-        $code = trim($this->_request->get('code'));
-
         $returnUrl = $this->view->projectUrl(array('module'=>'member', 'controller'=>'user', 'action'=>'forgot-password'));
+        //$time = intval($this->_request->get('time'));
+        //$code = trim($this->_request->get('code'));
+/*
         if (empty($userName)) {
             echo $this->view->message('用户名不能为空！', $returnUrl) ;
             exit;
@@ -495,15 +490,16 @@ class Member_UserController extends Member_CommonController
             echo $this->view->message('此链接已经失效，请重新发送！', $returnUrl) ;
             exit;
         }
+*/
         $memberModel = new Application_Model_Member();
         $row = $memberModel->fetchRow("`userName` = '". addslashes($userName) ."'");
         if (empty($row)) {
             echo $this->view->message('用户名不存在，请检查是否输入错误！', $returnUrl) ;
             exit;
-        } else if ($code != md5("{$userName}{$row['password']}{$time}{$this->_configs['project']['authKey']}")) {
+        }/* else if ($code != md5("{$userName}{$row['password']}{$time}{$this->_configs['project']['authKey']}")) {
             echo $this->view->message('验证错误！', $returnUrl) ;
             exit;
-        }
+        }*/
 
         if ($this->_request->isPost()) {
             $password = trim($this->_request->get('password'));

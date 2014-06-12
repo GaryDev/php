@@ -94,6 +94,8 @@ a.ny_list_d{display:block;background:url(../images/ny_jt2.jpg) no-repeat 92% cen
 .ny_img{border:1px #e5e5e5 solid; display:block;}
 .ny_bfb{color:#e80000; font-weight:bold; font-size:20px;}
 
+.required-star {color: red; font-size: 16px;position:relative; top:4px;}
+
 table tr td p {margin: 8px;}
 
 .infobox .brief td label, .order-info td label {

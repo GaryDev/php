@@ -56,6 +56,6 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
      */
     protected function _initSession()
     {
-        session_start();
+        if(!session_id()) session_start();
     }
 }

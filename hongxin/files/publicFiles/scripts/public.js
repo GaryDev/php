@@ -296,6 +296,14 @@ function popupWindow(title, url)
 	layerWindow(title, page);
 }
 
+function validateFileExt(fileName) {
+	var extension = /\.[^\.]+/.exec(fileName);
+	if("|.jpg|.png|.jpeg|.gif|".indexOf("|" + extension + "|") == -1) {
+		return false;
+	}
+	return true;
+}
+
 function compareDate(begin, end)
 {
 	if(begin!="" && end!="") {
