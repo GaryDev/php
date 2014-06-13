@@ -95,7 +95,7 @@ class Member_CommonController extends Zend_Controller_Action
     
     protected function __uploadFile($fieldName, $type, $userRow, $options=array())
     {
-    	$defalut = array('path' => '', 'imgWidth' => 80, 'imgHeight' => 80);
+    	$defalut = array('path' => '', 'imgWidth' => 80, 'imgHeight' => 80, 'waterMark'=>0);
     	$options = array_merge($defalut, $options);
     	 
     	//上传设置
@@ -141,8 +141,14 @@ class Member_CommonController extends Zend_Controller_Action
     		createDirectory($dir);//创建临时文件夹
     		move_uploaded_file($files[$fieldName]['tmp_name'], $this->_configs['project'][$configBasePath] . $path);
     		imageResize($this->_configs['project'][$configBasePath] . $path, $options['imgWidth'], $options['imgHeight']);
+    		
+    		if($options['waterMark'] == 1) {
+	    		$waterMarkFile = PUBLIC_PATH . '/files/publicFiles/images/logoWater.png';
+	    		imageWaterMark($this->_configs['project'][$configBasePath] . $path, $waterMarkFile, -20, 0);
+	    		imageWaterMark($this->_configs['project'][$configBasePath] . $path, $waterMarkFile, 0, 50);
+	    		imageWaterMark($this->_configs['project'][$configBasePath] . $path, $waterMarkFile, -20, 150);
+    		}
     	}
-    	 
     	return $path;
     }
 }

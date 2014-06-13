@@ -83,6 +83,7 @@ return array(
     			'register' => 'http://180.166.114.155:8082/p2bServer-lgjr/p2p/registerAction.action',
 				'payment' => 'http://180.166.114.155:8082/p2bServer-lgjr/p2p/rechargeReqAction.action',
 				'freeze' => 'http://180.166.114.155:8082/p2bServer-lgjr/p2p/freezeMoneyAction.action',
+				'thaw' => 'http://180.166.114.155:8082/p2bServer-lgjr/p2p/thawMoneyAction.action',
 				'refund' => 'http://180.166.114.155:8082/p2bServer-lgjr/p2p/refundAction.action',
 				'queryBalance' => 'http://180.166.114.155:8082/p2bServer-lgjr/p2p/queryBalanceAction.action',
     		),
@@ -97,7 +98,7 @@ return array(
             'preTaxIncome' => array('1'=>'3000~5000', '2'=>'5000~8000', '3'=>'8000~12000', '4'=>'12000~18000', '5'=>'18000~25000', '6'=>'25000以上'),
             'isHaveSocialInsurance' => array('1'=>'有', '2'=>'无'),
 
-        	'orderType' => array('10'=>'等待付款', '20'=>'冻结成功', '30'=>'已取消', '40'=>'已退款'),	
+        	'orderType' => array('10'=>'等待付款', '20'=>'冻结成功', '25'=>'投资成功', '30'=>'已取消', '40'=>'已退款'),	
         	
             'houseType' => array('1'=>'自有房屋无按揭', '2'=>'自有房屋有按揭', '3'=>'租房'),
             'isHaveAuto' => array('1'=>'有', '0'=>'无'),

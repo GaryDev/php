@@ -62,10 +62,22 @@ class Member_BorrowingController extends Member_CommonController
         Zend_Loader::loadClass('Project_Paginator');
         $paginator = new Project_Paginator($recordCount, $pageSize, $pageNo);
         $paginator->urlTemplateContent = $urlTemplate;
+        $rows = $dbPaginator->getRows();
+        
+        foreach($rows as $key=>$row) {
+        	$row['borrowedCount'] = $row['amountMaxUnit'] - $row['amountUnit'];
+        	$row['percent'] = floor($row['borrowedCount'] / $row['amountMaxUnit'] * 100);
+        	if($row['borrowedCount'] > 0 && $row['percent'] < 1) {
+        		$row['percent'] = 1;
+        	} else if($row['percent'] > 100) {
+        		$row['percent'] = 99;
+        	}
+        	$rows[$key] = $row;
+        }
 
         //分配view(分页处理后的记录集以及分页HTML字符)
         $this->view->pageString = $paginator->getPageString();
-        $this->view->rows = $dbPaginator->getRows();
+        $this->view->rows = $rows;
         $urls['pageNo'] = $pageNo;
         $this->view->pageUrl = $this->view->projectUrl($urls);
         $this->view->vars = $vars;
@@ -112,10 +124,11 @@ class Member_BorrowingController extends Member_CommonController
         Zend_Loader::loadClass('Project_Paginator');
         $paginator = new Project_Paginator($recordCount, $pageSize, $pageNo);
         $paginator->urlTemplateContent = $urlTemplate;
-
+        $rows = $dbPaginator->getRows();
+        
         //分配view(分页处理后的记录集以及分页HTML字符)
         $this->view->pageString = $paginator->getPageString();
-        $this->view->rows = $dbPaginator->getRows();
+        $this->view->rows = $rows;
         $urls['pageNo'] = $pageNo;
         $this->view->pageUrl = $this->view->projectUrl($urls);
         $this->view->vars = $vars;
@@ -334,7 +347,7 @@ class Member_BorrowingController extends Member_CommonController
             //$field['deadline'] = (int)((($field['ticketEndTime'] - $field['startTime'])/86400) + 1);	   // 期限
 			$field['deadline'] = (int)((($field['endTime'] - $field['startTime'])/86400) + 1);
             $field['notes'] = $filter->filter(trim($this->_request->get('notes')));
-            $field['ticketCopyPath'] = $this->__uploadFile('ticketCopy', 'ticketCopy', $memberRow, array('imgWidth' => 210, 'imgHeight' => 280));
+            $field['ticketCopyPath'] = $this->__uploadFile('ticketCopy', 'ticketCopy', $memberRow, array('imgWidth' => 210, 'imgHeight' => 280, 'waterMark' => 1));
             $field['status'] = '1';
             $field['statusMessage'] = '';
             $field['statusUpdateTime'] = 0;
@@ -344,6 +357,14 @@ class Member_BorrowingController extends Member_CommonController
             echo $this->view->message('提交成功，请等待审核！', $this->view->projectUrl(array('action'=>'in-progress'))) ;
             exit;
         }
+    }
+    
+    public function completeAction() {
+    	$code = trim($this->_request->get('code'));
+    }
+    
+    public function repayAction() {
+    	$code = trim($this->_request->get('code'));
     }
 
     /**

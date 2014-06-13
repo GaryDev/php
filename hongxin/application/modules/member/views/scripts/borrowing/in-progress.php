@@ -34,12 +34,13 @@
 				<tr class="subject line">
 					<td align="left">融资编号</td>
 					<td>融资金额</td>
-					<td>还款方式</td>
 					<td>期限</td>
 					<td>年利率</td>
 					<td>状态</td>
+					<td>完成率</td>
 					<td>申请时间</td>
-					<td align="center">明细</td>
+					<td>票据截止时间</td>
+					<td align="center">操作</td>
 				</tr>
 				<?php
 				foreach ($this->rows as $key=>$row) {
@@ -47,12 +48,21 @@
 					<tr class="line">
 						<td align="left"><a href="<?php echo $this->projectUrl(array('action'=>'view', 'code'=>$row['code']));?>"><?php echo $row['code'];?></a></td>
 						<td><?php echo $row['amount'] / 10000;?>万</td>
-						<td><?php echo '保本保息'; ?></td>
 						<td><?php echo $row['deadline'];?>天</td>
 						<td><?php echo $row['yearInterestRate'];?>%</td>
 						<td><?php if ($row['status'] == 1) {echo '已提交待审核';} else if ($row['status'] == 2) {echo '初审已通过';} else if ($row['status'] == 3) {echo '终审已通过（融资中）';}  else if ($row['status'] == 4) {echo '初审未通过';}  else if ($row['status'] == 5) {echo '终审未通过';} ?></td>
+						<td><?php echo $row['percent']; ?>%</td>
 						<td><?php echo date('Y-m-d', $row['addTime']);?></td>
-						<td align="center"><a href="<?php echo $this->projectUrl(array('action'=>'view', 'code'=>$row['code']));?>" class="link">查看</a></td>
+						<td><?php echo date('Y-m-d', $row['ticketEndTime']);?></td>
+						<td align="center">
+						<a href="<?php echo $this->projectUrl(array('action'=>'view', 'code'=>$row['code']));?>" class="link">详细</a>
+						<?php //if($row['percent'] > 95 && $row['percent'] < 100) {?>
+						<!--  <a href="<?php echo $this->projectUrl(array('action'=>'complete', 'code'=>$row['code']));?>" class="link">完成</a> -->
+						<?php //}?>
+						<?php if($row['percent'] == 100 && $row['ticketEndTime'] <= time()) {?>
+						<a href="<?php echo $this->projectUrl(array('action'=>'repay', 'code'=>$row['code']));?>" class="link">还款</a>
+						<?php }?>
+						</td>
 					</tr>
 				<?php
 				}
