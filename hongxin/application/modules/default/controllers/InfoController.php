@@ -29,7 +29,10 @@ class InfoController extends CommonController
     {
         $this->view->menuTitle = '关于我们';
         $textModel = new Application_Model_Text();
-        $this->view->content = $textModel->content(2);
+        
+        $this->view->contentAbout = $textModel->content(2);
+        $this->view->contentContact = $textModel->content(1);
+        
         $this->renderScript('info/info.php');
     }
 

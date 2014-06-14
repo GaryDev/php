@@ -25,7 +25,7 @@
 .box1_l{width:690px; float:left; overflow:hidden;}
 .box1_r{width:250px; float:right; overflow:hidden;}
 .tb1{width:340px;}.tb2{width:200px;}.tb3{width:740px; float:right;}.tb3_l{width:530px; float:left;}
-.tit1,.tit2,.tit3,.nytit1,.nytit3,.nytit4,.nytit5,.nytit6{width:688px; height:29px; background:#f7f7f7; border:1px solid #ccc; border-top:3px solid #6cf; border-bottom:0; float:left; line-height:29px;}
+.tit1,.tit2,.tit3,.nytit1,.nytit3,.nytit4,.nytit5,.nytit6{width:688px; height:29px; background:#f7f7f7; border:1px solid #ccc; border-top:3px solid #30318b; border-bottom:0; float:left; line-height:29px;}
 .tit1 h3,.tit2 h3,.tit3 h3,.nytit3 h3,.nytit4 h3,.nytit5 h3,.nytit6 h3{font-size:14px; text-indent:10px;}
 .tit1 span,.tit2 span,.tit3 span{float:right; padding-right:10px; color:#00f;}
 .tit1 A:link,.tit1 A:visited,.tit2 A:link,.tit2 A:visited,.tit3 A:link,.tit3 A:visited{color:#00f;}

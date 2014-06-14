@@ -5,16 +5,16 @@ body{margin:0px; padding:0px; font-size:12px; font-family:"微软雅黑","宋体
 img{border:0px; vertical-align:middle; margin:0px; padding:0px;}
 .mainbox{width:1085px; margin:0 auto;}
 
-a.menu{display:block; background:#1eb2d5; height:40px; line-height:40px; color:#ffffff; text-decoration:none; font-size:16px; font-weight:bold; text-align:center;}
-a.menu:hover{display:block; background:#e0e0e0; height:40px; line-height:40px; color:#1eb2d5; text-decoration:none; font-size:16px; font-weight:bold; text-align:center;}
-.menu_on{display:block; background:#e0e0e0; height:40px; line-height:40px; color:#1eb2d5; text-decoration:none; font-size:16px; font-weight:bold; text-align:center;}
+a.menu{display:block; background:#30318b; height:40px; line-height:40px; color:#ffffff; text-decoration:none; font-size:16px; font-weight:bold; text-align:center;}
+a.menu:hover{display:block; background:#e0e0e0; height:40px; line-height:40px; color:#30318b; text-decoration:none; font-size:16px; font-weight:bold; text-align:center;}
+.menu_on{display:block; background:#e0e0e0; height:40px; line-height:40px; color:#30318b; text-decoration:none; font-size:16px; font-weight:bold; text-align:center;}
 
-.top_tel{font-size:16px; font-weight:bold; color:#1eb2d5;}
-a.dl{color:#1eb2d5; text-decoration:none; font-size:14px; font-weight:bold;}
+.top_tel{font-size:16px; font-weight:bold; color:#30318b;}
+a.dl{color:#30318b; text-decoration:none; font-size:14px; font-weight:bold;}
 a.dl:hover{color:#ff0000; text-decoration:none; font-size:14px; font-weight:bold;}
 
 a.xz{color:#646464; text-decoration:none; font-size:12px; height:35px; line-height:35px; padding:0 10px;}
-a.xz:hover{color:#fff; text-decoration:none; font-size:12px; background:#1eb2d6; height:35px; line-height:35px; padding:0 10px;}
+a.xz:hover{color:#fff; text-decoration:none; font-size:12px; background:#30318b; height:35px; line-height:35px; padding:0 10px;}
 
 a{color:#646464; text-decoration:none; font-size:12px; font-weight:normal; line-height:25px;}
 a:hover{color:#ff0000; text-decoration:none; font-size:12px; font-weight:normal; line-height:25px;}
@@ -39,7 +39,7 @@ a.nygl:hover{color:#ff0000; text-decoration:none; font-size:12px; font-weight:no
 .bt_hs12{font-size:14px; font-weight:normal; color:#5f5f5f;}
 .bt_js12{font-size:12px; font-weight:bold; color:#ed9500;}
 .bt_bai14{font-size:14px; font-weight:normal; color:#ffffff;}
-.bt_ls14{font-size:14px; font-weight:bold; color:#1eb2d5; padding-left:10px;}
+.bt_ls14{font-size:14px; font-weight:bold; color:#30318b; padding-left:10px;}
 
 
 .hsbfb{color:#f09d25; font-weight:bold; font-size:18px;}
@@ -50,9 +50,9 @@ a.nygl:hover{color:#ff0000; text-decoration:none; font-size:12px; font-weight:no
 .renbfb1{color:#e80000; font-weight:bold; font-size:40px;}
 .renbfb2{color:#e80000; font-weight:bold; font-size:12px;}
 
-.lsbfb{color:#1eb2d6; font-weight:bold; font-size:18px;}
-.lsbfb1{color:#1eb2d6; font-weight:bold; font-size:40px;}
-.lsbfb2{color:#1eb2d6; font-weight:bold; font-size:12px;}
+.lsbfb{color:#30318b; font-weight:bold; font-size:18px;}
+.lsbfb1{color:#30318b; font-weight:bold; font-size:40px;}
+.lsbfb2{color:#30318b; font-weight:bold; font-size:12px;}
 
 
 .hs{width:100%; background:#f3f3f3; height:10px; overflow:hidden;}
@@ -73,11 +73,11 @@ a.nygl:hover{color:#ff0000; text-decoration:none; font-size:12px; font-weight:no
 .box_red1 span{font-size:15px; color:#e92123; font-weight:bold; text-decoration:none; padding-left:35px;}
 
 .box_ls a{display:block; border:1px #dedede solid; background:url(../images/jt_5.jpg) no-repeat 10px center; background-color:#f3f3f3; height:45px; line-height:45px;text-decoration:none;}
-.box_ls a:hover{display:block; border:1px #1eb2d6 solid; background:url(../images/jt_5.jpg) no-repeat 10px center; background-color:#f3f3f3; height:45px; line-height:45px;text-decoration:none;}
-.box_ls span{font-size:15px; color:#1eb2d6; font-weight:bold; text-decoration:none; padding-left:35px;}
+.box_ls a:hover{display:block; border:1px #30318b solid; background:url(../images/jt_5.jpg) no-repeat 10px center; background-color:#f3f3f3; height:45px; line-height:45px;text-decoration:none;}
+.box_ls span{font-size:15px; color:#30318b; font-weight:bold; text-decoration:none; padding-left:35px;}
 .box_ls1 a{display:block; border:1px #dedede solid; background:url(../images/jt_6.jpg) no-repeat 10px center; background-color:#f3f3f3; height:45px; line-height:45px;text-decoration:none;}
-.box_ls1 a:hover{display:block; border:1px #1eb2d6 solid; background:url(../images/jt_6.jpg) no-repeat 10px center; background-color:#f3f3f3; height:45px; line-height:45px;text-decoration:none;}
-.box_ls1 span{font-size:15px; color:#1eb2d6; font-weight:bold; text-decoration:none; padding-left:35px;}
+.box_ls1 a:hover{display:block; border:1px #30318b solid; background:url(../images/jt_6.jpg) no-repeat 10px center; background-color:#f3f3f3; height:45px; line-height:45px;text-decoration:none;}
+.box_ls1 span{font-size:15px; color:#30318b; font-weight:bold; text-decoration:none; padding-left:35px;}
 
 .xszy_nr{font-size:14px; font-family:"微软雅黑"; line-height:25px;}
 .xszy_bt{font-size:18px; font-weight:bold; font-family:"微软雅黑"; }
@@ -112,7 +112,7 @@ table tr td p {margin: 8px;}
 .bartext { float: right; height: 12px; font-size: 12px; width: 35px; text-align: right; }
 
 .progressbar { position: relative; width: 165px; /* 宽度 */ border: 1px solid #DEDEDE; padding: 1px; }
-.progressbar div { display: block; position: relative; background:#1EB2D5;/* 进度条背景颜色 */ height: 12px; /* 高度 */ line-height: 12px;  /* 必须和高度一致，文本才能垂直居中 */ }
+.progressbar div { display: block; position: relative; background:#30318B;/* 进度条背景颜色 */ height: 12px; /* 高度 */ line-height: 12px;  /* 必须和高度一致，文本才能垂直居中 */ }
 
 .progressbar div.orange { background:#FF8000;/* 进度条背景颜色 */ }
 .progressbar div.red { background:#FF0000;/* 进度条背景颜色 */ }
