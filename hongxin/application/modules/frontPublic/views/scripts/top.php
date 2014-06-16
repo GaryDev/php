@@ -11,7 +11,7 @@
 <table width="1195" border="0" align="center" cellpadding="0" cellspacing="0">
   <tr>
     <td width="121"><img src="/files/default/images/logo.jpg" width="121" height="34"></td>
-    <td width="400" align="center"><a id="guide" href="<?php echo $this->projectUrl(array('module'=>'default', 'controller'=>'guide', 'action'=>'index'));?>" class="menu">新手指引</a></td>
+    <td width="400" align="right"><a id="guide" href="<?php echo $this->projectUrl(array('module'=>'default', 'controller'=>'guide', 'action'=>'index'));?>" style="font-size: 16px;color:#30318B;">新手指引</a></td>
     <td width="674" height="70"><table width="85%" border="0" align="center" cellpadding="0" cellspacing="0">
       <tr>
         <td class="top_tel" style="text-align: right;">客服热线：400-606-0009</td>
@@ -79,7 +79,7 @@ function checkLogin(type)
 
 <?php
 if ($this->module == 'default') {
-	if($this->controller == 'borrowing' || $this->controller == 'guide') {
+	if($this->controller == 'borrowing'/* || $this->controller == 'guide'*/) {
 		$menu = $this->controller;
 	} else {
 		$menu = $this->action;

@@ -60,11 +60,13 @@ class Member_UserController extends Member_CommonController
         $this->view->memberGrade = $memberLoginModel->getCurrentMemberGrade($row['userName']);
         $this->view->memberAmount = $memberLoginModel->getCurrentMemberAmount($row['userName']);
         
-        $formClass = $this->_request->get('formClass');
+        //$formClass = $this->_request->get('formClass');
         //if ($this->_request->isPost()) {var_dump($formClass); die();}
+        $approveCheck = $this->_request->get('approveCheck');
+        $approveCheck = !empty($approveCheck) ? $approveCheck : '0';
 
         //个人基本资料
-        if ($this->_request->isPost() /*&& $formClass == 'accountDetail'*/) {
+        if ($this->_request->isPost() && $approveCheck != '1') {
             $field = array();
             $filter = new Zend_Filter_StripTags();
             $field['name'] = $filter->filter(trim($this->_request->getPost('userName')));
@@ -80,7 +82,7 @@ class Member_UserController extends Member_CommonController
         }
 
         //公司详细资料
-        if ($this->_request->isPost() && $row['userType'] == 'C' /*&& $formClass == 'enterprise'*/) {
+        if ($this->_request->isPost() && $row['userType'] == 'C' && $approveCheck != '1') {
             $field = array();
             $filter = new Zend_Filter_StripTags();
             $field['userName'] = $row['userName'];
@@ -122,7 +124,7 @@ class Member_UserController extends Member_CommonController
         }
 
         //资料审查
-        if ($this->_request->isPost()  && $row['userType'] == 'C' /*&& $formClass == 'borrowersStatus'*/) {
+        if ($this->_request->isPost() && $row['userType'] == 'C' && $approveCheck == '1') {
             $field = array();
             if ($row['borrowersStatus'] == '1' || $row['borrowersStatus'] == '4') {
                 $field['borrowersStatus'] = '2';
@@ -130,6 +132,9 @@ class Member_UserController extends Member_CommonController
                 echo $this->view->message('提交成功，我们会尽快审查你的资料。') ;
                 exit;
             }
+        } else if($this->_request->isPost() && $row['userType'] == 'C' && $approveCheck != '1') {
+        	echo $this->view->message('公司资料保存成功！') ;
+        	exit;
         }
 
     }

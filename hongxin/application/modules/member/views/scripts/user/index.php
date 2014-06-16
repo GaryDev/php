@@ -63,12 +63,14 @@
 					<td width="15%"><font class="required-star">*</font>&nbsp;身份证号码：</td>
 					<td><input name="idCardNumber" type="text" class="validate[required] input" id="idCardNumber" size="40" value="<?php echo htmlspecialchars($this->row['idCardNumber']);?>" /></td>
 				</tr>
+				<?php if ($this->loginedUserType == 'P') { ?>
 				<tr>
 					<td width="15%">&nbsp;</td>
 					<td>
-					<input name="submit" type="submit" id="submit1" value="保存" class="button" onclick="$('#formClass').val('accountDetail');" />
+					<input name="submit" type="submit" id="submit1" value="保存资料" class="btn" onclick="$('#formClass').val('accountDetail');" />
 					</td>
 				</tr>
+				<?php } ?>
 		</table><!--
 		<input name="formClass" type="hidden" id="formClass" value="accountDetail" />
 		</form>-->
@@ -141,10 +143,11 @@ foreach($this->memberVars['industry'] as $key=>$value) {
 				-->
 					<table width="100%" border="0" cellpadding="0" cellspacing="0" class="table">
 					<tr>
-						<td><input type="submit" class="btn" id="approveBtn" value="提交审核 " onclick="$('#formClass').val('borrowersStatus');" /></td>
+						<td width="15%"><input type="submit" class="btn" id="approveBtn" value="保存资料 " /></td>
+						<td><input type="checkbox" name="approveCheck" id="approveCBX" value="1" />&nbsp;提交审核</td>
 					</tr>
 					</table>
-					<input name="formClass" type="hidden" id="formClass" value="" />
+					<!--<input name="formClass" type="hidden" id="formClass" value="" />-->
 				</div>
 		<?php } ?>
 		</form>
@@ -177,7 +180,7 @@ var status = '<?php echo $this->row['lendersStatus'];?>';
 if (status == '1') {
 	$("input[type=submit]").show();
 	$('input, select').attr('disabled', false);
-} else if (status == '2'){
+} else {
 	$("input[type=submit]").hide();
 	$('input, select').attr('disabled', true);
 }
@@ -186,22 +189,33 @@ if (status == '1') {
 <?php if ($this->loginedUserType == 'C') { ?>
 var borrowersStatus = '<?php echo $this->row['borrowersStatus'];?>';
 if (borrowersStatus == '1') {
-	$("#approveBtn").val('提交审核');
+	//$("#approveBtn").val('提交审核');
 	$('input, select').attr('disabled', false);
 } else if (borrowersStatus == '2'){
 	//$("#approveBtn").attr('disabled', true);
 	$("input[type=submit]").attr('disabled', true);
 	$("#approveBtn").val('正在审核中');
+	$("#approveCBX").parent().hide();
 	$('input, select').attr('disabled', true);
 } else if (borrowersStatus == '3'){
 	//$("#approveBtn").attr('disabled', true);
 	$("input[type=submit]").attr('disabled', true);
 	$("#approveBtn").val('已审核通过');
+	$("#approveCBX").parent().hide();
 	$('input, select').attr('disabled', true);
 } else if (borrowersStatus == '4'){
 	$("#approveBtn").val('审核未通过');
+	$("#approveCBX").parent().hide();
 }
 $('input:text', $("#baseDiv, #enterpriseDiv")).css("width", "80%");
+
+$("#approveCBX").change(function(){
+	if(this.checked) {
+		$("#approveBtn").val('提交审核');
+	} else {
+		$("#approveBtn").val('保存资料');
+	}
+});
 
 $("#mainForm").submit(function(){
 	<?php if (empty($this->memberEnterpriseRow['legalPersonIDCardCopyPath'])): ?>

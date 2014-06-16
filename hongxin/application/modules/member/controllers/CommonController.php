@@ -148,6 +148,8 @@ class Member_CommonController extends Zend_Controller_Action
 	    		imageWaterMark($this->_configs['project'][$configBasePath] . $path, $waterMarkFile, 0, 50);
 	    		imageWaterMark($this->_configs['project'][$configBasePath] . $path, $waterMarkFile, -20, 150);
     		}
+    	} else {
+    		$path = $options['path'];
     	}
     	return $path;
     }

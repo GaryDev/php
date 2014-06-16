@@ -35,7 +35,7 @@
         float: left;
         width: 200px;
         margin: 0 3px;
-        background: #efefef;
+        /*background: #efefef;*/
         text-align: center;
     }
     #tabContainer a
@@ -46,8 +46,9 @@
     }
     #tabContainer a.on
     {
-        background: #30318B;
-    	color: #ffffff;
+        /*background: #30318B;*/
+    	/*color: #ffffff;*/
+    	border-bottom: 1px solid #000000;
     }
 </style>
 </head>
@@ -151,7 +152,7 @@
 	            <td align="left" class="xszy_nr">&nbsp;</td>
 	          </tr>
 	          <tr>
-	            <td align="left" class="xszy_bt"><a href="#"><img src="/files/default/images/zy_3go.jpg" width="165" height="46"></a></td>
+	            <td align="left" class="xszy_bt"><a href="<?php echo $this->projectUrl(array('module'=>'member', 'controller'=>'borrowing', 'action'=>'apply'));?>"><img src="/files/default/images/zy_3go.jpg" width="165" height="46"></a></td>
 	          </tr>
 	        </table></td>
 	        <td width="514" align="center"><img src="/files/default/images/zy_3.jpg" width="685" height="211"></td>
@@ -287,7 +288,7 @@
 	            <td align="left" class="xszy_nr">&nbsp;</td>
 	          </tr>
 	          <tr>
-	            <td align="left" class="xszy_bt"><a href="#"><img src="/files/default/images/tz_3go.jpg" width="161" height="46"></a></td>
+	            <td align="left" class="xszy_bt"><a href="<?php echo $this->projectUrl(array('module'=>'default', 'controller'=>'borrowing', 'action'=>'index'));?>"><img src="/files/default/images/tz_3go.jpg" width="161" height="46"></a></td>
 	          </tr>
 	        </table></td>
 	        <td width="514" align="center"><img src="/files/default/images/tz_3.jpg" width="540" height="218"></td>
