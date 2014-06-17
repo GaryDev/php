@@ -142,9 +142,11 @@ foreach($this->memberVars['industry'] as $key=>$value) {
 				<form id="statusForm" name="statusForm" method="post" action="">
 				-->
 					<table width="100%" border="0" cellpadding="0" cellspacing="0" class="table">
+					<?php if ($this->row['borrowersStatus'] == '4') { ?><tr><td colspan="2">您的资料未通过审核，请重新提交资料</td></tr><?php } ?>
 					<tr>
 						<td width="15%"><input type="submit" class="btn" id="approveBtn" value="保存资料 " /></td>
 						<td><input type="checkbox" name="approveCheck" id="approveCBX" value="1" />&nbsp;提交审核</td>
+						
 					</tr>
 					</table>
 					<!--<input name="formClass" type="hidden" id="formClass" value="" />-->
@@ -204,8 +206,8 @@ if (borrowersStatus == '1') {
 	$("#approveCBX").parent().hide();
 	$('input, select').attr('disabled', true);
 } else if (borrowersStatus == '4'){
-	$("#approveBtn").val('审核未通过');
-	$("#approveCBX").parent().hide();
+	//$("#approveBtn").val('审核未通过');
+	//$("#approveCBX").parent().hide();
 }
 $('input:text', $("#baseDiv, #enterpriseDiv")).css("width", "80%");
 

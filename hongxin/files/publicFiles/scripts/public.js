@@ -266,19 +266,19 @@ function bookmark(title, url)
 }
 
 var layerhtml;
-function layerWindow(title, page) {
+function layerWindow(title, page, area) {
 	$.layer({
         type: 1,
         title: title,
         offset: [($(window).height() - 290)/2+'px', ''],
         border : [5, 0.5, '#666'],
-        area: ['450px','290px'],
+        area: area,
         shadeClose: false,
         page: page
     });
 };
 
-function popupWindow(title, url)
+function popupWindow(title, url, area)
 {
 	var page = {};
 	//if(layerhtml) {
@@ -293,7 +293,10 @@ function popupWindow(title, url)
 			layerhtml = datas;
 		}
 	//}
-	layerWindow(title, page);
+	if(area === undefined) {
+		area = ['450px','290px'];
+	}
+	layerWindow(title, page, area);
 }
 
 function validateFileExt(fileName) {

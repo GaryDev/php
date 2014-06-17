@@ -101,6 +101,7 @@ class Member_CommonController extends Zend_Controller_Action
     	//上传设置
     	$uploadFileExtension = array('jpg', 'jpeg', 'png', 'gif');
     	$maxSize = 1024 * 1024 * 1;
+    	$maxSize = $maxSize * 2;
     	$configBasePath = $type . 'BasePath';
     	$files = $_FILES;
     	$path = '';

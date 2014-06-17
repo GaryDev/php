@@ -28,7 +28,7 @@
 	</table>
 	<table width="400" border="0" align="center" cellpadding="5" cellspacing="0" style="border:0px #dedede solid;margin-top: 10px;margin-left: 30px;">
 		<tr>
-			<td align="center"><input type="button" class="btn" id="goPay" name="goPay" value="资金冻结" /></td>
+			<td align="center"><input type="submit" class="btn" id="goPay" name="goPay" value="资金冻结" /></td>
 		</tr>
 	</table>
 <?php foreach ($this->params as $n=>$p): ?>
@@ -50,12 +50,12 @@
 </div>
 
 <script type="text/javascript">
-	$("#goPay").click(function(){
+	$("#paymentForm").submit(function(){
 		$("#paymentForm").hide();
 		$("#divComplete").show();
 		$(".xubox_close").hide();
-		$("#paymentForm").submit();
-		return false;
+		//$("#paymentForm").submit();
+		return true;
 	});
 
 	$("#notifyBtn").click(function(){

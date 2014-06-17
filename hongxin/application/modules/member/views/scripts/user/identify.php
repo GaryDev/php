@@ -12,7 +12,7 @@
 	</tr>
 	<tr>
 		<td>&nbsp;</td>
-		<td><input id="identify" type="button" value="去验证身份并开通支付账号" class="button" /></td>
+		<td><input id="identify" type="submit" value="去验证身份并开通支付账号" class="button" /></td>
 	</tr>
 </table>
 </div>
@@ -35,7 +35,31 @@
 </div>
 
 <script type="text/javascript">
-	$("#identify").click(function(){
+	function createMac()
+	{
+		var param = "{"
+		$("input:text, input[type=hidden]").each(function(){
+			param += '"' + this.name + '":' +  '"' + $.trim(this.value) + '",';
+		});
+		var json = param.substring(0, param.length - 1) + "}";
+		var result = false;
+		$.ajax({  
+	           async: false,
+	           type: 'POST',  
+	           url: '<?php echo $this->projectUrl(array('module'=>'member', 'controller'=>'user', 'action'=>'get-mac'));?>' + '?rand=' + Math.random(),  
+	           data: $.parseJSON(json),  
+	           success: function(datas){  
+	        	    $("input[name=mac]").val(datas.replace(/"/g, ''));
+		   			$("#identifyForm").hide();
+		   			$("#divComplete").show();
+					$(".xubox_close").hide();
+					result = true;
+	           }
+	    }); 
+	    return result;
+	}
+
+	$("#identifyForm").submit(function(){
 		if($("#name").val() == '') {
 			alert("请输入真实姓名。");
 			return false;
@@ -44,22 +68,8 @@
 			alert("请输入身份证号码。");
 			return false;
 		}
-		var param = "{"
-		$("input:text, input[type=hidden]").each(function(){
-			param += '"' + this.name + '":' +  '"' + $.trim(this.value) + '",';
-		});
-		var json = param.substring(0, param.length - 1) + "}";
-		$.post('<?php echo $this->projectUrl(array('module'=>'member', 'controller'=>'user', 'action'=>'get-mac'));?>' + '?rand=' + Math.random(), 
-				$.parseJSON(json),
-				function(data){	
-					$("input[name=mac]").val(data.replace(/"/g, ''));
-					$("#identifyForm").hide();
-					$("#divComplete").show();
-					$(".xubox_close").hide();
-					$("#identifyForm").submit();
-				}
-		);
-		return false;
+		var isPost = createMac();
+		return isPost;
 	});
 
 	$("#notifyBtn").click(function(){

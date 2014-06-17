@@ -3,8 +3,9 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <link href="<?php echo $this->baseUrl;?>/files/default/css/base.css" media="screen" rel="stylesheet" type="text/css" />
-<script language="javascript" src="<?php echo $this->baseUrl;?>/files/publicFiles/scripts/jquery-1.3.js"></script>
+<script language="javascript" src="<?php echo $this->baseUrl;?>/files/publicFiles/scripts/jquery.js"></script>
 <script language="javascript" src="<?php echo $this->baseUrl;?>/files/publicFiles/scripts/public.js"></script>
+<script language="javascript" src="<?php echo $this->baseUrl;?>/files/publicFiles/scripts/jqueryLayer/layer.min.js"></script>
 <link rel="stylesheet" href="<?php echo $this->baseUrl;?>/files/publicFiles/scripts/jqueryFormValidator/css/validationEngine.jquery.css" type="text/css" />
 <script type="text/javascript" src="<?php echo $this->baseUrl;?>/files/publicFiles/scripts/jqueryFormValidator/js/jquery.validationEngine-cn.js"></script>
 
@@ -42,7 +43,7 @@
 				<tr>
 					<td class="bgtd1">短信验证码：</td>
 					<td class="bgtd2"><input name="smscode" type="text" class="validate[required,callback[checkSmsCode,1]] bginput1 " id="smscode"/></td>
-					<td><input type="button" id="btn" value="获取验证码" onclick="time(this);" /></td>
+					<td><input type="button" id="btnSms" value="获取验证码" /></td>
 				</tr>
 				<tr>
 					<td class="bgtd1">注册类型：</td>
@@ -203,6 +204,45 @@ function time(o)
 			alert("请输入正确的手机号！");
 		}
 	}
+}
+
+$("#btnSms").click(function(){
+	if($("#userName").val() != "" && $("#userName").val().match(/^1[358][0-9]{9}$/)) {
+		popupWindow("输入验证码","<?php echo $this->projectUrl(array('module'=>'member', 'controller'=>'user', 'action'=>'imgcode'));?>", ['300px','120px']);
+		//$(".xubox_close").hide();
+	} else {
+		alert("请输入正确的手机号！");
+	}
+});
+
+function verifyCode() {
+	if ($.trim($("#code").val()) == ''){
+        alert("请填写验证码！");
+        $("#code").focus();
+        return false;
+    }
+	var url = '<?php echo $this->projectUrl(array('module'=>'member', 'controller'=>'user', 'action'=>'check-imgcode'));?>' + '?rand=' + Math.random();
+	$.ajax({
+		type: "POST",
+		url: url,
+		data: "code=" + $("#code").val(),
+		async: false,
+		success: function(data){ 
+			if(data == 1) {
+				$(".xubox_close").click();
+				time(document.getElementById("btnSms"));
+			} else {
+				alert('验证码错误，请重新填写！');
+				$("#code").val('');
+				$("#code").focus();
+				refreshCode();
+			}
+		} 
+	});
+}
+
+function refreshCode() {
+	$('#codeImage').attr('src', '<?php echo $this->projectUrl(array('module' => 'admin', 'controller' => 'image-code', 'action' => 'index', 'rand' => 1));?>' + Math.random());
 }
 </script>
 </body>

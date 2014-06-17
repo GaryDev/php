@@ -628,6 +628,21 @@ class Member_UserController extends Member_CommonController
     	exit;
     }
     
+    public function imgcodeAction() { }
+    
+    public function checkImgcodeAction()
+    {
+    	$code = trim($this->_request->getPost('code'));
+    	$ok = 0;
+    	if ((strtoupper($code) === $_SESSION["{$this->_configs['project']['cookiePrefix']}_imageCode"])) {
+    		$ok = 1;
+    	} else {
+    		$_SESSION["{$this->_configs['project']['cookiePrefix']}"] = '';
+    	}
+    	echo Zend_Json::encode($ok);
+    	exit;
+    }
+    
     /**
      * 注册
      *
