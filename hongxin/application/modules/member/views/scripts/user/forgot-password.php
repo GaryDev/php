@@ -5,10 +5,11 @@
 <link href="<?php echo $this->baseUrl;?>/files/default/css/base.css" media="screen" rel="stylesheet" type="text/css" />
 <script language="javascript" src="<?php echo $this->baseUrl;?>/files/publicFiles/scripts/jquery.js"></script>
 <script language="javascript" src="<?php echo $this->baseUrl;?>/files/publicFiles/scripts/public.js"></script>
+<script language="javascript" src="<?php echo $this->baseUrl;?>/files/publicFiles/scripts/jqueryLayer/layer.min.js"></script>
 <link rel="stylesheet" href="<?php echo $this->baseUrl;?>/files/publicFiles/scripts/jqueryFormValidator/css/validationEngine.jquery.css" type="text/css" />
 <script type="text/javascript" src="<?php echo $this->baseUrl;?>/files/publicFiles/scripts/jqueryFormValidator/js/jquery.validationEngine-cn.js"></script>
 
-<title>用户登录 - <?php echo $this->title;?></title>
+<title>找回密码 - <?php echo $this->title;?></title>
 <meta name="keywords" content="<?php echo $this->keywords;?>" />
 <meta name="description" content="<?php echo $this->description;?>" />
 </head>
@@ -28,7 +29,7 @@
 				<tr>
 					<td height="30" align="right">短信验证码：</td>
 					<td height="30"><input name="smscode" type="text" class="validate[required, callback[checkSmsCode,1]] input" id="smscode"/>
-					<input type="button" id="btn" value="获取验证码" onclick="time(this);" /></td>
+					<input type="button" id="btnSms" value="获取验证码" /></td>
 				</tr>
 				<tr>
 					<td height="30" align="right">新密码：</td>
@@ -37,6 +38,13 @@
 				<tr>
 					<td height="30" align="right">确认新密码：</td>
 					<td height="30"><input name="password2" type="password" class="validate[required, confirm[password]] input" id="password2" value="" size="30" /></td>
+				</tr>
+				<tr>
+					<td height="30" align="right">验证码：</td>
+					<td height="30">
+					<input name="imgCode" type="text" id="imgCode" class="validate[required,callback[checkImgCode,1]]" size="8" /> 
+					<img src="<?php echo $this->projectUrl(array('module' => 'admin', 'controller' => 'image-code', 'action' => 'index', 'rand' => rand(100, 999)));?>" 
+						name="codeImg" border="0" align="absmiddle" id="codeImg" onclick="refreshCode(this);" style="text-decoration:underline; cursor:pointer;"/></td>
 				</tr>
 				<tr>
 					<td height="30">&nbsp;</td>
@@ -75,6 +83,28 @@ function checkSmsCode(mcode){
 	return checkResult;
 }
 
+function checkImgCode(mcode){
+	checkResult = {'isRight':true, 'message':''};
+	if (mcode != '') {
+		var url = '<?php echo $this->projectUrl(array('module'=>'member', 'controller'=>'user', 'action'=>'check-imgcode'));?>' + '?rand=' + Math.random();
+		$.ajax({
+			type: "POST",
+			url: url,
+			data: "code=" + mcode,
+			async: false,
+			success: function(data){ 
+				if(data != 1) {
+					checkResult = {'isRight':false, 'message':'* 验证码错误，请重新填写。'};
+					$("#imgCode").val('');
+					$("#imgCode").focus();
+					refreshCode('#codeImg');
+				}
+			} 
+		});
+	}
+	return checkResult;
+}
+
 var wait=120;
 function time(o)
 {
@@ -106,6 +136,46 @@ function time(o)
 			alert("请输入正确的手机号！");
 		}
 	}
+}
+
+$("#btnSms").click(function(){
+	if($("#userName").val() != "" && $("#userName").val().match(/^1[358][0-9]{9}$/)) {
+		popupWindow("输入验证码","<?php echo $this->projectUrl(array('module'=>'member', 'controller'=>'user', 'action'=>'imgcode'));?>", ['300px','120px']);
+		//$(".xubox_close").hide();
+	} else {
+		alert("请输入正确的手机号！");
+	}
+});
+
+function verifyCode() {
+	if ($.trim($("#code").val()) == ''){
+        alert("请填写验证码！");
+        $("#code").focus();
+        return false;
+    }
+	var url = '<?php echo $this->projectUrl(array('module'=>'member', 'controller'=>'user', 'action'=>'check-imgcode'));?>' + '?rand=' + Math.random();
+	$.ajax({
+		type: "POST",
+		url: url,
+		data: "code=" + $("#code").val(),
+		async: false,
+		success: function(data){ 
+			if(data == 1) {
+				$(".xubox_close").click();
+				refreshCode('#codeImg');
+				time(document.getElementById("btnSms"));
+			} else {
+				alert('验证码错误，请重新填写！');
+				$("#code").val('');
+				$("#code").focus();
+				refreshCode('#codeImage');
+			}
+		} 
+	});
+}
+
+function refreshCode(o) {
+	$(o).attr('src', '<?php echo $this->projectUrl(array('module' => 'admin', 'controller' => 'image-code', 'action' => 'index', 'rand' => 1));?>' + Math.random());
 }
 </script>
 </body>

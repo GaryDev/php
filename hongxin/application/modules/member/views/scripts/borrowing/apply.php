@@ -178,7 +178,7 @@ function calculateAmount() {
 	var benifitDay = diffDate($.trim($("#ticketEndDate").val()), $.trim($("#applyEndDate").val()));
 	var benifit = 0;
 	if(benifitDay > 0) {
-		benifit = amount * (1-(yearRate/100)) * (benifitDay/365);
+		benifit = amount * (1-((yearRate/100) * (benifitDay/365)));
 	}
 	benifit = Math.round(benifit*100)/100;
 	$("#amount").val(benifit);

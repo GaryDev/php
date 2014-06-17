@@ -126,7 +126,7 @@ class Application_Model_MemberLogin extends Application_Model_Member
         $cookieModel = new Application_Model_Cookie();
         $memberVisitModel = new Application_Model_MemberVisit();
         $status = 1;
-        $row = $this->fetchRow("(`userName` = '". addslashes($userName) ."' || `mobile` = '". addslashes($userName) ."' || `email` = '". addslashes($userName) ."') AND `password` = '". md5($password) ."'");
+        $row = $this->fetchRow("(`userName` = '". addslashes($userName) ."') AND `password` = '". md5($password) ."'");
         if (empty($row)) {
             $status = 1;
         //} else if ($row['status'] == 1) {

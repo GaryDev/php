@@ -25,12 +25,15 @@
 <table width="1085" border="0" align="center" cellpadding="10" cellspacing="0" class="infobox" style="border:1px #dedede solid;">
   <tr>
     <td width="335" height="400" valign="top">
-    <table width="90%" border="0" align="center" cellpadding="20" cellspacing="0" style="border:1px #dedede solid;">
+    <table width="90%" border="0" align="center" cellpadding="10" cellspacing="0" style="border:1px #dedede solid;">
     	<tr>
     		<td align="center">到期由：<?php echo $this->row['repaymentBank']; ?>无条件兑付</td>
     	</tr>
     	<tr>
-    		<td align="center"><a href="#" class="ny_img"><img src="<?php echo $this->row['ticketCopyPath']; ?>" /></a></td>
+    		<td align="center"><img src="<?php echo $this->row['ticketCopyPath']; ?>" width="210" height="280" /></td>
+    	</tr>
+    	<tr>
+    		<td align="right"><a href="<?php echo $this->row['ticketCopyPath']; ?>" target="_blank">查看大图</a></td>
     	</tr>
     </table>
     </td>
@@ -51,7 +54,7 @@
     		</tr>
     		<tr>
     			<td>年化收益：<label><?php echo $this->row['yearInterestRate']; ?></label>%</td>
-    			<td>融资金额：<label><?php echo $this->row['amount'] / 10000;?></label>万</td>
+    			<td>融资金额：<label><?php echo $this->row['amount'];?></label>万</td>
     			<td>产品编号：<?php echo $this->row['code'];?></td>
     		</tr>
     		<tr>

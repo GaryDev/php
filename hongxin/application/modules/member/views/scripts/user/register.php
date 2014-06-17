@@ -62,7 +62,13 @@
 					<td class="bgtd2"><input name="password2" type="password" class="validate[required,confirm[password]] bginput1" id="password2"/></td>
 					<td class="color999">请重新输入一次密码，已确认无误</td>
 				</tr>
-
+				<tr>
+					<td class="bgtd1">验证码：</td>
+					<td class="bgtd2">
+					<input name="imgCode" type="text" id="imgCode" class="validate[required,callback[checkImgCode,1]]" size="8" /> 
+					<img src="<?php echo $this->projectUrl(array('module' => 'admin', 'controller' => 'image-code', 'action' => 'index', 'rand' => rand(100, 999)));?>" 
+						name="codeImg" border="0" align="absmiddle" id="codeImg" onclick="refreshCode(this);" style="text-decoration:underline; cursor:pointer;"/></td>
+				</tr>
 				<tr>
 					<td class="bgtd1"></td>
 					<td colspan="2" class="bgtd2">
@@ -173,6 +179,28 @@ function checkSmsCode(mcode){
 	return checkResult;
 }
 
+function checkImgCode(mcode){
+	checkResult = {'isRight':true, 'message':''};
+	if (mcode != '') {
+		var url = '<?php echo $this->projectUrl(array('module'=>'member', 'controller'=>'user', 'action'=>'check-imgcode'));?>' + '?rand=' + Math.random();
+		$.ajax({
+			type: "POST",
+			url: url,
+			data: "code=" + mcode,
+			async: false,
+			success: function(data){ 
+				if(data != 1) {
+					checkResult = {'isRight':false, 'message':'* 验证码错误，请重新填写。'};
+					$("#imgCode").val('');
+					$("#imgCode").focus();
+					refreshCode('#codeImg');
+				}
+			} 
+		});
+	}
+	return checkResult;
+}
+
 var wait=120;
 function time(o)
 {
@@ -207,6 +235,7 @@ function time(o)
 }
 
 $("#btnSms").click(function(){
+	if($("div.userName").size() > 0) return;
 	if($("#userName").val() != "" && $("#userName").val().match(/^1[358][0-9]{9}$/)) {
 		popupWindow("输入验证码","<?php echo $this->projectUrl(array('module'=>'member', 'controller'=>'user', 'action'=>'imgcode'));?>", ['300px','120px']);
 		//$(".xubox_close").hide();
@@ -230,19 +259,20 @@ function verifyCode() {
 		success: function(data){ 
 			if(data == 1) {
 				$(".xubox_close").click();
+				refreshCode('#codeImg');
 				time(document.getElementById("btnSms"));
 			} else {
 				alert('验证码错误，请重新填写！');
 				$("#code").val('');
 				$("#code").focus();
-				refreshCode();
+				refreshCode('#codeImage');
 			}
 		} 
 	});
 }
 
-function refreshCode() {
-	$('#codeImage').attr('src', '<?php echo $this->projectUrl(array('module' => 'admin', 'controller' => 'image-code', 'action' => 'index', 'rand' => 1));?>' + Math.random());
+function refreshCode(o) {
+	$(o).attr('src', '<?php echo $this->projectUrl(array('module' => 'admin', 'controller' => 'image-code', 'action' => 'index', 'rand' => 1));?>' + Math.random());
 }
 </script>
 </body>

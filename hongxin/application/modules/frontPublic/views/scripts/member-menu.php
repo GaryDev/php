@@ -4,6 +4,14 @@
         </tr>
       <tr>
         <td style="padding-bottom:30px;">
+          <table width="120" border="0" align="center" cellpadding="0" cellspacing="0" style="margin-top:10px;">
+            <tr>
+              <td height="30" class="bt_hs14">我的鉴丰</td>
+            </tr>
+            <tr>
+              <td><a href="<?php echo $this->projectUrl(array('module'=>'member', 'controller'=>'index', 'action'=>'index'));?>">· 会员首页</a><br/></td>
+            </tr>
+          </table>
          <?php if ($this->loginedUserType == 'C') { ?>
          <table width="120" border="0" align="center" cellpadding="0" cellspacing="0" style="margin-top:10px;">
             <tr>
@@ -47,9 +55,11 @@
             <tr>
               <td><a href="<?php echo $this->projectUrl(array('module'=>'member', 'controller'=>'cession', 'action'=>'in-progress'));?>">· 我的转让申请</a><br/></td>
             </tr>
+            <!--  
             <tr>
               <td><a href="#">· 订单管理</a><br/></td>
             </tr>
+            -->
           </table>
         <?php } ?>
           <!--  

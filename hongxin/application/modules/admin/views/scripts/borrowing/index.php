@@ -12,16 +12,16 @@
 <body>
 <table width="100%" border="0" cellspacing="0" cellpadding="0" class="navigation">
     <tr>
-        <td class="content"><span class="description">当前位置：</span>借款列表</td>
+        <td class="content"><span class="description">当前位置：</span>融资列表</td>
         <td align="right"></td>
     </tr>
 </table>
 <form id="searchForm" name="searchForm" method="post" action="<?php echo $this->projectUrl();?>">
     <table width="100%" border="0" cellspacing="0" cellpadding="0" class="table">
         <tr>
-        	<td align="left">借款用户：
+        	<td align="left">融资用户：
         		<input name="userName" type="text" class="input" id="userName" size="20" value="<?php echo htmlspecialchars($this->vars['userName']);?>" />
-        		&nbsp;&nbsp;&nbsp;&nbsp;借款编号：
+        		&nbsp;&nbsp;&nbsp;&nbsp;融资编号：
         		<input name="code" type="text" class="input" id="code" size="20" value="<?php echo htmlspecialchars($this->vars['code']);?>" />
         		&nbsp;&nbsp;&nbsp;&nbsp;标题：
         		<input name="title" type="text" class="input" id="title" size="20" value="<?php echo htmlspecialchars($this->vars['title']);?>" />
@@ -41,10 +41,10 @@
 <table width="100%" border="0" cellspacing="0" cellpadding="0" class="table">
     <form id="listForm" name="listForm" method="post" action="">
         <tr class="title">
-            <td align="center">借款用户</td>
-            <td align="center">借款编号</td>
+            <td align="center">融资用户</td>
+            <td align="center">融资编号</td>
             <td align="center">标题</td>
-            <td align="center">借款金额</td>
+            <td align="center">融资金额</td>
             <td align="center">还款方式</td>
             <td align="center">期限</td>
             <td align="center">年利率</td>
@@ -59,7 +59,7 @@ foreach ($this->rows as $key=>$row) {
             <td align="center"><?php echo $row['userName'];?></td>
             <td align="center"><?php echo $row['code'];?></td>
             <td align="center" title="<?php echo $row['title'];?>"><?php echo substrMoreCn($row['title'], 20);?></td>
-            <td align="center"><?php echo $row['amount'] / 10000;?>万</td>
+            <td align="center"><?php echo $row['amount'];?>元</td>
             <td align="center"><?php echo '保本保息'; ?></td>
             <td align="center"><?php echo $row['deadline'];?>天</td>
             <td align="center"><?php echo $row['yearInterestRate'];?>%</td>

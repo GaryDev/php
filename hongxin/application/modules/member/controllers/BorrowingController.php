@@ -46,7 +46,7 @@ class Member_BorrowingController extends Member_CommonController
         }
 
         $wheres[] = "`userName` = {$this->_model->getAdapter()->quote(Application_Model_MemberLogin::getLoginedUserName())}";
-        $wheres[] = "`status` IN ('1', '2', '3')";
+        //$wheres[] = "`status` IN ('1', '2', '3')";
 
         $urls = $vars;
         $urls['pageNo'] = '{page}';
@@ -278,6 +278,14 @@ class Member_BorrowingController extends Member_CommonController
         }
         
         $memberRow = $memberLoginModel->getLoginedRow();
+        if ($memberRow['status'] == 1) {
+        	echo $this->view->message('你还未完成身份认证，暂不能申请！', $this->view->projectUrl(array('controller'=>'index', 'action'=>'index'))) ;
+        	exit;
+        } else if ($memberRow['status'] == 3) {
+        	echo $this->view->message('你的账号已关闭，暂不能申请！', $this->view->projectUrl(array('controller'=>'member', 'action'=>'index'))) ;
+        	exit;
+        }
+        
         if ($memberRow['borrowersStatus'] != 3) {
             echo $this->view->message('你的资料还没通过审核，暂不能申请！', $this->view->projectUrl(array('controller'=>'user', 'action'=>'index'))) ;
             exit;
@@ -333,7 +341,7 @@ class Member_BorrowingController extends Member_CommonController
 			$field['repaymentBank'] = $filter->filter(trim($this->_request->get('repayBank')));
             $field['title'] = $this->_configs['project']['productTitle']; //$filter->filter(trim($this->_request->get('title')));
             $field['code'] = date('YmdHis') . rand(1000, 9999);
-            $field['amount'] = is_numeric(trim($this->_request->get('amount'))) ? trim($this->_request->get('amount')) : 0;
+            $field['amount'] = is_numeric(trim($this->_request->get('amount'))) ? intval(trim($this->_request->get('amount'))) : 0;
             $yearInterestRate = is_numeric(trim($this->_request->get('yearInterestRate'))) ? trim($this->_request->get('yearInterestRate')) : 0;
             $field['yearInterestRate'] = $yearInterestRate;
             $field['borrowUnit'] = $this->_configs['project']['borrowingUnitMin'];
@@ -347,7 +355,7 @@ class Member_BorrowingController extends Member_CommonController
             //$field['deadline'] = (int)((($field['ticketEndTime'] - $field['startTime'])/86400) + 1);	   // 期限
 			$field['deadline'] = (int)((($field['endTime'] - $field['startTime'])/86400) + 1);
             $field['notes'] = $filter->filter(trim($this->_request->get('notes')));
-            $field['ticketCopyPath'] = $this->__uploadFile('ticketCopy', 'ticketCopy', $memberRow, array('imgWidth' => 210, 'imgHeight' => 280, 'waterMark' => 1));
+            $field['ticketCopyPath'] = $this->__uploadFile('ticketCopy', 'ticketCopy', $memberRow, array(/*'imgWidth' => 210, 'imgHeight' => 280,*/ 'waterMark' => 1));
             $field['status'] = '1';
             $field['statusMessage'] = '';
             $field['statusUpdateTime'] = 0;

@@ -12,7 +12,9 @@ class Member_CessionController extends Member_CommonController
 	public function init()
 	{
 		parent::init();
-		$this->_model = new Application_Model_Borrowing();
+		echo $this->view->message('功能暂未开放，敬请期待！', $this->view->projectUrl(array('controller'=>'index', 'action'=>'index'))) ;
+		exit;
+		//$this->_model = new Application_Model_Borrowing();
 	}
 	
 	public function applyAction()

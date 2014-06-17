@@ -66,7 +66,7 @@ class Member_UserController extends Member_CommonController
         $approveCheck = !empty($approveCheck) ? $approveCheck : '0';
 
         //个人基本资料
-        if ($this->_request->isPost() && $approveCheck != '1') {
+        if ($this->_request->isPost()) {
             $field = array();
             $filter = new Zend_Filter_StripTags();
             $field['name'] = $filter->filter(trim($this->_request->getPost('userName')));
@@ -82,7 +82,7 @@ class Member_UserController extends Member_CommonController
         }
 
         //公司详细资料
-        if ($this->_request->isPost() && $row['userType'] == 'C' && $approveCheck != '1') {
+        if ($this->_request->isPost() && $row['userType'] == 'C') {
             $field = array();
             $filter = new Zend_Filter_StripTags();
             $field['userName'] = $row['userName'];
@@ -97,13 +97,11 @@ class Member_UserController extends Member_CommonController
             $field['businessLicenseNumber'] = $filter->filter(trim($this->_request->getPost('businessLicenseNumber')));
             
             $field['businessLicenseCopyPath'] = $this->__uploadFile('businessLicenseCopy', 'certificateCopy', $row,
-            									array('path' => empty($memberEnterpriseRow) ? '' : $memberEnterpriseRow['businessLicenseCopyPath'],
-            										'imgWidth' => 600, 'imgHeight' => 400));
+            									array('path' => empty($memberEnterpriseRow) ? '' : $memberEnterpriseRow['businessLicenseCopyPath']));
             $field['organizationCode'] = $filter->filter(trim($this->_request->getPost('organizationCode')));
             
             $field['organizationCodeCopyPath'] = $this->__uploadFile('organizationCodeCopy', 'certificateCopy', $row,
-            		array('path' => empty($memberEnterpriseRow) ? '' : $memberEnterpriseRow['organizationCodeCopyPath'],
-            				'imgWidth' => 400, 'imgHeight' => 300));
+            		array('path' => empty($memberEnterpriseRow) ? '' : $memberEnterpriseRow['organizationCodeCopyPath']));
 
             $field['licenseNumberBankAccount'] = $filter->filter(trim($this->_request->getPost('licenseNumberBankAccount')));
             $field['turnoverLastYear'] = $filter->filter(trim($this->_request->getPost('turnoverLastYear')));
@@ -112,8 +110,7 @@ class Member_UserController extends Member_CommonController
             $field['legalPersonIDCard'] = $filter->filter(trim($this->_request->getPost('legalPersonIDCard')));
             
             $field['legalPersonIDCardCopyPath'] = $this->__uploadFile('legalPersonIDCardCopy', 'certificateCopy', $row,
-            		array('path' => empty($memberEnterpriseRow) ? '' : $memberEnterpriseRow['legalPersonIDCardCopyPath'],
-            				'imgWidth' => 400, 'imgHeight' => 300));
+            		array('path' => empty($memberEnterpriseRow) ? '' : $memberEnterpriseRow['legalPersonIDCardCopyPath']));
             if (empty($memberEnterpriseRow)) {
                 $memberEnterpriseModel->insert($field);
             } else {
@@ -161,11 +158,15 @@ class Member_UserController extends Member_CommonController
     						'ysbUserId' => $response['userId'],
     						'status' => '2',
     				);
+    				if($userType == 'P') {
+    					$field['lendersStatus'] = '3';
+    				}
+    				/*
     				if($userType == 'C') {
     					$field['borrowersStatus'] = '3';
     				} elseif($userType == 'P') {
     					$field['lendersStatus'] = '3';
-    				}
+    				}*/
     				$memberLoginModel->update($field, "`userName` = '{$userName}'");
     				echo $this->view->message('身份验证成功！', $backUrl, 1, 'window.opener=null;window.close();');
     				exit;
@@ -291,9 +292,20 @@ class Member_UserController extends Member_CommonController
     	if ($this->_request->isPost()) {
             $userName = trim($this->_request->getPost('userName'));
             $password = trim($this->_request->getPost('password'));
+            $code = trim($this->_request->getPost('code'));
             $timeToLive = intval($this->_request->getPost('timeToLive'));
             $backUrl = trim($this->_request->get('backUrl')) != '' ? urldecode(trim($this->_request->get('backUrl'))) : NULL;
 
+            if (!isset($_SESSION["{$this->_configs['project']['cookiePrefix']}_imageCode"])) {
+            	exit($this->view->message('验证码初始化错误，请返回重新填写！'));
+            } else if ($code == '') {
+            	exit($this->view->message('请输入验证码！'));
+            }else if ((strtoupper($code) !== $_SESSION["{$this->_configs['project']['cookiePrefix']}_imageCode"])) {
+            	$_SESSION["{$this->_configs['project']['cookiePrefix']}"] = '';
+            	echo $this->view->message('验证码错误，请返回重新填写！') ;
+            	exit;
+            }
+            
             $memberLoginModel = new Application_Model_MemberLogin();
             $status = $memberLoginModel->login($userName, $password, $timeToLive);
             if ($status == 1) {

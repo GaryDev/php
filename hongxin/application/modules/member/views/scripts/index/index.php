@@ -19,7 +19,7 @@
     <td width="180" height="40" align="left" valign="top">
     	<?php echo $this->render('member-menu.php');?>
     </td>
-    <td><table width="100%" border="0" align="center" cellpadding="0" cellspacing="0">
+    <td valign="top"><table width="100%" border="0" align="center" cellpadding="0" cellspacing="0">
       <tr>
         <td height="40" class="bt_hs16">您好，尊敬的会员<span class="hsbfb"><?php echo $this->loginedUserName; ?></span>，欢迎来到会员中心！
         </td>

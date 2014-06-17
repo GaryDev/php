@@ -48,6 +48,13 @@
 					</td>
 				</tr>
 				<tr>
+					<td>验证码：</td>
+					<td>
+					<input name="code" type="text" id="code" style="border:#2B4A99 solid 1px;" size="8" /> 
+					<img src="<?php echo $this->projectUrl(array('module' => 'admin', 'controller' => 'image-code', 'action' => 'index', 'rand' => rand(100, 999)));?>" 
+						name="codeImage" border="0" align="absmiddle" id="codeImage" onclick="$(this).attr('src', '<?php echo $this->projectUrl(array('module' => 'admin', 'controller' => 'image-code', 'action' => 'index', 'rand' => 1));?>' + Math.random());" style="text-decoration:underline; cursor:pointer;"/></td>
+				</tr>
+				<tr>
 					<td></td>
 					<td><input name="submit" value=" 登录 " tabindex="5" type="submit" class="btn" /></td>
 				</tr>
@@ -82,6 +89,11 @@ $("#userForm").submit(function(){
 		$("#password").focus();
 		return false;
 	}
+    if ($.trim($("#code").val()) == ''){
+        alert("请填写验证码！");
+        $("#code").focus();
+        return false;
+    }
 });
 </script>
 </body>

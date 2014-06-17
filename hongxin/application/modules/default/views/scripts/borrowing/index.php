@@ -92,7 +92,7 @@ foreach($this->rows as $row) {
     <td width="10" style="text-align: center;">
     <a href="#" class="ny_img"><img src="/files/default/images/product-avatar.png" width="90" height="90" /></a>
     </td>
-    <td width="200" height="110"><table width="95%" border="0" align="center" cellpadding="0" cellspacing="0">
+    <td width="300" height="110"><table width="95%" border="0" align="center" cellpadding="0" cellspacing="0">
       <tr>
         <td height="40" align="left">
         <a href="<?php echo $this->projectUrl(array('module'=>'default', 'controller'=>'borrowing', 'action'=>'view', 'code'=>$row['code']));?>" title="<?php echo $row['title'];?>" class="nyls"><?php echo substrMoreCn($row['title'], 36);?></a>
@@ -100,7 +100,7 @@ foreach($this->rows as $row) {
         </td>
         </tr>
       <tr>
-        <td height="25" align="left" class="bt_js12">融资金额：<span class="ny_bfb"><?php echo $row['amount'] / 10000;?></span>万&nbsp;(单位：<span class="ny_bfb"><?php echo $row['borrowUnit'];?></span>元/份)</td>
+        <td height="25" align="left" class="bt_js12">融资金额：<span class="ny_bfb"><?php echo $row['amount'];?></span>元&nbsp;(单位：<span class="ny_bfb"><?php echo $row['borrowUnit'];?></span>元/份)</td>
         </tr>
       <tr>
         <td height="25" align="left" class="box_hs">到期由<font style="color: red;"><?php echo $row['repaymentBank'];?></font>无条件兑付</td>

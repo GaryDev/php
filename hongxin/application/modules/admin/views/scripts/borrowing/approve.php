@@ -52,7 +52,7 @@ foreach($this->row['statusLogRows'] as $logRow) {
        	</tr>
         <tr>
 			<td>融资金额：</td>
-        	<td><?php echo $this->row['amount'] / 10000;?>万</td>
+        	<td><?php echo $this->row['amount'];?>元</td>
        	</tr>
         <tr>
         	<td>还款方式：</td>

@@ -470,7 +470,7 @@ class Admin_MemberController extends Admin_CommonController
     		}
     	
     		$this->_model->update($field, "`id` = {$id}");
-    		echo $this->view->message('借贷资料审核修改成功！') ;
+    		echo $this->view->message('资料审核成功！') ;
     		exit;
     	}
     	
