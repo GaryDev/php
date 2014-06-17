@@ -88,8 +88,10 @@ jQuery.fn.validationEngine = function(settings) {
 			return false;
 		}
 	})
-	$(this).not("[type=checkbox]").bind("blur", function(caller){loadValidation(this)})
-	$(this+"[type=checkbox]").bind("click", function(caller){loadValidation(this)})
+	//$(this).not("[type=checkbox]").bind("blur", function(caller){loadValidation(this)})
+	$(this).not(":checkbox").bind("blur", function(caller){loadValidation(this)})
+	//$(this+"[type=checkbox]").bind("click", function(caller){loadValidation(this)})
+	$(this).filter(":checkbox").bind("click", function(caller){loadValidation(this)})
 	
 	var buildPrompt = function(caller,promptText) {			// ERROR PROMPT CREATION AND DISPLAY WHEN AN ERROR OCCUR
 		var divFormError = document.createElement('div')
@@ -233,7 +235,7 @@ jQuery.fn.validationEngine = function(settings) {
 				}
 			}
 			if (callerType == "select-multiple") { // added by paul@kinetek.net for select boxes, Thank you
-					callerName = $(caller).attr("id");
+				callerName = $(caller).attr("id");
 				
 				if(!$("#"+callerName).val()) {
 					isError = true;
@@ -244,8 +246,13 @@ jQuery.fn.validationEngine = function(settings) {
 		function _customRegex(caller,rules,position){		 // VALIDATE REGEX RULES
 			var customRule = rules[position+1]
 			pattern = eval(settings.allrules[customRule].regex)
-			
-			if(!pattern.test($(caller).attr('value'))){
+			callerType = $(caller).attr("type");
+			if(callerType != "radio" && callerType != "checkbox") {
+				callerValue = $(caller).val();
+			} else {
+				callerValue = $(caller).attr('value');
+			}
+			if(callerValue && !pattern.test(callerValue)){
 				isError = true
 				promptText += settings.allrules[customRule].alertText+"<br />"
 			}
@@ -253,7 +260,8 @@ jQuery.fn.validationEngine = function(settings) {
 		function _confirm(caller,rules,position){		 // VALIDATE FIELD MATCH
 			var confirmField = rules[position+1]
 			
-			if($(caller).attr('value') != $("#"+confirmField).attr('value')){
+			//if($(caller).attr('value') != $("#"+confirmField).attr('value')){
+			if($(caller).val() != $("#"+confirmField).val()){
 				isError = true
 				promptText += settings.allrules["confirm"].alertText+"<br />"
 			}
@@ -262,7 +270,8 @@ jQuery.fn.validationEngine = function(settings) {
 		
 			var startLength = eval(rules[position+1])
 			var endLength = eval(rules[position+2])
-			var feildLength = _strlen($(caller).attr('value'))
+			//var feildLength = _strlen($(caller).attr('value'))
+			var feildLength = _strlen($(caller).val())
 
 			if(feildLength<startLength || feildLength>endLength){
 				isError = true
@@ -272,7 +281,8 @@ jQuery.fn.validationEngine = function(settings) {
 		function _minLength(caller,rules,position){    // VALIDATE LENGTH
 		
 			var length = eval(rules[position+1])
-			var feildLength = _strlen($(caller).attr('value'))
+			//var feildLength = _strlen($(caller).attr('value'))
+			var feildLength = _strlen($(caller).val());
 
 			if(feildLength<length){
 				isError = true
@@ -282,7 +292,8 @@ jQuery.fn.validationEngine = function(settings) {
 		function _maxLength(caller,rules,position){    // VALIDATE LENGTH
 		
 			var length = eval(rules[position+1])
-			var feildLength = _strlen($(caller).attr('value'))
+			//var feildLength = _strlen($(caller).attr('value'))
+			var feildLength = _strlen($(caller).val());
 
 			if(feildLength>length){
 				isError = true
@@ -308,7 +319,7 @@ jQuery.fn.validationEngine = function(settings) {
 			func = rules[position+1];
 			isBackValue = rules[position+2];
 			if (isBackValue == 1) {
-				func += "('"+ $(caller).attr('value').replace(/'/g, "\\'") +"')";
+				func += "('"+ $(caller).val().replace(/'/g, "\\'") +"')";
 			}
 			eval("var result = " + func + ";");
 			if (!result.isRight) {

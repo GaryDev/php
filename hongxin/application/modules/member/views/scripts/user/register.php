@@ -37,7 +37,7 @@
 				-->
 				<tr>
 					<td class="bgtd1">手机号：</td>
-					<td class="bgtd2"><input name="userName" type="text" class="validate[custom(mobileTelephone),callback[checkUserIsExists,1]] bginput1 " id="userName"/></td>
+					<td class="bgtd2"><input name="userName" type="text" class="validate[required, custom(mobileTelephone),callback[checkUserIsExists,1]] bginput1 " id="userName"/></td>
 					<td class="color999">&nbsp;</td>
 				</tr>
 				<tr>
@@ -89,7 +89,7 @@ function checkUserIsExists(userName){
 	checkResult = {'isRight':true, 'message':''};
 	
 	var reg = /^1[358][0-9]{9}$/; 
-	if (!userName.match(reg)) { 
+	if (userName && !userName.match(reg)) { 
 		checkResult = {'isRight':false, 'message':'* 用户名只允许为手机号码。'};
 	} else if (userName != '') {
 		var url = '<?php echo $this->projectUrl(array('module'=>'member', 'controller'=>'user', 'action'=>'account-is-exists', 'accountType'=>'userName'));?>' + '?rand=' + Math.random();
