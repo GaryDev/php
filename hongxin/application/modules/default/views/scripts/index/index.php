@@ -129,7 +129,7 @@
           <tr>
             <th height="20" align="center">产品名称</th>
             <th width="100" height="30" align="center" class="header">年化收益率(%)</th>
-            <th width="70" height="30" align="center" class="header">剩余(万)</th>
+            <th width="70" height="30" align="center" class="header">剩余(元)</th>
             <th width="70" height="30" align="center" class="header">期限(天)</th>
             <th width="70" height="30" align="center" class="header">投标率(%)</th>
             <th width="70" height="30" align="center">&nbsp;</th>
@@ -151,7 +151,7 @@
 	          <tr>
 	            <td align="left" bgcolor="#FFFFFF" class="bt_hs12"><?php echo $this->borrowingRows[$i]['title']; ?></td>
 	            <td align="right" bgcolor="#FFFFFF" class="hsbfb"><?php echo $this->borrowingRows[$i]['yearInterestRate']; ?></td>
-	            <td align="right" bgcolor="#FFFFFF" class="bt_hs12"><?php echo ($this->borrowingRows[$i]['amountUnit'] * $this->borrowingRows[$i]['borrowUnit']) / 10000; ?></td>
+	            <td align="right" bgcolor="#FFFFFF" class="bt_hs12"><?php echo ($this->borrowingRows[$i]['amountUnit'] * $this->borrowingRows[$i]['borrowUnit']); ?></td>
 	            <td align="right" bgcolor="#FFFFFF" class="bt_hs12"><?php echo $this->borrowingRows[$i]['deadline']; ?></td>
 	            <td align="right" bgcolor="#FFFFFF" class="bt_hs12"><?php echo $this->borrowingRows[$i]['percent']; ?></td>
 	            <td align="center" bgcolor="#FFFFFF" class="bt_hs14">
@@ -204,7 +204,7 @@
             <td width="50%" height="25" align="left"><span class="hsbfb2">已售：</span><?php echo $this->popRow['borrowedCount']; ?>份</td>
             </tr>
           <tr>
-            <td width="50%" height="25" align="left"><span class="hsbfb2">总价：</span><?php echo $this->popRow['amount'] / 10000; ?>万</td>
+            <td width="50%" height="25" align="left"><span class="hsbfb2">总价：</span><?php echo $this->popRow['amount']; ?>元</td>
             <td width="50%" height="25" align="left">&nbsp;</td>
             </tr>
           
@@ -278,7 +278,7 @@
               <td width="50%" height="25" align="left"><span class="redbfb2">已售：</span><?php echo $this->doneRow['borrowedCount']; ?>份</td>
             </tr>
             <tr>
-              <td width="50%" height="25" align="left"><span class="redbfb2">总价：</span><?php echo $this->doneRow['amount'] / 10000; ?>万</td>
+              <td width="50%" height="25" align="left"><span class="redbfb2">总价：</span><?php echo $this->doneRow['amount']; ?>元</td>
               <td width="50%" height="25" align="left">&nbsp;</td>
             </tr>
         </table></td>
@@ -315,6 +315,7 @@
     </table>
     </td>
     <td width="33%" align="center" valign="middle"><table width="96%" border="0" cellpadding="0" cellspacing="0" style="border:1px #dfdfdf solid; background:url(/files/default/images/zqzr.jpg) no-repeat 240px 10px;background-color:#ffffff;">
+      <?php if(false) {?>
       <tr>
         <td height="40" align="left" class="bt_hs16" style="padding-top:20px; padding-left:20px;">赋银财富银票第0001期 </td>
       </tr>
@@ -373,6 +374,9 @@
             </tr>
         </table></td>
       </tr>
+	  <?php } else {?>
+    	<tr><td  height="315" align="center">功能暂未开放，敬请期待！</td></tr>
+      <?php } ?>
     </table></td>
   </tr>
 </table>
@@ -382,14 +386,14 @@
     <td width="33%" height="300" align="center" valign="middle"><table width="96%" border="0" cellpadding="0" cellspacing="0" style="border:1px #dfdfdf solid; background-color:#ffffff;">
       <tr>
         <td width="50%" height="40" align="left" class="lsbfb" style="border-bottom:2px #1eb3d4 solid; padding-left:10px;">理财课堂</td>
-        <td width="50%" align="right" style="border-bottom:2px #1eb3d4 solid; padding-right:10px;"><a href="<?php echo $this->projectUrl(array('module'=>'default', 'controller'=>'archives', 'action'=>'index', 'classId'=>2));?>">+更多</a></td>
+        <td width="50%" align="right" style="border-bottom:2px #1eb3d4 solid; padding-right:10px;"><a href="<?php echo $this->projectUrl(array('module'=>'default', 'controller'=>'archives', 'action'=>'index', 'classId'=>3));?>">+更多</a></td>
       </tr>
       <tr>
         <td height="240" colspan="2" align="left" valign="top">
         <table width="92%" border="0" align="center" cellpadding="0" cellspacing="0">
 		<?php
-		if (!empty($this->archives1Rows)) {
-			foreach($this->archives1Rows as $row) {				
+		if (!empty($this->archives2Rows)) {
+			foreach($this->archives2Rows as $row) {				
 				if ($row['isLink'] == 1) {
 					$link = $row['linkUrl'];
 				} else {
@@ -416,14 +420,14 @@
     <td width="33%" height="300" align="center" valign="middle"><table width="96%" border="0" cellpadding="0" cellspacing="0" style="border:1px #dfdfdf solid; background-color:#ffffff;">
       <tr>
         <td width="50%" height="40" align="left" class="lsbfb" style="border-bottom:2px #1eb3d4 solid; padding-left:10px;">行业咨询</td>
-        <td width="50%" align="right" style="border-bottom:2px #1eb3d4 solid; padding-right:10px;"><a href="<?php echo $this->projectUrl(array('module'=>'default', 'controller'=>'archives', 'action'=>'index', 'classId'=>3));?>">+更多</a></td>
+        <td width="50%" align="right" style="border-bottom:2px #1eb3d4 solid; padding-right:10px;"><a href="<?php echo $this->projectUrl(array('module'=>'default', 'controller'=>'archives', 'action'=>'index', 'classId'=>2));?>">+更多</a></td>
       </tr>
       <tr>
         <td height="240" colspan="2" align="left" valign="top">
         <table width="92%" border="0" align="center" cellpadding="0" cellspacing="0">
 		<?php
-		if (!empty($this->archives2Rows)) {
-			foreach($this->archives2Rows as $row) {				
+		if (!empty($this->archives1Rows)) {
+			foreach($this->archives1Rows as $row) {				
 				if ($row['isLink'] == 1) {
 					$link = $row['linkUrl'];
 				} else {

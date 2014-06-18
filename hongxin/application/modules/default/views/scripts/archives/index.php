@@ -8,54 +8,82 @@
 <title><?php echo $this->archivesClassRow['name'];?> - <?php echo $this->title;?></title>
 <meta name="keywords" content="<?php echo $this->keywords;?>" />
 <meta name="description" content="<?php echo $this->description;?>" />
+<style type="text/css">
+    #tabContainer
+    {
+        margin: 15px 5px 5px 30px;
+    	padding-top: 3px;
+    }
+    #tabContainer li
+    {
+        /*float: left;*/
+        width: 200px;
+        margin: 3px 3px;
+        background: #efefef;
+        text-align: center;
+    }
+    #tabContainer li a, #archivesList a
+    {
+        display: block;
+    	font-size: 15px;
+    	line-height: 30px;
+    }
+    #tabContainer li a.on
+    {
+        background: #30318B;
+    	color: #ffffff;
+    }
+</style>
 </head>
 
 <body>
 <?php echo $this->render('top.php');?>
-<div class="mainbox">
-	<div class="nytit3 mtop10"><h3><?php echo $this->archivesClassRow['name'];?></h3></div>
-	<div class="nytxt3">
-<?php
-if (!empty($this->rows)) {
-?>
-		<ul class="archivesHead">
-			<li>
-				<div class="title">标题</div>
-				<div class="date">时间</div>
-				<div style="clear:both;"></div>
-			</li>
-			<div style="clear:both;"></div>
-		</ul>
-
-		<ul class="archivesList">
-<?php
-	foreach ($this->rows as $key=>$row) {
-		if ($row['isLink'] == 1) {
-			$link = $row['linkUrl'];
+<table id="tabContainer" style="width: 1200px;">
+	<tr>
+		<td valign="top">
+			<ul>
+		      <li id="tab1" style="margin-left: 35px;"><a href="<?php echo $this->projectUrl(array('module'=>'default', 'controller'=>'archives', 'action'=>'index', 'classId'=>3));?>" class="<?php echo ($this->vars['classId'] == 3) ? 'on' : ''; ?>">理财课堂</a></li>
+		      <li id="tab2" style="margin-left: 35px;"><a href="<?php echo $this->projectUrl(array('module'=>'default', 'controller'=>'archives', 'action'=>'index', 'classId'=>2));?>" class="<?php echo ($this->vars['classId'] == 2) ? 'on' : ''; ?>">行业咨询</a></li>
+		      <li id="tab2" style="margin-left: 35px;"><a href="<?php echo $this->projectUrl(array('module'=>'default', 'controller'=>'archives', 'action'=>'index', 'classId'=>6));?>" class="<?php echo ($this->vars['classId'] == 6) ? 'on' : ''; ?>">媒体报道</a></li>
+		    </ul>
+		</td>
+		<td valign="top" style="width: 950px;">
+		<?php
+		if (!empty($this->rows)) {
+		?>
+				<table id="archivesList" width="900px" border="0" align="center" cellpadding="0" cellspacing="0">
+					<tr>
+						<th>文章标题</th>
+						<th>更新时间</th>
+					</tr>
+		<?php
+			foreach ($this->rows as $key=>$row) {
+				if ($row['isLink'] == 1) {
+					$link = $row['linkUrl'];
+				} else {
+					$link = $this->projectUrl(array('module'=>'default', 'controller'=>'archives', 'action'=>'view', 'id'=>$row['id']));
+				}
+		?>
+					<tr>
+						<td width="70%"><a href="<?php echo $link;?>" title="<?php echo $row['title'];?>" target="_blank"><?php echo substrMoreCn($row['title'], 50, '...');?></a></td>
+						<td align="center"><?php echo date('Y-m-d H:i:s', $row['updateTime']);?></td>
+					</tr>
+		<?php
+			}
+		?>
+				</table>
+				<div class="page"><?php echo $this->pageString;?></div>
+		<?php
 		} else {
-			$link = $this->projectUrl(array('module'=>'default', 'controller'=>'archives', 'action'=>'view', 'id'=>$row['id']));
+		?>
+				<div style="padding:20px; text-align:center;">暂无记录</div>
+		<?php
 		}
-?>
-			<li>
-				<div class="title"><a href="<?php echo $link;?>" title="<?php echo $row['title'];?>"><?php echo $row['title'];?></a></div>
-				<div class="date"><?php echo date('Y-m-d', $row['updateTime']);?></div>
-				<span style="clear:both;"></span>
-			</li>
-<?php
-	}
-?>
-		</ul>
-		<div class="page"><?php echo $this->pageString;?></div>
-<?php
-} else {
-?>
-		<div style="padding:20px; text-align:center;">暂无记录</div>
-<?php
-}
-?>
-	</div>	
+		?>
+		</td>
+	</tr>
+</table>
 
-</div>
 <?php echo $this->render('footer.php');?>
 </body>
 </html>

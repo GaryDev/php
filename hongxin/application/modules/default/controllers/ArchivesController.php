@@ -31,7 +31,7 @@ class ArchivesController extends CommonController
         $archivesClassModel = new Application_Model_ArchivesClass();
 
         //获取当前页码
-        $pageSize = 20;
+        $pageSize = 10;
         $pageNo = intval($this->_request->get('pageNo'));
         if (empty($pageNo)) {
             $pageNo = 1;
@@ -46,8 +46,9 @@ class ArchivesController extends CommonController
         $vars['classId'] = intval($this->_request->get('classId'));
 
         if (empty($vars['classId'])) {
-            echo $this->view->message('没有传递分类ID！', $this->view->projectUrl(array('controller'=>'index', 'action'=>'index')));
-            exit;
+            //echo $this->view->message('没有传递分类ID！', $this->view->projectUrl(array('controller'=>'index', 'action'=>'index')));
+            //exit;
+        	$vars['classId'] = 3;
         }
         $archivesClassRow = $archivesClassModel->fetchRow("`id` = {$vars['classId']}");
         if (empty($archivesClassRow)) {

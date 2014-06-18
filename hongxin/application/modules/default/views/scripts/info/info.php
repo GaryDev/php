@@ -62,17 +62,20 @@
 
 </div>
 <?php else: ?>
-<div id="tabContainer" style="width: 1200px;">
-	<ul>
-      <li id="tab1" style="margin-left: 35px;"><a href="#" class="on" onclick="switchTab('tab1','con1');this.blur();return false;">公司简介</a></li>
-      <li id="tab2" style="margin-left: 35px;"><a href="#" onclick="switchTab('tab2','con2');this.blur();return false;">联系方式</a></li>
-    </ul>
-	<div style="clear: both" />
-
-	<div id="con1" style="width: 850px; position:absolute; left: 300px;top: 160px;"><?php echo $this->contentAbout;?></div>
-	
-	<div id="con2" style="width: 850px; position:absolute; left: 300px;top: 160px; display:none;"><?php echo $this->contentContact;?></div>
-</div>
+<table id="tabContainer" style="width: 1200px;">
+	<tr>
+		<td valign="top">
+			<ul>
+		      <li id="tab1" style="margin-left: 35px;"><a href="#" class="on" onclick="switchTab('tab1','con1');this.blur();return false;">公司简介</a></li>
+		      <li id="tab2" style="margin-left: 35px;"><a href="#" onclick="switchTab('tab2','con2');this.blur();return false;">联系方式</a></li>
+		    </ul>
+		</td>
+		<td valign="top">
+			<div id="con1" style="width: 850px; position:absolute; left: 300px;top: 160px;"><?php echo $this->contentAbout;?></div>
+			<div id="con2" style="width: 850px; position:absolute; left: 300px;top: 160px; display:none;"><?php echo $this->contentContact;?></div>
+		</td>
+	</tr>
+</table>
 <?php endif; ?>
 
 <?php echo $this->render('footer.php');?>

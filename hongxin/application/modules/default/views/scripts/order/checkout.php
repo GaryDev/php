@@ -21,7 +21,7 @@
 			<td>订单成功创建！</td>
 		</tr>
 		<tr>
-			<td>请您在提交订单后25分钟内完成资金冻结，否则订单会自动取消。</td>
+			<td>请您在提交订单后<span id="timeLeft"></span>内完成资金冻结，否则订单会自动取消。</td>
 		</tr>
 	</table>
 	<table width="1085" border="0" align="center" cellpadding="5" cellspacing="0" style="border:1px #dedede solid;margin-top: 10px;">
@@ -93,7 +93,11 @@
 		</tr>
 	</table>
 </div>
-
+<?php
+$endtime = strtotime("+25 minutes");
+$nowtime = time();
+$lefttime = $endtime-$nowtime;  //实际剩下的时间（秒）
+?>
 <script type="text/javascript">
 	$("#goPay").click(function(){
 		popupWindow("资金冻结", "#divComplete");
@@ -108,6 +112,23 @@
 		frm.target = "_self";
 		frm.submit();
 	});
+	
+	var runtimes = 0;
+	function GetRTime() {
+	    var nMS = "<?php echo $lefttime;?>"*1000-runtimes*1000;
+	    var nM=Math.floor(nMS/(1000*60)) % 60;
+	    if(nM < 10) nM = "0" + nM;
+	    var nS=Math.floor(nMS/1000) % 60;
+	    if(nS < 10) nS = "0" + nS;
+	    document.getElementById("timeLeft").innerHTML = nM + "分" + nS + "秒";
+	    runtimes++;
+	    if (nS == 00 && nM == 00) {
+	        location.href = "<?php echo $this->projectUrl(array('module'=>'member', 'controller'=>'index', 'action'=>'index'));?>";
+	    }else {
+			setTimeout("GetRTime()",1000);
+	    }
+	}
+	window.onload=GetRTime;
 </script>
 
 <?php echo $this->render('footer.php');?>

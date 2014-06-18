@@ -86,9 +86,9 @@
 .nytxt1 A:link,.nytxt1 A:visited{color:#00f;}
 .nytxt1 A:active,.nytxt1 A:hover{color:#f00;}
 .page{float:right; margin-top:10px; height:30px;}
-.page a{border:1px solid #d8c2ae; height:20px; line-height:20px; background:#faf8e9; color:#a67546; display:inline; margin-left:1px; padding:4px;}
+.page a{border:1px solid #d8c2ae; height:20px; line-height:25px; background:#faf8e9; color:#a67546; display:inline; margin-left:1px; padding:4px;}
 .page a:link,.page a:visited{color:#a67546;}
-.page a:active,.page a:hover{border:1px solid #963;background: #fc0; text-decoration:none; color:#fff;} 
+.page a:active,.page a:hover{border:1px solid #963;background: #fc0; text-decoration:none; color:#fff;}
 .page a.now{border:1px solid #963;background: #fc0; color:#fff;}
 .page a.now:link,.page a.now:visited{color:#fff;}
 .nopage{margin-top:5px; text-align:center;}
