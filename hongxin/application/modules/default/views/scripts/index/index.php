@@ -5,6 +5,7 @@
 <link href="<?php echo $this->baseUrl;?>/files/default/css/base.css" media="screen" rel="stylesheet" type="text/css" />
 <script language="javascript" src="<?php echo $this->baseUrl;?>/files/publicFiles/scripts/jquery.js"></script>
 <script language="javascript" src="<?php echo $this->baseUrl;?>/files/publicFiles/scripts/public.js"></script>
+<script language="javascript" src="<?php echo $this->baseUrl;?>/files/publicFiles/scripts/slide.js"></script>
 <script language="javascript" src="<?php echo $this->baseUrl;?>/files/publicFiles/scripts/jqueryTableSorter/jquery.tablesorter.js"></script>
 <script language="javascript" src="<?php echo $this->baseUrl;?>/files/publicFiles/scripts/jqueryLayer/layer.min.js"></script>
 <title><?php echo $this->title;?></title>
@@ -16,6 +17,25 @@
         	headers: { 0: { sorter: false}, 5: {sorter: false} },
 	        debug: false
         });
+
+        var nums = [], timer, n = $$("idSlider").getElementsByTagName("li").length,
+    	st = new SlideTrans("idContainer", "idSlider", n, {
+    		//Vertical: false,
+    		onStart: function(){//设置按钮样式
+    			forEach(nums, function(o, i){ o.className = st.Index == i ? "on" : ""; })
+    		}
+    	});
+	    for(var i = 1; i <= n; AddNum(i++)){};
+	    function AddNum(i){
+	    	var num = $$("idNum").appendChild(document.createElement("li"));
+	    	num.innerHTML = i--;
+	    	num.onmouseover = function(){
+	    		timer = setTimeout(function(){ num.className = "on"; st.Auto = false; st.Run(i); }, 200);
+	    	}
+	    	num.onmouseout = function(){ clearTimeout(timer); num.className = ""; st.Auto = true; st.Run(); }
+	    	nums[i] = num;
+	    }
+	    st.Run();
 	}); 
     function viewTicket(url){
 		if(checkLogin(1)) { 
@@ -38,7 +58,16 @@
 
 <table width="1085" border="0" align="center" cellpadding="0" cellspacing="0" style="margin-top:15px;">
   <tr>
-    <td width="717"><img src="/files/default/images/ad.jpg" width="717" height="318" /></td>
+    <td width="717">
+    <div class="bannercontainer" id="idContainer">
+	<ul id="idSlider">
+		<li><img src="/files/default/images/ad1.jpg" /></li>
+		<li><img src="/files/default/images/ad2.jpg" /></li>
+	</ul>
+	<ul class="num" id="idNum">
+	</ul>
+	</div>
+    </td>
     <td width="368" valign="top"><table width="98%" border="0" align="right" cellpadding="0" cellspacing="0" style="border:1px #dfdfdf solid;">
       <tr>
         <td height="318" align="center" valign="middle" bgcolor="#f3f3f3"><table width="92%" border="0" align="center" cellpadding="0" cellspacing="0" style="border:1px #dfdfdf solid; height:90px; background:url(/files/default/images/ico_1.jpg) no-repeat 20px center;background-color:#ffffff; ">
@@ -496,12 +525,13 @@
         <td width="40" height="80" align="center"><img src="/files/default/images/l_jt.jpg" width="26" height="36" /></td>
         <td><table width="95%" border="0" align="center" cellpadding="0" cellspacing="0">
           <tr>
-            <td align="center"><a href="#"><img src="/files/default/images/linke.jpg" width="139" height="45" /></a></td>
-            <td align="center"><a href="#"><img src="/files/default/images/linke.jpg" width="139" height="45" /></a></td>
-            <td align="center"><a href="#"><img src="/files/default/images/linke.jpg" width="139" height="45" /></a></td>
-            <td align="center"><a href="#"><img src="/files/default/images/linke.jpg" width="139" height="45" /></a></td>
-            <td align="center"><a href="#"><img src="/files/default/images/linke.jpg" width="139" height="45" /></a></td>
-            <td align="center"><a href="#"><img src="/files/default/images/linke.jpg" width="139" height="45" /></a></td>
+            <td align="center"><a href="#"><img src="/files/default/images/bank1.png" width="139" height="45" /></a></td>
+            <td align="center"><a href="#"><img src="/files/default/images/bank2.png" width="139" height="45" /></a></td>
+            <td align="center"><a href="#"><img src="/files/default/images/bank3.png" width="139" height="45" /></a></td>
+            <td align="center"><a href="#"><img src="/files/default/images/bank4.png" width="139" height="45" /></a></td>
+            <td align="center"><a href="#"><img src="/files/default/images/bank5.png" width="139" height="45" /></a></td>
+            <td align="center"><a href="#"><img src="/files/default/images/bank6.png" width="139" height="45" /></a></td>
+            <td align="center"><a href="#"><img src="/files/default/images/bank7.png" width="139" height="45" /></a></td>
           </tr>
           
         </table></td>

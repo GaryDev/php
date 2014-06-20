@@ -9,6 +9,19 @@
 <title><?php echo $this->title;?></title>
 <meta name="keywords" content="<?php echo $this->keywords;?>" />
 <meta name="description" content="<?php echo $this->description;?>" />
+<style>
+form a, form a:hover
+{
+  font-size: 14px;
+  line-height: 30px;
+  margin-right: 20px;
+}
+
+form a.selected
+{
+  color: #ff0000;
+}
+</style>
 </head>
 
 <body>
@@ -23,12 +36,10 @@
         <tr>
           <td width="150" height="45" align="right" class="bt_hs12">到期承诺还款银行：</td>
           <td>
-          <select name="qBank" id="qBank">
-          	<option value="">不限</option>
-          	<?php foreach ($this->banks as $bank) {?>
-          		<option value="<?php echo $bank; ?>" <?php echo $this->vars['qBank'] == $bank ? ' selected' : ''; ?> ><?php echo $bank; ?></option>
-          	<?php } ?>
-          </select>
+          <a href="javascript:void(0);" class="<?php echo empty($this->vars['qBank']) ? 'selected' : ''; ?>" for="qBank" q="">全部</a>
+          <?php foreach ($this->banks as $bank) {?>
+          		<a href="javascript:void(0);" class="<?php echo $this->vars['qBank'] == $bank ? 'selected' : ''; ?>" for="qBank" q="<?php echo $bank; ?>" ><?php echo $bank; ?></a>&nbsp;
+          <?php } ?>
 		  </td>
         </tr>
       </table>
@@ -36,14 +47,12 @@
         <tr>
           <td width="150" height="45" align="right" class="bt_hs12">融资期限：</td>
           <td>
-		  <select name="qDeadLine" id="qDeadLine">
-		  	<option value="">不限</option>
-		  	<option value="1" <?php echo $this->vars['qDeadLine'] == '1' ? ' selected' : '';?>>30天以内</option>
-		  	<option value="2" <?php echo $this->vars['qDeadLine'] == '2' ? ' selected' : '';?>>30-90天</option>
-		  	<option value="3" <?php echo $this->vars['qDeadLine'] == '3' ? ' selected' : '';?>>90-180天</option>
-		  	<option value="4" <?php echo $this->vars['qDeadLine'] == '4' ? ' selected' : '';?>>180-365天</option>
-		  	<option value="5" <?php echo $this->vars['qDeadLine'] == '5' ? ' selected' : '';?>>365天以上</option>
-		  </select>     
+		  <a href="javascript:void(0);" class="<?php echo empty($this->vars['qDeadLine']) ? 'selected' : ''; ?>" for="qDeadLine" q="">全部</a>&nbsp;
+		  <a href="javascript:void(0);" class="<?php echo $this->vars['qDeadLine'] == '1' ? 'selected' : ''; ?>" for="qDeadLine" q="1">30天以内</a>&nbsp;
+		  <a href="javascript:void(0);" class="<?php echo $this->vars['qDeadLine'] == '2' ? 'selected' : ''; ?>" for="qDeadLine" q="2">30-90天</a>&nbsp;
+		  <a href="javascript:void(0);" class="<?php echo $this->vars['qDeadLine'] == '3' ? 'selected' : ''; ?>" for="qDeadLine" q="3">90-180天</a>&nbsp;
+		  <a href="javascript:void(0);" class="<?php echo $this->vars['qDeadLine'] == '4' ? 'selected' : ''; ?>" for="qDeadLine" q="4">180-365天</a>&nbsp;
+		  <a href="javascript:void(0);" class="<?php echo $this->vars['qDeadLine'] == '5' ? 'selected' : ''; ?>" for="qDeadLine" q="5">365天以上</a>&nbsp;
           </td>
         </tr>
       </table>
@@ -51,12 +60,10 @@
         <tr>
           <td width="150" height="45" align="right" class="bt_hs12">预期年收益率：</td>
           <td>
-          <select name="qYearRate" id="qYearRate">
-		  	<option value="">不限</option>
-		  	<option value="1" <?php echo $this->vars['qYearRate'] == '1' ? ' selected' : '';?>>5%以下</option>
-		  	<option value="2" <?php echo $this->vars['qYearRate'] == '2' ? ' selected' : '';?>>5%-10%</option>
-		  	<option value="3" <?php echo $this->vars['qYearRate'] == '3' ? ' selected' : '';?>>10%以上</option>
-		  </select> 
+		  <a href="javascript:void(0);" class="<?php echo empty($this->vars['qYearRate']) ? 'selected' : ''; ?>" for="qYearRate" q="">全部</a>&nbsp;
+		  <a href="javascript:void(0);" class="<?php echo $this->vars['qYearRate'] == '1' ? 'selected' : ''; ?>" for="qYearRate" q="1">5%以下</a>&nbsp;
+		  <a href="javascript:void(0);" class="<?php echo $this->vars['qYearRate'] == '2' ? 'selected' : ''; ?>" for="qYearRate" q="2">5%-10%</a>&nbsp;
+		  <a href="javascript:void(0);" class="<?php echo $this->vars['qYearRate'] == '3' ? 'selected' : ''; ?>" for="qYearRate" q="3">10%以上</a>&nbsp;
           </td>
         </tr>
       </table>
@@ -64,14 +71,12 @@
         <tr>
           <td width="150" height="45" align="right" class="bt_hs12">融资金额：</td>
           <td>
-          <select name="qAmount" id="qAmount">
-		  	<option value="">不限</option>
-		  	<option value="1" <?php echo $this->vars['qAmount'] == '1' ? ' selected' : '';?>>10万以下</option>
-		  	<option value="2" <?php echo $this->vars['qAmount'] == '2' ? ' selected' : '';?>>10-30万</option>
-		  	<option value="3" <?php echo $this->vars['qAmount'] == '3' ? ' selected' : '';?>>30-50万</option>
-		  	<option value="3" <?php echo $this->vars['qAmount'] == '4' ? ' selected' : '';?>>50-100万</option>
-		  	<option value="3" <?php echo $this->vars['qAmount'] == '5' ? ' selected' : '';?>>100万以上</option>
-		  </select> 
+		  <a href="javascript:void(0);" class="<?php echo empty($this->vars['qAmount']) ? 'selected' : ''; ?>" for="qAmount" q="">全部</a>&nbsp;
+		  <a href="javascript:void(0);" class="<?php echo $this->vars['qAmount'] == '1' ? 'selected' : ''; ?>" for="qAmount" q="1">10万以下</a>&nbsp;
+		  <a href="javascript:void(0);" class="<?php echo $this->vars['qAmount'] == '2' ? 'selected' : ''; ?>" for="qAmount" q="2">10-30万</a>&nbsp;
+		  <a href="javascript:void(0);" class="<?php echo $this->vars['qAmount'] == '3' ? 'selected' : ''; ?>" for="qAmount" q="3">30-50万</a>&nbsp;
+		  <a href="javascript:void(0);" class="<?php echo $this->vars['qAmount'] == '4' ? 'selected' : ''; ?>" for="qAmount" q="4">50-100万</a>&nbsp;
+		  <a href="javascript:void(0);" class="<?php echo $this->vars['qAmount'] == '5' ? 'selected' : ''; ?>" for="qAmount" q="5">100万以上</a>&nbsp;
           </td>
         </tr>
       </table>
@@ -79,6 +84,10 @@
   </tr>
 </table>
 <input type="hidden" name="qFrom" value="self" />
+<input type="hidden" name="qBank" id="qBank" value="<?php echo $this->vars['qBank'] ?>" />
+<input type="hidden" name="qDeadLine" id="qDeadLine" value="<?php echo $this->vars['qDeadLine'] ?>" />
+<input type="hidden" name="qYearRate" id="qYearRate" value="<?php echo $this->vars['qYearRate'] ?>" />
+<input type="hidden" name="qAmount" id="qAmount" value="<?php echo $this->vars['qAmount'] ?>" />
 </form>
 </div>
 <div class="cl"></div>
@@ -175,7 +184,11 @@ if (empty($this->rows)) {
 		}
 	}
 
-	$("select").change(function(){
+	$("form a").click(function(){
+		var $this = $(this);
+		var vFor = $this.attr("for");
+		var q = $this.attr("q");
+		$("#" + vFor).val(q);
 		document.forms[0].submit();
 	});
 </script>

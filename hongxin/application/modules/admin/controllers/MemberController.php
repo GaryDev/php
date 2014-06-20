@@ -526,6 +526,8 @@ class Admin_MemberController extends Admin_CommonController
             }
         }
         $backUrl = urldecode($this->_request->get('backUrl'));
-        redirect($backUrl);
+        //redirect($backUrl);
+        echo $this->view->message('会员删除成功！', $backUrl) ;
+        exit;
     }
 }

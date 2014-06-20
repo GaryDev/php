@@ -54,7 +54,7 @@
     		</tr>
     		<tr>
     			<td>年化收益：<label><?php echo $this->row['yearInterestRate']; ?></label>%</td>
-    			<td>融资金额：<label><?php echo $this->row['amount'];?></label>万</td>
+    			<td>融资金额：<label><?php echo $this->row['amount'];?></label>元</td>
     			<td>产品编号：<?php echo $this->row['code'];?></td>
     		</tr>
     		<tr>

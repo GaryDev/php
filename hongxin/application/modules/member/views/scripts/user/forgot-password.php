@@ -39,6 +39,7 @@
 					<td height="30" align="right">确认新密码：</td>
 					<td height="30"><input name="password2" type="password" class="validate[required, confirm[password]] input" id="password2" value="" size="30" /></td>
 				</tr>
+				<!--  
 				<tr>
 					<td height="30" align="right">验证码：</td>
 					<td height="30">
@@ -46,6 +47,7 @@
 					<img src="<?php echo $this->projectUrl(array('module' => 'admin', 'controller' => 'image-code', 'action' => 'index', 'rand' => rand(100, 999)));?>" 
 						name="codeImg" border="0" align="absmiddle" id="codeImg" onclick="refreshCode(this);" style="text-decoration:underline; cursor:pointer;"/></td>
 				</tr>
+				-->
 				<tr>
 					<td height="30">&nbsp;</td>
 					<td height="30"><input type="submit" name="button" id="button" value="确定" class="btn" />
@@ -97,7 +99,7 @@ function checkImgCode(mcode){
 					checkResult = {'isRight':false, 'message':'* 验证码错误，请重新填写。'};
 					$("#imgCode").val('');
 					$("#imgCode").focus();
-					refreshCode('#codeImg');
+					//refreshCode('#codeImg');
 				}
 			} 
 		});
@@ -162,7 +164,7 @@ function verifyCode() {
 		success: function(data){ 
 			if(data == 1) {
 				$(".xubox_close").click();
-				refreshCode('#codeImg');
+				//refreshCode('#codeImg');
 				time(document.getElementById("btnSms"));
 			} else {
 				alert('验证码错误，请重新填写！');
