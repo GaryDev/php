@@ -28,6 +28,12 @@
 	</table>
 	<table width="400" border="0" align="center" cellpadding="5" cellspacing="0" style="border:0px #dedede solid;margin-top: 10px;margin-left: 30px;">
 		<tr>
+			<td align="center">
+			<input type="checkbox" name="agreement" id="agreement" checked="checked" />
+				我同意 <a href="<?php echo $this->projectUrl(array('module'=>'default', 'controller'=>'info', 'action'=>'agreement'));?>" target="_blank">质押借款协议</a> 和 <a href="<?php echo $this->projectUrl(array('module'=>'default', 'controller'=>'info', 'action'=>'policy'));?>" target="_blank">委托协议</a>
+			</td>
+		</tr>
+		<tr>
 			<td align="center"><input type="submit" class="btn" id="goPay" name="goPay" value="资金冻结" /></td>
 		</tr>
 	</table>
@@ -51,6 +57,10 @@
 
 <script type="text/javascript">
 	$("#paymentForm").submit(function(){
+		if(!$("#agreement")[0].checked) {
+			alert("请勾选同意协议条款");
+			return false;
+		}
 		$("#paymentForm").hide();
 		$("#divComplete").show();
 		$(".xubox_close").hide();

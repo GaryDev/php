@@ -44,6 +44,7 @@
     			<td>
 	    			<div class="barbox">
 						<div class="bartext"><?php echo $this->row['percent']; ?>%</div>
+						<div style="float: left;">已投：</div>
 		    			<div class="progressbar">
 						    <div style="width: <?php echo $this->row['percent']; ?>%;">
 						        <span></span>

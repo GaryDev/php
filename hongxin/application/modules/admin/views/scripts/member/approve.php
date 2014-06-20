@@ -55,7 +55,7 @@
     </table>
 </form>
 
-<h3>个人基本资料</h3>
+<h3>经办人基本资料</h3>
 <table width="100%" border="0" cellpadding="0" cellspacing="0" class="table">
 	<form id="accountDetailForm" name="accountDetailForm" method="post" action="">
 		<tr>
@@ -205,9 +205,9 @@ foreach($this->memberVars['industry'] as $key=>$value) {
 		</tr>
 		 -->
 		<tr>
-			<td width="15%">法人姓名：</td>
+			<td width="15%">法定代表人姓名：</td>
 			<td width="35%"><input type="text" class="input" name="legalPersonName" id="legalPersonName" value="<?php echo isset($this->memberEnterpriseRow['legalPersonName']) ? htmlspecialchars($this->memberEnterpriseRow['legalPersonName']) : '';?>" /></td>
-			<td width="15%">法人身份证：</td>
+			<td width="15%">法定代表人身份证：</td>
 			<td width="35%"><?php if(isset($this->memberEnterpriseRow['legalPersonIDCardCopyUrl'])) {?><a href="<?php echo $this->memberEnterpriseRow['legalPersonIDCardCopyUrl']; ?>" target="_blank">查看</a></td><?php } else { echo '未上传'; }?></td>
 		</tr>
 		<tr>

@@ -341,7 +341,9 @@ class Member_BorrowingController extends Member_CommonController
 			$field['repaymentBank'] = $filter->filter(trim($this->_request->get('repayBank')));
             $field['title'] = $this->_configs['project']['productTitle']; //$filter->filter(trim($this->_request->get('title')));
             $field['code'] = date('YmdHis') . rand(1000, 9999);
-            $field['amount'] = is_numeric(trim($this->_request->get('amount'))) ? intval(trim($this->_request->get('amount'))) : 0;
+            $amount = trim($this->_request->get('amount'));
+            $amount = str_replace(',', '', $amount);
+            $field['amount'] = is_numeric($amount) ? intval($amount) : 0;
             $yearInterestRate = is_numeric(trim($this->_request->get('yearInterestRate'))) ? trim($this->_request->get('yearInterestRate')) : 0;
             $field['yearInterestRate'] = $yearInterestRate;
             $field['borrowUnit'] = $this->_configs['project']['borrowingUnitMin'];

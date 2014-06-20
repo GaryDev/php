@@ -32,6 +32,7 @@ form a.selected
 <table width="1085" border="0" align="center" cellpadding="0" cellspacing="0" style="border:1px #dedede solid; border-top:none; background:#f3f3f3; border-bottom:1px #888888 solid; position:relative;">
   <tr>
     <td>
+      <!--  
       <table width="100%" border="0" align="center" cellpadding="0" cellspacing="0" style="border-bottom:1px #d2d2d2 solid;">
         <tr>
           <td width="150" height="45" align="right" class="bt_hs12">到期承诺还款银行：</td>
@@ -41,6 +42,18 @@ form a.selected
           		<a href="javascript:void(0);" class="<?php echo $this->vars['qBank'] == $bank ? 'selected' : ''; ?>" for="qBank" q="<?php echo $bank; ?>" ><?php echo $bank; ?></a>&nbsp;
           <?php } ?>
 		  </td>
+        </tr>
+      </table>
+      -->
+      <table width="100%" border="0" align="center" cellpadding="0" cellspacing="0" style="border-bottom:1px #d2d2d2 solid;">
+        <tr>
+          <td width="150" height="45" align="right" class="bt_hs12">预期年收益率：</td>
+          <td>
+		  <a href="javascript:void(0);" class="<?php echo empty($this->vars['qYearRate']) ? 'selected' : ''; ?>" for="qYearRate" q="">全部</a>&nbsp;
+		  <a href="javascript:void(0);" class="<?php echo $this->vars['qYearRate'] == '1' ? 'selected' : ''; ?>" for="qYearRate" q="1">5%以下</a>&nbsp;
+		  <a href="javascript:void(0);" class="<?php echo $this->vars['qYearRate'] == '2' ? 'selected' : ''; ?>" for="qYearRate" q="2">5%-10%</a>&nbsp;
+		  <a href="javascript:void(0);" class="<?php echo $this->vars['qYearRate'] == '3' ? 'selected' : ''; ?>" for="qYearRate" q="3">10%以上</a>&nbsp;
+          </td>
         </tr>
       </table>
       <table width="100%" border="0" align="center" cellpadding="0" cellspacing="0" style="border-bottom:1px #d2d2d2 solid;">
@@ -53,17 +66,6 @@ form a.selected
 		  <a href="javascript:void(0);" class="<?php echo $this->vars['qDeadLine'] == '3' ? 'selected' : ''; ?>" for="qDeadLine" q="3">90-180天</a>&nbsp;
 		  <a href="javascript:void(0);" class="<?php echo $this->vars['qDeadLine'] == '4' ? 'selected' : ''; ?>" for="qDeadLine" q="4">180-365天</a>&nbsp;
 		  <a href="javascript:void(0);" class="<?php echo $this->vars['qDeadLine'] == '5' ? 'selected' : ''; ?>" for="qDeadLine" q="5">365天以上</a>&nbsp;
-          </td>
-        </tr>
-      </table>
-      <table width="100%" border="0" align="center" cellpadding="0" cellspacing="0" style="border-bottom:1px #d2d2d2 solid;">
-        <tr>
-          <td width="150" height="45" align="right" class="bt_hs12">预期年收益率：</td>
-          <td>
-		  <a href="javascript:void(0);" class="<?php echo empty($this->vars['qYearRate']) ? 'selected' : ''; ?>" for="qYearRate" q="">全部</a>&nbsp;
-		  <a href="javascript:void(0);" class="<?php echo $this->vars['qYearRate'] == '1' ? 'selected' : ''; ?>" for="qYearRate" q="1">5%以下</a>&nbsp;
-		  <a href="javascript:void(0);" class="<?php echo $this->vars['qYearRate'] == '2' ? 'selected' : ''; ?>" for="qYearRate" q="2">5%-10%</a>&nbsp;
-		  <a href="javascript:void(0);" class="<?php echo $this->vars['qYearRate'] == '3' ? 'selected' : ''; ?>" for="qYearRate" q="3">10%以上</a>&nbsp;
           </td>
         </tr>
       </table>
@@ -115,7 +117,7 @@ foreach($this->rows as $row) {
         <td height="25" align="left" class="box_hs">到期由<font style="color: red;"><?php echo $row['repaymentBank'];?></font>无条件兑付</td>
         </tr>
     </table></td>
-    <td width="150" align="center">预期年收益率：<span class="hsbfb1"></span><span class="ny_bfb"><?php echo $row['yearInterestRate'];?>%</span></td>
+    <td width="120" align="center">预期年收益率：<span class="hsbfb1"></span><span class="ny_bfb"><?php echo $row['yearInterestRate'];?>%</span></td>
     <td width="160"><table width="80%" border="0" align="right" cellpadding="0" cellspacing="0">
       <tr>
         <td height="25" align="left">融资期限：<?php echo $row['deadline'];?>天</td>

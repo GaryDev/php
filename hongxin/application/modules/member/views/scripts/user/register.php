@@ -48,8 +48,12 @@
 				<tr>
 					<td class="bgtd1">注册类型：</td>
 					<td class="bgtd2">
+					<?php if($this->from == 'borrowing') {?>
+					<label><input type="hidden" name="userType" id="userType" value="C" />企业</label>
+					<?php } else {?>
 					<label><input type="radio" name="userType" id="userType" value="P" checked="checked" />个人</label>
 					<label><input type="radio" name="userType" id="userType" value="C" />企业</label>
+					<?php } ?>
 					</td>
 				</tr>
 				<tr>
@@ -240,7 +244,7 @@ function time(o)
 $("#btnSms").click(function(){
 	if($("div.userName").size() > 0) return;
 	if($("#userName").val() != "" && $("#userName").val().match(/^1[358][0-9]{9}$/)) {
-		popupWindow("输入验证码","<?php echo $this->projectUrl(array('module'=>'member', 'controller'=>'user', 'action'=>'imgcode'));?>", ['300px','120px']);
+		popupWindow("图片校验","<?php echo $this->projectUrl(array('module'=>'member', 'controller'=>'user', 'action'=>'imgcode'));?>", ['350px','120px']);
 		//$(".xubox_close").hide();
 	} else {
 		alert("请输入正确的手机号！");

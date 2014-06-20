@@ -665,6 +665,13 @@ class Member_UserController extends Member_CommonController
     	$textModel = new Application_Model_Text();
     	$this->view->agreement = $textModel->content(3);
     	
+    	$from = $this->_request->get('from');
+    	if(empty($from)) {
+    		$this->view->from = 'member';
+    	} else {
+    		$this->view->from = $from;
+    	}
+    	
     	if ($this->_request->isPost()) {
     		$memberModel = new Application_Model_Member();
     		$filter = new Zend_Filter_StripTags();

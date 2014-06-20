@@ -45,7 +45,7 @@
             <td align="center">融资编号</td>
             <td align="center">标题</td>
             <td align="center">融资金额</td>
-            <td align="center">还款方式</td>
+            <!--  <td align="center">还款方式</td>  -->
             <td align="center">期限</td>
             <td align="center">年利率</td>
             <td align="center">状态</td>
@@ -60,7 +60,7 @@ foreach ($this->rows as $key=>$row) {
             <td align="center"><?php echo $row['code'];?></td>
             <td align="center" title="<?php echo $row['title'];?>"><?php echo substrMoreCn($row['title'], 20);?></td>
             <td align="center"><?php echo $row['amount'];?>元</td>
-            <td align="center"><?php echo '保本保息'; ?></td>
+            <!--<td align="center"><?php echo '保本保息'; ?></td>-->
             <td align="center"><?php echo $row['deadline'];?>天</td>
             <td align="center"><?php echo $row['yearInterestRate'];?>%</td>
             <td align="center"><?php if ($row['status'] == 1) {echo '已提交待审核';} else if ($row['status'] == 2) {echo '初审已通过';} else if ($row['status'] == 3) {echo '终审已通过（融资中）';}  else if ($row['status'] == 4) {echo '初审未通过';}  else if ($row['status'] == 5) {echo '终审未通过';} ?></td>

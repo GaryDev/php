@@ -42,7 +42,7 @@
 	            <?php } ?>
 			    <?php if($this->infoComplete == 'Y') {?>
 				    <?php if($this->loginedUserType == 'C') { ?>
-				    	法人姓名：<?php echo $this->memberEnterpriseRow['legalPersonName']; ?><br/>
+				    	法定代表人姓名：<?php echo $this->memberEnterpriseRow['legalPersonName']; ?><br/>
 				    <?php } else if($this->loginedUserType == 'P') {?>
 				    	投资人姓名：<?php echo $this->memeberRow['name']; ?><br/>
 				    	投资人身份证号：<?php echo substr_replace($this->memeberRow['idCardNumber'], '********', 6, 8); ?><br/>

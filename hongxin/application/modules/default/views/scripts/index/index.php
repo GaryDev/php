@@ -212,6 +212,7 @@
             <td align="left" valign="middle">
     			<div class="barbox">
 					<div class="bartext"><?php echo $this->popRow['percent']; ?>%</div>
+					<div class="hsbfb2" style="float: left;">已投：</div>
 	    			<div class="progressbar">
 					    <div class="orange" style="width: <?php echo $this->popRow['percent']; ?>%;">
 					        <span></span>
@@ -286,6 +287,7 @@
               <td align="left" valign="middle">
     			<div class="barbox">
 					<div class="bartext"><?php echo $this->doneRow['percent']; ?>%</div>
+					<div class="renbfb2" style="float: left;">已投：</div>
 	    			<div class="progressbar">
 					    <div class="red" style="width: <?php echo $this->doneRow['percent']; ?>%;">
 					        <span></span>
@@ -299,15 +301,15 @@
       <tr>
         <td height="30"><table width="88%" border="0" align="center" cellpadding="0" cellspacing="0">
             <tr>
-              <td width="50%" height="25" align="left"><span class="redbfb2">认筹：</span><?php echo $this->doneRow['borrowUnit']; ?>元起<br/></td>
-              <td width="50%" height="25" align="left"><span class="redbfb2">停售：</span><?php echo date('Y-m-d', $this->doneRow['endTime']); ?><br/></td>
+              <td width="50%" height="25" align="left"><span class="renbfb2">认筹：</span><?php echo $this->doneRow['borrowUnit']; ?>元起<br/></td>
+              <td width="50%" height="25" align="left"><span class="renbfb2">停售：</span><?php echo date('Y-m-d', $this->doneRow['endTime']); ?><br/></td>
             </tr>
             <tr>
-              <td width="50%" height="25" align="left"><span class="redbfb2">剩余：</span><?php echo $this->doneRow['remainDay']; ?>天</td>
-              <td width="50%" height="25" align="left"><span class="redbfb2">已售：</span><?php echo $this->doneRow['borrowedCount']; ?>份</td>
+              <td width="50%" height="25" align="left"><span class="renbfb2">剩余：</span><?php echo $this->doneRow['remainDay']; ?>天</td>
+              <td width="50%" height="25" align="left"><span class="renbfb2">已售：</span><?php echo $this->doneRow['borrowedCount']; ?>份</td>
             </tr>
             <tr>
-              <td width="50%" height="25" align="left"><span class="redbfb2">总价：</span><?php echo $this->doneRow['amount']; ?>元</td>
+              <td width="50%" height="25" align="left"><span class="renbfb2">总价：</span><?php echo $this->doneRow['amount']; ?>元</td>
               <td width="50%" height="25" align="left">&nbsp;</td>
             </tr>
         </table></td>

@@ -45,7 +45,7 @@
 		</table>
 		<table width="100%" border="0" cellpadding="0" cellspacing="0" class="subTab">
 			<tr>
-				<td><h3>个人基本资料<span style="color: red;">（*为必填项）</span></h3></td>
+				<td><h3><?php echo $this->loginedUserType == 'C' ? '经办人' : '个人'; ?>基本资料<span style="color: red;">（*为必填项）</span></h3></td>
 				<td align="left">&nbsp;</td>
 			</tr>
 		</table>
@@ -116,9 +116,9 @@ foreach($this->memberVars['industry'] as $key=>$value) {
 						</tr>
 						-->
 						<tr>
-							<td width="15%"><font class="required-star">*</font>&nbsp;法人姓名：</td>
+							<td width="15%"><font class="required-star">*</font>&nbsp;法定代表人姓名：</td>
 							<td width="35%"><input type="text" class="validate[required] input" name="legalPersonName" id="legalPersonName" value="<?php echo isset($this->memberEnterpriseRow['legalPersonName']) ? htmlspecialchars($this->memberEnterpriseRow['legalPersonName']) : '';?>" /></td>
-							<td width="15%"><font class="required-star">*</font>&nbsp;法人身份证：</td>
+							<td width="15%"><font class="required-star">*</font>&nbsp;法定代表人身份证：</td>
 							<td width="35%">(扫描件)<input type="file" name="legalPersonIDCardCopy" id="legalPersonIDCardCopy" value="<?php echo $this->memberEnterpriseRow['legalPersonIDCardCopyPath']; ?>" /></td>
 							<!--  
 							<td width="15%">法人身份证号码：</td>
@@ -222,10 +222,10 @@ $("#approveCBX").change(function(){
 $("#mainForm").submit(function(){
 	<?php if (empty($this->memberEnterpriseRow['legalPersonIDCardCopyPath'])): ?>
 	if($("#legalPersonIDCardCopy").val() == "") {
-		alert('请选择法人身份证扫描件。');
+		alert('请选择法定代表人身份证扫描件。');
 		return false;
 	} else if(!validateFileExt($("#legalPersonIDCardCopy").val())) {
-		alert('法人身份证扫描件格式不正确。');
+		alert('法定代表人身份证扫描件格式不正确。');
 		return false;
 	}
 	<?php endif; ?>

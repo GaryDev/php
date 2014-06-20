@@ -62,7 +62,11 @@ function checkLogin(type)
 	if(status != 0) {
 		var msg = '';
 		if(type == 1) {
-			msg = "请先登录，才能查看";
+			if(status == 2) {
+				status = 0;
+			} else {
+				msg = "请先登录，才能查看";
+			}
 		} else if(type == 2) {
 			msg = "请先登录，才能操作";
 			if(status == 2) {
@@ -72,7 +76,7 @@ function checkLogin(type)
 				return false;
 			}
 		}
-		layer.msg(msg, 3, 5);
+		msg == '' || layer.msg(msg, 3, 5);
 	}
 	return (status == 0);
 }

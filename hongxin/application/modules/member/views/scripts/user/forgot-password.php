@@ -142,7 +142,7 @@ function time(o)
 
 $("#btnSms").click(function(){
 	if($("#userName").val() != "" && $("#userName").val().match(/^1[358][0-9]{9}$/)) {
-		popupWindow("输入验证码","<?php echo $this->projectUrl(array('module'=>'member', 'controller'=>'user', 'action'=>'imgcode'));?>", ['300px','120px']);
+		popupWindow("图片校验","<?php echo $this->projectUrl(array('module'=>'member', 'controller'=>'user', 'action'=>'imgcode'));?>", ['300px','120px']);
 		//$(".xubox_close").hide();
 	} else {
 		alert("请输入正确的手机号！");

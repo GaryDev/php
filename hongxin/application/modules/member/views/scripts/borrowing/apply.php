@@ -70,14 +70,17 @@
 						<script type="text/javascript">Calendar.setup({"ifFormat":"%Y-%m-%d","firstDay":0,"showsTime":false,"showOthers":false,"inputField":"repayEndTime","button":"repayEndTime"});</script></td>
 					</tr>
 					<tr>
-						<td align="left">到期承诺还款银行：</td>
+						<td align="left">到期承兑银行：</td>
 						<td align="left">
+						<input type="text" class="input" name="repayBank" id="repayBank" value="" size="15" />
+						<!-- 
 						<select name="repayBank" id="repayBank" style="width: 20%">
 							<option value="">请选择</option>
 							<?php foreach ($this->banks as $bank) {?>
 							<option value="<?php echo $bank; ?>"><?php echo $bank; ?></option>
 							<?php } ?>
 						</select>
+						-->
 						</td>
 					</tr>
 					<tr>
@@ -103,11 +106,11 @@ $("#applyForm").submit(function()
 		alert('请填写融资标题。');
 		$("#title").focus();
 		return false;
-	} else*/ if ($.trim($("#ticketAmount").val()) == "" || parseFloat($.trim($("#ticketAmount").val())) == 0) {
+	} else*/ if ($.trim($("#ticketAmount").val()) == "" || parseFloat(rmoney($.trim($("#ticketAmount").val()))) == 0) {
 		alert('请填写票面金额。');
 		$("#amount").focus();
 		return false;
-	} else if (parseFloat($.trim($("#ticketAmount").val())) <= 0 || isNaN($.trim($("#ticketAmount").val()))) {
+	} else if (parseFloat(rmoney($.trim($("#ticketAmount").val()))) <= 0 || isNaN(rmoney($.trim($("#ticketAmount").val())))) {
 		alert('票面金额填写错误。');
 		$("#amount").focus();
 		return false;
@@ -142,11 +145,15 @@ $("#applyForm").submit(function()
 		alert('请选择最迟还款日期。');
 		return false;
 	}
-	if(compareDate($("#ticketEndDate").val(), $("#repayEndTime").val()) != 1) {
-		alert('最迟还款日期必须大于票据截止日期。');
+	if(compareDate($("#applyEndDate").val(), $("#repayEndTime").val()) != 1) {
+		alert('最迟还款日期必须大于融资截止日期。');
 		return false;
 	}
-	if($("#repayBank option:selected").val() == "") {
+	if(compareDate($("#repayEndTime").val(), $("#ticketEndDate").val()) == -1) {
+		alert('最迟还款日期必须小于或等于票据截止日期。');
+		return false;
+	}
+	if($("#repayBank").val() == "") {
 		alert('请选择到期承诺还款银行。');
 		return false;
 	}
@@ -184,9 +191,22 @@ function calculateAmount() {
 	$("#amount").val(benifit);
 }
 
-$("#ticketAmount").change(function(){ calculateAmount(); });
-//$("#ticketEndDate").change(function(){ calculateAmount(); });
-//$("#applyEndDate").change(function(){ calculateAmount(); });
+$("#ticketAmount").change(function(){ 
+	calculateAmount(); 
+}).focusout(function(){
+	this.value = fmoney(this.value, 3);
+});
+
+//layer.tips('融资截止日期为您希望此次拿到融资的最迟日期。', $("#applyEndDate"), {guide: 1, style: ['background-color:#FDFD79; color:#000;', '#FDFD79']});
+
+/*
+$("#applyEndDate").focusin(function(){
+	//layer.tips('融资截止日期为您希望此次拿到融资的最迟日期。', 
+			this , {guide: 1, style: ['background-color:#FDFD79; color:#000;', '#FDFD79']});
+	//$(".xubox_main").parent().css("top", "256px");
+}).focusout(function(){
+	//$(".xubox_tips").hide();
+})*/
 
 $("#yearInterestRate").focusin(function(){
 	layer.tips('利率精确到小数点后一位，<br/>范围5%-10%之间。融资最<br/>低利率由您的融资期限确<br/>定，一般来说融资利率越<br/>高，筹款速度越快。', 

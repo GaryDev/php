@@ -71,6 +71,10 @@
 			<td>网银支付</td>
 		</tr>
 		-->
+		<td align="center">
+		<input type="checkbox" name="agreement" id="agreement" checked="checked" />
+			我同意 <a href="<?php echo $this->projectUrl(array('module'=>'default', 'controller'=>'info', 'action'=>'agreement'));?>" target="_blank">质押借款协议</a> 和 <a href="<?php echo $this->projectUrl(array('module'=>'default', 'controller'=>'info', 'action'=>'policy'));?>" target="_blank">委托协议</a>
+		</td>
 		<tr>
 			<td align="center"><input type="submit" class="btn" id="goPay" name="goPay" value="资金冻结" /></td>
 		</tr>
@@ -99,11 +103,15 @@ $nowtime = time();
 $lefttime = $endtime-$nowtime;  //实际剩下的时间（秒）
 ?>
 <script type="text/javascript">
-	$("#goPay").click(function(){
+	$("#paymentForm").submit(function(){
+		if(!$("#agreement")[0].checked) {
+			alert("请勾选同意协议条款");
+			return false;
+		}
 		popupWindow("资金冻结", "#divComplete");
 		$(".xubox_close").hide();
-		$("#paymentForm").submit();
-		return false;
+		//$("#paymentForm").submit();
+		return true;
 	});
 
 	$("#notifyBtn").click(function(){

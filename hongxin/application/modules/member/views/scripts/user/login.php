@@ -25,7 +25,7 @@
 					<td>用户名：</td>
 					<td>
 						<input name="userName" id="userName" type="text" class="table1_input1" />
-						<a href="<?php echo $this->projectUrl(array('module'=>'member', 'controller'=>'user', 'action'=>'register'));?>">马上注册！</a>
+						<a href="<?php echo $this->projectUrl(array('module'=>'member', 'controller'=>'user', 'action'=>'register', 'from'=>$this->banner));?>">马上注册！</a>
 					</td>
 				</tr>
 				<tr>
@@ -52,7 +52,8 @@
 					<td>
 					<input name="code" type="text" id="code" style="border:#2B4A99 solid 1px;" size="8" /> 
 					<img src="<?php echo $this->projectUrl(array('module' => 'admin', 'controller' => 'image-code', 'action' => 'index', 'rand' => rand(100, 999)));?>" 
-						name="codeImage" border="0" align="absmiddle" id="codeImage" onclick="$(this).attr('src', '<?php echo $this->projectUrl(array('module' => 'admin', 'controller' => 'image-code', 'action' => 'index', 'rand' => 1));?>' + Math.random());" style="text-decoration:underline; cursor:pointer;"/></td>
+						name="codeImage" border="0" align="absmiddle" id="codeImage" onclick="$(this).attr('src', '<?php echo $this->projectUrl(array('module' => 'admin', 'controller' => 'image-code', 'action' => 'index', 'rand' => 1));?>' + Math.random());" style="text-decoration:underline; cursor:pointer;"/>
+					<a href="javascript:void(0);" onclick="$('#codeImage').attr('src', '<?php echo $this->projectUrl(array('module' => 'admin', 'controller' => 'image-code', 'action' => 'index', 'rand' => 1));?>' + Math.random());" style="text-decoration:underline; cursor:pointer;">看不清？</a></td>
 				</tr>
 				<tr>
 					<td></td>

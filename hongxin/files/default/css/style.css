@@ -19,7 +19,7 @@ a.xz:hover{color:#fff; text-decoration:none; font-size:12px; background:#30318b;
 a{color:#646464; text-decoration:none; font-size:12px; font-weight:normal; line-height:25px;}
 a:hover{color:#ff0000; text-decoration:none; font-size:12px; font-weight:normal; line-height:25px;}
 
-a.xq{color:#1eb3d4; text-decoration:none; font-size:14px; font-weight:normal;}
+a.xq{color:#30318b; text-decoration:none; font-size:14px; font-weight:normal;}
 a.xq:hover{color:#ff0000; text-decoration:none; font-size:14px; font-weight:normal;}
 
 a.nyls{color:#0063dc; text-decoration:none; font-size:14px; font-weight:normal;}
@@ -108,10 +108,10 @@ table tr td p {margin: 8px;}
 	border-bottom: 1px solid #ccc;
 }
 
-.barbox { width: 200px; }
+.barbox { width: 235px; }
 .bartext { float: right; height: 12px; font-size: 12px; width: 35px; text-align: right; }
 
-.progressbar { position: relative; width: 165px; /* 宽度 */ border: 1px solid #DEDEDE; padding: 1px; }
+.progressbar { position: relative; width: 165px; /* 宽度 */ border: 1px solid #DEDEDE; padding: 1px; margin-left: 40px; }
 .progressbar div { display: block; position: relative; background:#30318B;/* 进度条背景颜色 */ height: 12px; /* 高度 */ line-height: 12px;  /* 必须和高度一致，文本才能垂直居中 */ }
 
 .progressbar div.orange { background:#FF8000;/* 进度条背景颜色 */ }

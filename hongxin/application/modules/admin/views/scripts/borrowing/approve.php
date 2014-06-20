@@ -39,7 +39,7 @@
 				<label><input type="radio" name="status" id="status" value="5" <?php echo $this->row['status'] == '5' ? ' checked' : '';?> <?php echo $this->row['status'] != '2' ? ' disabled="disabled"' : '';?>/> 终审未通过</label>
 				
 				&nbsp;&nbsp;意见：<input type="text" name="statusMessage" id="statusMessage" class="input" value="<?php echo $this->row['statusMessage'];?>" <?php echo $this->row['status'] == '3' ? ' disabled="disabled"' : '';?> />
-				<input name="submit" type="submit" id="submit" value="修改" class="button" <?php echo $this->row['status'] == '3' ? ' disabled="disabled"' : '';?> />
+				<input name="submit" type="submit" id="submit" value="确认" class="button" <?php echo $this->row['status'] == '3' ? ' disabled="disabled"' : '';?> />
 				<input name="act" type="hidden" id="act" value="updateStatus" />
 				
 <?php
