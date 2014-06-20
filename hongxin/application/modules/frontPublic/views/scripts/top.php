@@ -1,9 +1,16 @@
 
 <table width="100%" border="0" align="center" cellpadding="0" cellspacing="0">
   <tr>
-    <td height="30" bgcolor="#dedede"><table width="1085" border="0" align="center" cellpadding="0" cellspacing="0">
+    <td height="30" style="border-bottom: 1px solid #dedede"><table width="1085" border="0" align="center" cellpadding="0" cellspacing="0">
       <tr>
-        <td align="right"></td>
+        <td align="right">
+       	<label style="margin-right: 20px;">客服热线：400-606-0009</label>
+        <a id="guide" href="<?php echo $this->projectUrl(array('module'=>'default', 'controller'=>'guide', 'action'=>'index'));?>" style="font-size: 12px;color:#ff0000;margin-right:20px;">新手指引</a>
+		<?php if (!empty($this->loginedUserName)) { ?>
+	    	你好，用户<a href="<?php echo $this->projectUrl(array('module'=>'member', 'controller'=>'index', 'action'=>'index'));?>" style="margin-right:10px;"><?php echo $this->loginedUserName;?></a>
+	    	<a href="<?php echo $this->projectUrl(array('module'=>'member', 'controller'=>'user', 'action'=>'logout'));?>">退出</a>
+		<?php } ?>
+        </td>
       </tr>
     </table></td>
   </tr>
@@ -11,35 +18,34 @@
 <table width="1175" border="0" align="right" cellpadding="0" cellspacing="0">
   <tr>
     <td width="121"><img src="/files/default/images/logo2.jpg"></td>
-    <td width="400" align="right"><a id="guide" href="<?php echo $this->projectUrl(array('module'=>'default', 'controller'=>'guide', 'action'=>'index'));?>" style="font-size: 16px;color:#30318B;">新手指引</a></td>
-    <td width="674" height="70"><table width="85%" border="0" align="center" cellpadding="0" cellspacing="0">
+    <!--  <td width="400" align="right"><a id="guide" href="<?php echo $this->projectUrl(array('module'=>'default', 'controller'=>'guide', 'action'=>'index'));?>" style="font-size: 16px;color:#30318B;">新手指引</a></td>-->
+    <td width="580" align="right"></td>
+    <?php if (empty($this->loginedUserName)) { ?>
+    <td height="70"><table width="160" border="0" align="center" cellpadding="0" cellspacing="0">
       <tr>
-        <td class="top_tel" style="text-align: right;">客服热线：400-606-0009</td>
-        <?php if (empty($this->loginedUserName)) { ?>
-	        <td width="200" align="right"><a id="login" href="<?php echo $this->projectUrl(array('module'=>'member', 'controller'=>'user', 'action'=>'login'));?>" class="dl">登录</a> </td>
-	        <td width="50" align="center"><a id="register" href="<?php echo $this->projectUrl(array('module'=>'member', 'controller'=>'user', 'action'=>'register'));?>" class="dl">注册</a></td>
-	    <?php } else { ?>
-	    	<td width="200" align="center">你好，用户<a href="<?php echo $this->projectUrl(array('module'=>'member', 'controller'=>'index', 'action'=>'index'));?>" class="dl"><?php echo $this->loginedUserName;?></a> </td>
-	    	<td width="50" align="center"><a href="<?php echo $this->projectUrl(array('module'=>'member', 'controller'=>'user', 'action'=>'logout'));?>" class="dl">退出</a>
-	    <?php } ?>
+        <!--  <td class="top_tel" style="text-align: right;">客服热线：400-606-0009</td> -->
+	        <td width="80" align="center" height="30px" style="border: 1px solid #dedede;"><a id="login" href="<?php echo $this->projectUrl(array('module'=>'member', 'controller'=>'user', 'action'=>'login'));?>" class="dl">登录</a> </td>
+	        <td width="80" align="center" height="30px" style="border: 1px solid #dedede; background:#30318b;"><a id="register" href="<?php echo $this->projectUrl(array('module'=>'member', 'controller'=>'user', 'action'=>'register'));?>" class="dl" style="color:#ffffff;">注册</a></td>
       </tr>
     </table></td>
+     <?php }?>
   </tr>
 </table>
 <table width="100%" border="0" align="center" cellpadding="0" cellspacing="0">
   <tr>
     <td height="40" bgcolor="#30318b"><table width="1085" border="0" align="center" cellpadding="0" cellspacing="0">
       <tr>
-        <td align="center"><a id="index" href="<?php echo $this->projectUrl(array('module'=>'default', 'controller'=>'index', 'action'=>'index'));?>" class="menu"><span class="menu_on">首页</span></a></td>
-        <td align="center"><a id="safe" href="<?php echo $this->projectUrl(array('module'=>'default', 'controller'=>'info', 'action'=>'safe'));?>" class="menu">安全保障</a></td>
-        <td align="center"><a id="borrowing" href="<?php echo $this->projectUrl(array('module'=>'default', 'controller'=>'borrowing', 'action'=>'index'));?>" class="menu">我要投资</a></td>
-        <td align="center"><a id="lease" href="<?php echo $this->projectUrl(array('module'=>'member', 'controller'=>'borrowing', 'action'=>'apply'));?>" class="menu">我要融资</a></td>
-        <td align="center"><a id="cession" href="<?php echo $this->projectUrl(array('module'=>'default', 'controller'=>'cession', 'action'=>'index'));?>" class="menu">债权转让</a></td>
-        <td align="center"><a id="archives" href="<?php echo $this->projectUrl(array('module'=>'default', 'controller'=>'archives', 'action'=>'index'));?>" class="menu">信息公告</a></td>
+        <td align="left"><a id="index" href="<?php echo $this->projectUrl(array('module'=>'default', 'controller'=>'index', 'action'=>'index'));?>" class="menu"><span class="menu_on">首页</span></a></td>
+        <td align="left"><a id="safe" href="<?php echo $this->projectUrl(array('module'=>'default', 'controller'=>'info', 'action'=>'safe'));?>" class="menu">安全保障</a></td>
+        <td align="left"><a id="borrowing" href="<?php echo $this->projectUrl(array('module'=>'default', 'controller'=>'borrowing', 'action'=>'index'));?>" class="menu">我要投资</a></td>
+        <td align="left"><a id="lease" href="<?php echo $this->projectUrl(array('module'=>'member', 'controller'=>'borrowing', 'action'=>'apply'));?>" class="menu">企业融资</a></td>
+        <!-- <td align="center"><a id="cession" href="<?php echo $this->projectUrl(array('module'=>'default', 'controller'=>'cession', 'action'=>'index'));?>" class="menu">债权转让</a></td> -->
+        <td align="left"><a id="archives" href="<?php echo $this->projectUrl(array('module'=>'default', 'controller'=>'archives', 'action'=>'index'));?>" class="menu">信息公告</a></td>
         <!--  <td align="center"><a id="guide" href="<?php echo $this->projectUrl(array('module'=>'default', 'controller'=>'guide', 'action'=>'index'));?>" class="menu">新手指引</a></td>-->
-        <td align="center"><a id="member" href="<?php echo $this->projectUrl(array('module'=>'member', 'controller'=>'index', 'action'=>'index'));?>" class="menu">我的鉴丰</a></td>
-        <td align="center"><a id="about" href="<?php echo $this->projectUrl(array('module'=>'default', 'controller'=>'info', 'action'=>'about'));?>" class="menu">关于我们</a></td>
+        <td align="left"><a id="member" href="<?php echo $this->projectUrl(array('module'=>'member', 'controller'=>'index', 'action'=>'index'));?>" class="menu">我的鉴丰</a></td>
+        <!-- <td align="center"><a id="about" href="<?php echo $this->projectUrl(array('module'=>'default', 'controller'=>'info', 'action'=>'about'));?>" class="menu">关于我们</a></td>-->
         <!-- <td align="center"><a id="contact" href="<?php echo $this->projectUrl(array('module'=>'default', 'controller'=>'info', 'action'=>'contact'));?>" class="menu">联系我们</a></td>-->
+      	<td width="30%">&nbsp;</td>
       </tr>
     </table></td>
   </tr>
