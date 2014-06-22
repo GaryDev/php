@@ -91,6 +91,17 @@ class ArchivesController extends CommonController
         $this->view->pageUrl = $this->view->projectUrl($urls);
         $this->view->vars = $vars;
         $this->view->archivesClassRow = $archivesClassRow;
+        switch ($vars['classId']) {
+        	case 3:
+	        	$this->view->subTitle = '理财课堂';
+	        	break;
+        	case 2:
+        		$this->view->subTitle = '行业咨询';
+        		break;
+        	case 6:
+	        	$this->view->subTitle = '媒体报道';
+	        	break;
+        }
     }
 
     /**

@@ -8,18 +8,65 @@
 <title><?php echo $this->row['title'];?> - <?php echo $this->row['className'];?> - <?php echo $this->title;?></title>
 <meta name="keywords" content="<?php echo $this->keywords;?>" />
 <meta name="description" content="<?php echo $this->description;?>" />
+<style type="text/css">
+    #tabContainer
+    {
+        margin: 15px 5px 5px 30px;
+    	padding-top: 3px;
+    }
+    #tabContainer li
+    {
+        /*float: left;*/
+        width: 200px;
+        margin: 3px 3px;
+        background: #efefef;
+        text-align: center;
+    }
+    #tabContainer li a, #archivesList a
+    {
+        display: block;
+    	font-size: 15px;
+    	line-height: 30px;
+    }
+    #tabContainer li a.on
+    {
+        background: #30318B;
+    	color: #ffffff;
+    }
+	#tabContainer .tt
+    {
+	    color: #666666;
+	    font-size: 18px;
+	    line-height: 48px;
+	    width: 798px;
+    	margin-bottom: 5px;
+    	text-align: center
+    }
+</style>
 </head>
 
 <body>
 <?php echo $this->render('top.php');?>
-<div class="mainbox">
-	<div class="nytit3 mtop10"><h3><a href="<?php echo $this->projectUrl(array('module'=>'default', 'controller'=>'archives', 'action'=>'index', 'classId'=>$this->row['classId']));?>"><?php echo $this->row['className'];?></a></h3></div>
-	<div class="nytxt3">
-		<p style="text-align:center; font-weight:bold;"><?php echo $this->row['title'];?></p>
-		<div><?php echo $this->row['content'];?></div>
-	</div>
-
-</div>
+<table id="tabContainer" style="width: 1200px;">
+	<tr>
+		<td valign="top">
+			<ul>
+		      <li id="tab1" style="margin-left: 35px;"><a href="<?php echo $this->projectUrl(array('module'=>'default', 'controller'=>'archives', 'action'=>'index', 'classId'=>3));?>" class="<?php echo ($this->row['classId'] == 3) ? 'on' : ''; ?>">理财课堂</a></li>
+		      <li id="tab2" style="margin-left: 35px;"><a href="<?php echo $this->projectUrl(array('module'=>'default', 'controller'=>'archives', 'action'=>'index', 'classId'=>2));?>" class="<?php echo ($this->row['classId'] == 2) ? 'on' : ''; ?>">行业咨询</a></li>
+		      <li id="tab3" style="margin-left: 35px;"><a href="<?php echo $this->projectUrl(array('module'=>'default', 'controller'=>'archives', 'action'=>'index', 'classId'=>6));?>" class="<?php echo ($this->row['classId'] == 6) ? 'on' : ''; ?>">媒体报道</a></li>
+		      <li id="tab4" style="margin-left: 35px;"><a href="<?php echo $this->projectUrl(array('module'=>'default', 'controller'=>'info', 'action'=>'about'));?>">关于我们</a></li>
+		      <li id="tab5" style="margin-left: 35px;"><a href="<?php echo $this->projectUrl(array('module'=>'default', 'controller'=>'info', 'action'=>'contact'));?>">联系我们</a></li>
+		    </ul>
+		</td>
+		<td style="width: 30px;">&nbsp;</td>
+		<td valign="top" style="width: 950px;">
+		<div class="tt"><?php echo $this->row['title'];?></div>
+		<table width="798px" border="0" cellpadding="0" cellspacing="0">
+		<tr><td><?php echo $this->row['content'];?></td></tr>
+		</table>
+		</td>
+	</tr>
+</table>
 <?php echo $this->render('footer.php');?>
 </body>
 </html>

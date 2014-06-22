@@ -49,13 +49,23 @@
         background: #30318B;
     	color: #ffffff;
     }
+	#tabContainer .tt
+    {
+        border-bottom: 2px solid #DDDDDD;
+	    color: #666666;
+	    font-size: 18px;
+	    font-weight: bold;
+	    line-height: 48px;
+	    width: 798px;
+    	margin-bottom: 5px;
+    }
 </style>
 </head>
 
 <body>
 <?php echo $this->render('top.php');?>
 
-<?php if($this->action != 'about'): ?>
+<?php if(!in_array($this->action, array('about', 'contact'))): ?>
 <div class="mainbox">
 	<div class="nytit3 mtop10"><h3><?php echo $this->menuTitle;?></h3></div>
 	<div class="nytxt3"><?php echo $this->content;?></div>
@@ -66,13 +76,19 @@
 	<tr>
 		<td valign="top">
 			<ul>
-		      <li id="tab1" style="margin-left: 35px;"><a href="#" class="on" onclick="switchTab('tab1','con1');this.blur();return false;">公司简介</a></li>
-		      <li id="tab2" style="margin-left: 35px;"><a href="#" onclick="switchTab('tab2','con2');this.blur();return false;">联系方式</a></li>
+		      <li id="tab1" style="margin-left: 35px;"><a href="<?php echo $this->projectUrl(array('module'=>'default', 'controller'=>'archives', 'action'=>'index', 'classId'=>3));?>" class="<?php echo ($this->vars['classId'] == 3) ? 'on' : ''; ?>">理财课堂</a></li>
+		      <li id="tab2" style="margin-left: 35px;"><a href="<?php echo $this->projectUrl(array('module'=>'default', 'controller'=>'archives', 'action'=>'index', 'classId'=>2));?>" class="<?php echo ($this->vars['classId'] == 2) ? 'on' : ''; ?>">行业咨询</a></li>
+		      <li id="tab3" style="margin-left: 35px;"><a href="<?php echo $this->projectUrl(array('module'=>'default', 'controller'=>'archives', 'action'=>'index', 'classId'=>6));?>" class="<?php echo ($this->vars['classId'] == 6) ? 'on' : ''; ?>">媒体报道</a></li>
+		      <li id="tab4" style="margin-left: 35px;"><a href="<?php echo $this->projectUrl(array('module'=>'default', 'controller'=>'info', 'action'=>'about'));?>" class="<?php echo ($this->action == 'about') ? 'on' : ''; ?>">关于我们</a></li>
+		      <li id="tab5" style="margin-left: 35px;"><a href="<?php echo $this->projectUrl(array('module'=>'default', 'controller'=>'info', 'action'=>'contact'));?>" class="<?php echo ($this->action == 'contact') ? 'on' : ''; ?>">联系我们</a></li>
 		    </ul>
 		</td>
-		<td valign="top">
-			<div id="con1" style="width: 850px; position:absolute; left: 300px;top: 160px;"><?php echo $this->contentAbout;?></div>
-			<div id="con2" style="width: 850px; position:absolute; left: 300px;top: 160px; display:none;"><?php echo $this->contentContact;?></div>
+		<td style="width: 30px;">&nbsp;</td>
+		<td valign="top" style="width: 950px;">
+		<div class="tt"><?php echo $this->menuTitle; ?></div>
+		<table width="798px" border="0" cellpadding="0" cellspacing="0">
+		<tr><td><?php echo $this->content;?></td></tr>
+		</table>
 		</td>
 	</tr>
 </table>

@@ -58,54 +58,68 @@
 
 <table width="1085" border="0" align="center" cellpadding="0" cellspacing="0" style="margin-top:15px;">
   <tr>
-    <td width="717">
+    <td>
     <div class="bannercontainer" id="idContainer">
 	<ul id="idSlider">
-		<li><img src="/files/default/images/ad1.jpg" /></li>
-		<li><img src="/files/default/images/ad2.jpg" /></li>
+		<li><img src="/files/default/images/banner1.jpg" /></li>
+		<li><img src="/files/default/images/banner2.jpg" /></li>
+		<li><img src="/files/default/images/banner3.jpg" /></li>
+		<li><img src="/files/default/images/banner4.jpg" /></li>
 	</ul>
 	<ul class="num" id="idNum">
 	</ul>
 	</div>
     </td>
-    <td width="368" valign="top"><table width="98%" border="0" align="right" cellpadding="0" cellspacing="0" style="border:1px #dfdfdf solid;">
+   </tr>
+</table>
+<table width="1085" border="0" align="center" cellpadding="0" cellspacing="0" style="border:0px #dfdfdf solid; background:#f3f3f3; margin-top:10px;">
+   <tr>
+    <td><table width="100%" border="0" align="right" cellpadding="0" cellspacing="0" style="border:1px #dfdfdf solid;">
       <tr>
-        <td height="318" align="center" valign="middle" bgcolor="#f3f3f3"><table width="92%" border="0" align="center" cellpadding="0" cellspacing="0" style="border:1px #dfdfdf solid; height:90px; background:url(/files/default/images/ico_1.jpg) no-repeat 20px center;background-color:#ffffff; ">
+        <td align="center" valign="middle" bgcolor="#f3f3f3">
+        <table width="92%" border="0" align="center" cellpadding="0" cellspacing="0" style="border:1px #dfdfdf solid; height:90px; background-color:#ffffff;margin-top: 10px; margin-bottom: 10px; margin-left: 7px;">
           <tr>
-            <td align="left"><table width="60%" border="0" align="left" cellpadding="0" cellspacing="0" style="margin-left:100px;_margin-left:50px;">
+            <td align="center"><table width="60%" border="0" align="left" cellpadding="0" cellspacing="0">
               <tr>
-                <td height="35" align="left" class="top_tel">诚信交易</td>
-              </tr>
-              <tr>
-                <td align="left">工信部认证可信网站平台所有交易合法可信</td>
+                <td align="center"><img src="/files/default/images/noteA.jpg" width="256" /></td>
               </tr>
             </table></td>
           </tr>
         </table>
-          <table width="92%" border="0" align="center" cellpadding="0" cellspacing="0" style="border:1px #dfdfdf solid; height:90px; background:url(/files/default/images/ico_2.jpg) no-repeat 20px center;background-color:#ffffff; margin-top:10px;">
-            <tr>
-              <td align="left"><table width="60%" border="0" align="left" cellpadding="0" cellspacing="0" style="margin-left:100px;_margin-left:50px;">
-                <tr>
-                  <td height="35" align="left" class="top_tel">安全可靠</td>
-                </tr>
-                <tr>
-                  <td align="left">所有交易票据均由银行发布受银行认可并可实际兑换</td>
-                </tr>
-              </table></td>
-            </tr>
-          </table>
-          <table width="92%" border="0" align="center" cellpadding="0" cellspacing="0" style="border:1px #dfdfdf solid; height:90px; background:url(/files/default/images/ico_3.jpg) no-repeat 20px center;background-color:#ffffff; margin-top:10px;">
-            <tr>
-              <td align="left"><table width="60%" border="0" align="left" cellpadding="0" cellspacing="0" style="margin-left:100px;_margin-left:50px;">
-                <tr>
-                  <td height="35" align="left" class="top_tel">权威保障</td>
-                </tr>
-                <tr>
-                  <td align="left">本网站风险金帐户已受中国工商银行托管，有效保证理财人的财产安全。</td>
-                </tr>
-              </table></td>
-            </tr>
-          </table></td>
+        </td>
+        <td align="center" valign="middle" bgcolor="#f3f3f3">
+        <table width="92%" border="0" align="center" cellpadding="0" cellspacing="0" style="border:1px #dfdfdf solid; height:90px; background-color:#ffffff;margin-top: 10px; margin-bottom: 10px; margin-left: 5px;">
+          <tr>
+            <td align="center"><table width="60%" border="0" align="left" cellpadding="0" cellspacing="0">
+              <tr>
+                <td align="center"><img src="/files/default/images/noteB.jpg" width="256" /></td>
+              </tr>
+            </table></td>
+          </tr>
+        </table>
+        </td>
+        <td align="center" valign="middle" bgcolor="#f3f3f3">
+        <table width="92%" border="0" align="center" cellpadding="0" cellspacing="0" style="border:1px #dfdfdf solid; height:90px; background-color:#ffffff;margin-top: 10px; margin-bottom: 10px; margin-left: 5px;">
+          <tr>
+            <td align="center"><table width="60%" border="0" align="left" cellpadding="0" cellspacing="0">
+              <tr>
+                <td align="center"><img src="/files/default/images/noteC.jpg" width="256" /></td>
+              </tr>
+            </table></td>
+          </tr>
+        </table>
+        </td>
+        <td align="center" valign="middle" bgcolor="#f3f3f3">
+        <table width="92%" border="0" align="center" cellpadding="0" cellspacing="0" style="border:1px #dfdfdf solid; height:90px; background-color:#ffffff;margin-top: 10px; margin-bottom: 10px; margin-left: 5px;">
+          <tr>
+            <td align="center"><table width="60%" border="0" align="left" cellpadding="0" cellspacing="0">
+              <tr>
+                <td align="center"><img src="/files/default/images/noteD.jpg" width="256" /></td>
+              </tr>
+            </table></td>
+          </tr>
+        </table>
+        </td>
       </tr>
     </table></td>
   </tr>

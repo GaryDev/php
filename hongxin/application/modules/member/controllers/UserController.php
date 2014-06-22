@@ -613,10 +613,10 @@ class Member_UserController extends Member_CommonController
     	$status = $memberLoginModel->getLoginStatus();
     	if($status == 0) {
     		$row = $memberLoginModel->getLoginedRow();
-    		if($row['userType'] == 'C') {
-    			$status = 2;
-    		} else if($row['status'] == 1) {
+    		if($row['status'] == 1) {
     			$status = -1;
+    		} else if($row['userType'] == 'C') {
+    			$status = 2;
     		}
     	}
     	echo Zend_Json::encode($status);

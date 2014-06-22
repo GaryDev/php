@@ -69,13 +69,13 @@ class BorrowingController extends CommonController
 	            }
 	        }
 	        
-	        if (in_array($vars['qYearRate'], array('1', '2', '3'))) {
+        	if (in_array($vars['qYearRate'], array('1', '2', '3'))) {
 	        	if ($vars['qYearRate'] == '1') {
-	        		$wheres[] = "`b`.`yearInterestRate` < 5";
+	        		$wheres[] = "`b`.`yearInterestRate` >= 5 AND `b`.`yearInterestRate` < 6.5";
 	        	} else if ($vars['qYearRate'] == '2') {
-	        		$wheres[] = "`b`.`yearInterestRate` >= 5 AND `b`.`yearInterestRate` < 10";
+	        		$wheres[] = "`b`.`yearInterestRate` >= 6.5 AND `b`.`yearInterestRate` < 8.5";
 	        	} else if ($vars['qYearRate'] == '3') {
-	        		$wheres[] = "`b`.`yearInterestRate` >= 10";
+	        		$wheres[] = "`b`.`yearInterestRate` >= 8.5 AND `b`.`yearInterestRate` < 10";
 	        	}
 	        }
 	        

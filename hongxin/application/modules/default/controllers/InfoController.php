@@ -27,12 +27,9 @@ class InfoController extends CommonController
      */
     public function aboutAction()
     {
-        $this->view->menuTitle = '关于我们';
+        $this->view->menuTitle = '公司简介';
         $textModel = new Application_Model_Text();
-        
-        $this->view->contentAbout = $textModel->content(2);
-        $this->view->contentContact = $textModel->content(1);
-        
+        $this->view->content = $textModel->content(2);
         $this->renderScript('info/info.php');
     }
 

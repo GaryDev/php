@@ -15,11 +15,11 @@
     </table></td>
   </tr>
 </table>
-<table width="1175" border="0" align="right" cellpadding="0" cellspacing="0">
+<table width="1175" border="0" align="right" cellpadding="10" cellspacing="0">
   <tr>
-    <td width="121"><img src="/files/default/images/logo2.jpg"></td>
+    <td width="416"><img src="/files/default/images/logo2.jpg"></td>
     <!--  <td width="400" align="right"><a id="guide" href="<?php echo $this->projectUrl(array('module'=>'default', 'controller'=>'guide', 'action'=>'index'));?>" style="font-size: 16px;color:#30318B;">新手指引</a></td>-->
-    <td width="580" align="right"></td>
+    <td width="385" align="right"></td>
     <?php if (empty($this->loginedUserName)) { ?>
     <td height="70"><table width="160" border="0" align="center" cellpadding="0" cellspacing="0">
       <tr>
@@ -50,6 +50,7 @@
     </table></td>
   </tr>
 </table>
+<script language="javascript" src="<?php echo $this->baseUrl;?>/files/publicFiles/scripts/jqueryLayer/layer.min.js"></script>
 <script language="javascript">
 
 function checkLogin(type)
@@ -76,7 +77,7 @@ function checkLogin(type)
 		} else if(type == 2) {
 			msg = "请先登录，才能操作";
 			if(status == 2) {
-				msg = "企业用户不能进行投资操作";
+				msg = "企业用户不能进行投资操作，请使用个人账号";
 			} else if(status == -1) {
 				popupWindow("身份验证","<?php echo $this->projectUrl(array('module'=>'member', 'controller'=>'user', 'action'=>'identify'));?>");
 				return false;
@@ -87,10 +88,21 @@ function checkLogin(type)
 	return (status == 0);
 }
 
+function goApply()
+{
+	//if(checkLogin(2))
+	//{
+		window.location.href = "<?php echo $this->projectUrl(array('module'=>'member', 'controller'=>'borrowing', 'action'=>'apply'));?>";
+	//}
+}
+
 <?php
 if ($this->module == 'default') {
-	if($this->controller == 'borrowing' || $this->controller == 'archives') {
-		$menu = $this->controller;
+	if($this->controller == 'borrowing') {
+		$menu = 'borrowing';
+	}
+	else if($this->controller == 'archives' || in_array($this->action, array('about', 'contact'))) {
+		$menu = 'archives';
 	} else {
 		$menu = $this->action;
 	}
