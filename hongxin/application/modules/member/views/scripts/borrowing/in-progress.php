@@ -40,7 +40,7 @@
 					<td>完成率</td>
 					<td>申请时间</td>
 					<td>票据截止时间</td>
-					<td>终审</td>
+					<!--  <td>终审</td> -->
 					<td align="center">操作</td>
 				</tr>
 				<?php
@@ -55,7 +55,7 @@
 						<td><?php echo $row['percent']; ?>%</td>
 						<td><?php echo date('Y-m-d', $row['addTime']);?></td>
 						<td><?php echo date('Y-m-d', $row['ticketEndTime']);?></td>
-						<td>&nbsp;</td>
+						<!--<td>&nbsp;</td>-->
 						<td align="center">
 						<a href="<?php echo $this->projectUrl(array('action'=>'view', 'code'=>$row['code']));?>" class="link">详细</a>
 						</td>

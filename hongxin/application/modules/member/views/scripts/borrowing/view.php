@@ -39,12 +39,14 @@
 				</tr>
 				<tr>
 					<td align="left">融资金额：</td>
-					<td align="left"><?php echo $this->row['amount'] / 10000;?>万</td>
+					<td align="left"><?php echo $this->row['amount'];?>元</td>
 				</tr>
+				<!--  
 				<tr>
 					<td align="left">还款方式：</td>
 					<td align="left"><?php echo '保本保息'; ?></td>
 				</tr>
+				-->
 				<tr>
 					<td align="left">年利率：</td>
 					<td align="left"><?php echo $this->row['yearInterestRate'];?>%</td>
@@ -89,7 +91,7 @@ if (trim($this->row['statusMessage']) != '') {
 					<td align="left"><?php echo date('Y-m-d', $this->row['endTime']);?></td>
 				</tr>
 				<tr>
-					<td align="left">融资到期时间：</td>
+					<td align="left">票据到期时间：</td>
 					<td align="left"><?php echo date('Y-m-d', $this->row['ticketEndTime']);?></td>
 				</tr>
 				<tr>
@@ -97,7 +99,7 @@ if (trim($this->row['statusMessage']) != '') {
 					<td align="left"><?php echo date('Y-m-d', $this->row['repayEndTime']);?></td>
 				</tr>
 				<tr>
-					<td align="left">融资说明：</td>
+					<td align="left">融资用途：</td>
 					<td align="left"><?php echo str_replace("\n", "<br/>", $this->row['notes']);?></td>
 				</tr>
 

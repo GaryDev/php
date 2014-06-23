@@ -111,6 +111,19 @@ class Member_UserController extends Member_CommonController
             
             $field['legalPersonIDCardCopyPath'] = $this->__uploadFile('legalPersonIDCardCopy', 'certificateCopy', $row,
             		array('path' => empty($memberEnterpriseRow) ? '' : $memberEnterpriseRow['legalPersonIDCardCopyPath']));
+            
+            $field['address'] = $filter->filter(trim($this->_request->getPost('address')));
+            $field['zipcode'] = $filter->filter(trim($this->_request->getPost('zipcode')));
+            $field['email'] = $filter->filter(trim($this->_request->getPost('email')));
+            $field['operatorCopyPath'] = $this->__uploadFile('operatorCopy', 'certificateCopy', $row,
+            		array('path' => empty($memberEnterpriseRow) ? '' : $memberEnterpriseRow['operatorCopyPath']));
+            $field['creditCopyPath'] = $this->__uploadFile('creditCopy', 'certificateCopy', $row,
+            		array('path' => empty($memberEnterpriseRow) ? '' : $memberEnterpriseRow['creditCopyPath']));
+            $field['taxCopyPath'] = $this->__uploadFile('taxCopy', 'certificateCopy', $row,
+            		array('path' => empty($memberEnterpriseRow) ? '' : $memberEnterpriseRow['taxCopyPath']));
+            $field['bankCopyPath'] = $this->__uploadFile('bankCopy', 'certificateCopy', $row,
+            		array('path' => empty($memberEnterpriseRow) ? '' : $memberEnterpriseRow['bankCopyPath']));
+            
             if (empty($memberEnterpriseRow)) {
                 $memberEnterpriseModel->insert($field);
             } else {

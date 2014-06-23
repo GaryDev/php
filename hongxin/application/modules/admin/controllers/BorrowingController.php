@@ -240,9 +240,12 @@ class Admin_BorrowingController extends Admin_CommonController
     
     			$field['statusUpdateTime'] = time();
     			$this->_model->update($field, "`id` = {$id}");
+    			if($field['status'] == 2) {
+    				$this->_sendsms($row);
+    			}
     		}
     
-    		echo $this->view->message('操作成功！') ;
+    		echo $this->view->message('操作成功！');
     		exit;
     	}
     	
@@ -255,5 +258,25 @@ class Admin_BorrowingController extends Admin_CommonController
     		echo $this->view->message('操作成功！') ;
     		exit;
     	}
+    }
+    
+    private function _sendsms($row)
+    {
+    	$msg = '恭喜您，您的融资申请(编号：'. $row['code'] .')初审已通过，请携带相关资料原件到鉴丰进行终审，谢谢！';
+    	$params = array(
+    			'adminId'=> $this->_configs['project']['ysbVars']['smsId'],
+    			'platform'=> $this->_configs['project']['ysbVars']['smsPlatform'],
+    			'platformPwd'=> $this->_configs['project']['ysbVars']['smsPlatformPwd'],
+    			'ssrc' => 0,
+    			'mobiles' => $row['userName'],
+    			'msg' => $msg,
+    	);
+    	//var_dump($params);die();
+    	$client = new Zend_Http_Client();
+    	$response = $client->setUri($this->_configs['project']['ysbVars']['url']['sms'])
+    	->setMethod(Zend_Http_Client::POST)
+    	->setParameterPost($params)
+    	->request();
+    	return $response->getBody();
     }
 }

@@ -193,14 +193,14 @@ function calculateAmount() {
 	   $("#amount").val("");
 	   return false;
 	}
-	var amount = parseFloat($.trim($("#ticketAmount").val()));
+	var amount = parseFloat(rmoney($.trim($("#ticketAmount").val())));
 	var yearRate = parseFloat($.trim($("#yearInterestRate").val()));
 	var benifitDay = diffDate($.trim($("#ticketEndDate").val()), $.trim($("#applyEndDate").val()));
 	var benifit = 0;
 	if(benifitDay > 0) {
 		benifit = amount * (1-((yearRate/100) * (benifitDay/365)));
 	}
-	benifit = Math.round(benifit*100)/100;
+	benifit = parseInt(Math.round(benifit*100)/100);
 	$("#amount").val(benifit);
 }
 
@@ -231,6 +231,14 @@ $("#ticketEndDate").focusin(function(){
 // repayEndTime
 $("#repayEndTime").focusin(function(){
 	layer.tips('还款日期为您希望的此次融资的还款日期，<br/>此期限不得迟于票据到期日。', 
+			this , {guide: 1, style: ['background-color:#FDFD79; color:#000;', '#FDFD79']});
+	//$(".xubox_main").parent().css("top", "256px");
+}).focusout(function(){
+	$(".xubox_tips").hide();
+});
+
+$("#repayBank").focusin(function(){
+	layer.tips('银行全称，与票据承兑银行名称一致。。', 
 			this , {guide: 1, style: ['background-color:#FDFD79; color:#000;', '#FDFD79']});
 	//$(".xubox_main").parent().css("top", "256px");
 }).focusout(function(){

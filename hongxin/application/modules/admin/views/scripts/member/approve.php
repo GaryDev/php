@@ -19,7 +19,7 @@
 <body>
 <table width="100%" border="0" cellspacing="0" cellpadding="0" class="navigation">
     <tr>
-        <td class="content"><span class="description">当前位置：</span><a href="<?php echo $this->projectUrl(array('action'=>'index', 'type'=>'E')) ;?>">会员列表</a> &gt; 查看企业资料</td>
+        <td class="content"><span class="description">当前位置：</span><a href="<?php echo $this->projectUrl(array('action'=>'index', 'type'=>'C')) ;?>">会员列表</a> &gt; 查看企业资料</td>
     </tr>
 </table>
 <form id="accountForm" name="accountForm" method="post" action="">
@@ -29,10 +29,12 @@
             <td width="15%">用户名：</td>
             <td><?php echo $this->row['userName']?></td>
         </tr>
+        <!--  
         <tr>
 			<td>邮件：</td>
         	<td><?php echo htmlspecialchars($this->row['email']);?></td>
        	</tr>
+       	-->
     </table>
 </form>
 
@@ -191,19 +193,21 @@ foreach($this->memberVars['industry'] as $key=>$value) {
 			<td width="35%"><input type="text" class="input" name="name" id="name" value="<?php echo isset($this->memberEnterpriseRow['name']) ? htmlspecialchars($this->memberEnterpriseRow['name']) : '';?>" /></td>
 		</tr>
 		<tr>
+			<!--  
 			<td width="15%">成立日期：</td>
 			<td width="35%"><input type="text" class="input" name="createTime" id="createTime" value="<?php echo isset($this->memberEnterpriseRow['createTime']) ? htmlspecialchars($this->memberEnterpriseRow['createTime']) : '';?>" /></td>
+			-->
+			<td width="15%">公司邮箱：</td>
+			<td width="35%"><input type="text" class="input" name="email" id="email" value="<?php echo isset($this->memberEnterpriseRow['email']) ? htmlspecialchars($this->memberEnterpriseRow['email']) : '';?>" /></td>
 			<td width="15%">公司座机：</td>
 			<td width="35%"><input type="text" class="input" name="telephone" id="telephone" value="<?php echo isset($this->memberEnterpriseRow['telephone']) ? htmlspecialchars($this->memberEnterpriseRow['telephone']) : '';?>" /></td>
 		</tr>
-		<!-- 
 		<tr>
-			<td width="15%">组织机构代码证号码：</td>
-			<td width="35%"><input type="text" class="input" name="organizationCode" id="organizationCode" value="<?php echo isset($this->memberEnterpriseRow['organizationCode']) ? htmlspecialchars($this->memberEnterpriseRow['organizationCode']) : '';?>" /></td>
-			<td width="15%">银行开户许可证号码：</td>
-			<td width="35%"><input type="text" class="input" name="licenseNumberBankAccount" id="licenseNumberBankAccount" value="<?php echo isset($this->memberEnterpriseRow['licenseNumberBankAccount']) ? htmlspecialchars($this->memberEnterpriseRow['licenseNumberBankAccount']) : '';?>" /></td>
+			<td width="15%">公司地址：</td>
+			<td width="35%"><input type="text" class="input" name="address" id="address" value="<?php echo isset($this->memberEnterpriseRow['address']) ? htmlspecialchars($this->memberEnterpriseRow['address']) : '';?>" /></td>
+			<td width="15%">公司邮编：</td>
+			<td width="35%"><input type="text" class="input" name="zipcode" id="zipcode" value="<?php echo isset($this->memberEnterpriseRow['zipcode']) ? htmlspecialchars($this->memberEnterpriseRow['zipcode']) : '';?>" /></td>
 		</tr>
-		 -->
 		<tr>
 			<td width="15%">法定代表人姓名：</td>
 			<td width="35%"><input type="text" class="input" name="legalPersonName" id="legalPersonName" value="<?php echo isset($this->memberEnterpriseRow['legalPersonName']) ? htmlspecialchars($this->memberEnterpriseRow['legalPersonName']) : '';?>" /></td>
@@ -211,10 +215,22 @@ foreach($this->memberVars['industry'] as $key=>$value) {
 			<td width="35%"><?php if(isset($this->memberEnterpriseRow['legalPersonIDCardCopyUrl'])) {?><a href="<?php echo $this->memberEnterpriseRow['legalPersonIDCardCopyUrl']; ?>" target="_blank">查看</a></td><?php } else { echo '未上传'; }?></td>
 		</tr>
 		<tr>
+			<td width="15%">经办人身份证：</td>
+			<td width="35%"><?php if(isset($this->memberEnterpriseRow['operatorCopyUrl'])) {?><a href="<?php echo $this->memberEnterpriseRow['operatorCopyUrl']; ?>" target="_blank">查看</a></td><?php } else { echo '未上传'; }?></td>
+			<td width="15%">机构信用代码证：</td>
+			<td width="35%"><?php if(isset($this->memberEnterpriseRow['creditCopyUrl'])) {?><a href="<?php echo $this->memberEnterpriseRow['creditCopyUrl']; ?>" target="_blank">查看</a></td><?php } else { echo '未上传'; }?></td>
+		</tr>
+		<tr>
 			<td width="15%">营业执照：</td>
 			<td width="35%"><?php if(isset($this->memberEnterpriseRow['businessLicenseCopyUrl'])) {?><a href="<?php echo $this->memberEnterpriseRow['businessLicenseCopyUrl']; ?>" target="_blank">查看</a><?php } else { echo '未上传'; }?></td>
 			<td width="15%">组织机构代码证：</td>
 			<td width="35%"><?php if(isset($this->memberEnterpriseRow['organizationCodeCopyUrl'])) {?><a href="<?php echo $this->memberEnterpriseRow['organizationCodeCopyUrl']; ?>" target="_blank">查看</a><?php } else { echo '未上传'; }?></td>
+		</tr>
+		<tr>
+			<td width="15%">税务登记证：</td>
+			<td width="35%"><?php if(isset($this->memberEnterpriseRow['taxCopyUrl'])) {?><a href="<?php echo $this->memberEnterpriseRow['taxCopyUrl']; ?>" target="_blank">查看</a><?php } else { echo '未上传'; }?></td>
+			<td width="15%">银行开户许可证：</td>
+			<td width="35%"><?php if(isset($this->memberEnterpriseRow['bankCopyUrl'])) {?><a href="<?php echo $this->memberEnterpriseRow['bankCopyUrl']; ?>" target="_blank">查看</a><?php } else { echo '未上传'; }?></td>
 		</tr>
 	</form>
 </table>

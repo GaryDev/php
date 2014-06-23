@@ -132,6 +132,7 @@ class OrderController extends CommonController
     						}
     					}
     				}
+    				echo $this->view->message('资金冻结失败。请重试！', $backUrl, 3, 'window.opener=null;window.close();');
     				exit;
     			} else {
     				echo $this->view->message('资金冻结失败。请重试！', $backUrl, 3, 'window.opener=null;window.close();');

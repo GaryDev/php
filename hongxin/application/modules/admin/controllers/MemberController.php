@@ -443,6 +443,18 @@ class Admin_MemberController extends Admin_CommonController
     	if (!empty($memberEnterpriseRow['organizationCodeCopyPath'])) {
     		$memberEnterpriseRow['organizationCodeCopyUrl'] = $certificateUrl . $memberEnterpriseRow['organizationCodeCopyPath'];
     	}
+    	if (!empty($memberEnterpriseRow['operatorCopyPath'])) {
+    		$memberEnterpriseRow['operatorCopyUrl'] = $certificateUrl . $memberEnterpriseRow['operatorCopyPath'];
+    	}
+    	if (!empty($memberEnterpriseRow['creditCopyPath'])) {
+    		$memberEnterpriseRow['creditCopyUrl'] = $certificateUrl . $memberEnterpriseRow['creditCopyPath'];
+    	}
+    	if (!empty($memberEnterpriseRow['taxCopyPath'])) {
+    		$memberEnterpriseRow['taxCopyUrl'] = $certificateUrl . $memberEnterpriseRow['taxCopyPath'];
+    	}
+    	if (!empty($memberEnterpriseRow['bankCopyPath'])) {
+    		$memberEnterpriseRow['bankCopyUrl'] = $certificateUrl . $memberEnterpriseRow['bankCopyPath'];
+    	}
     	
     	$memberSpouseRow = $memberSpouseModel->fetchRow("`userName` = '{$row['userName']}'");
     	

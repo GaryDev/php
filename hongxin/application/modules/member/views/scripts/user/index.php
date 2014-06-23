@@ -101,20 +101,22 @@ foreach($this->memberVars['industry'] as $key=>$value) {
 							<td width="35%"><input type="text" class="validate[required] input" name="companyName" id="companyName" value="<?php echo isset($this->memberEnterpriseRow['name']) ? htmlspecialchars($this->memberEnterpriseRow['name']) : '';?>" /></td>
 						</tr>
 						<tr>
+							<!--  
 							<td width="15%">成立日期：</td>
 							<td width="35%"><input type="text" readonly="readonly" class="input" name="createTime" id="createTime" value="<?php echo isset($this->memberEnterpriseRow['createTime']) ? htmlspecialchars($this->memberEnterpriseRow['createTime']) : '';?>" />
 							<script type="text/javascript">Calendar.setup({"ifFormat":"%Y-%m-%d","firstDay":0,"showsTime":false,"showOthers":false,"inputField":"createTime","button":"createTime"});</script></td>
-							<td width="15%">公司座机：</td>
-							<td width="35%"><input type="text" class="input" name="telephone" id="telephone" value="<?php echo isset($this->memberEnterpriseRow['telephone']) ? htmlspecialchars($this->memberEnterpriseRow['telephone']) : '';?>" /></td>
+							-->
+							<td width="15%"><font class="required-star">*</font>&nbsp;公司邮箱：</td>
+							<td width="35%"><input type="text" class="validate[required] input" name="email" id="email" value="<?php echo isset($this->memberEnterpriseRow['email']) ? htmlspecialchars($this->memberEnterpriseRow['email']) : '';?>" /></td>
+							<td width="15%"><font class="required-star">*</font>&nbsp;公司座机：</td>
+							<td width="35%"><input type="text" class="validate[required] input" name="telephone" id="telephone" value="<?php echo isset($this->memberEnterpriseRow['telephone']) ? htmlspecialchars($this->memberEnterpriseRow['telephone']) : '';?>" /></td>
 						</tr>
-						<!--  
 						<tr>
-							<td width="15%">组织机构代码证号码：</td>
-							<td width="35%"><input type="text" class="input" name="organizationCode" id="organizationCode" value="<?php echo isset($this->memberEnterpriseRow['organizationCode']) ? htmlspecialchars($this->memberEnterpriseRow['organizationCode']) : '';?>" /></td>
-							<td width="15%">银行开户许可证号码：</td>
-							<td width="35%"><input type="text" class="input" name="licenseNumberBankAccount" id="licenseNumberBankAccount" value="<?php echo isset($this->memberEnterpriseRow['licenseNumberBankAccount']) ? htmlspecialchars($this->memberEnterpriseRow['licenseNumberBankAccount']) : '';?>" /></td>
+							<td width="15%"><font class="required-star">*</font>&nbsp;公司地址：</td>
+							<td width="35%"><input type="text" class="validate[required] input" name="address" id="address" value="<?php echo isset($this->memberEnterpriseRow['address']) ? htmlspecialchars($this->memberEnterpriseRow['address']) : '';?>" /></td>
+							<td width="15%"><font class="required-star">*</font>&nbsp;公司邮编：</td>
+							<td width="35%"><input type="text" class="validate[required] input" name="zipcode" id="zipcode" value="<?php echo isset($this->memberEnterpriseRow['zipcode']) ? htmlspecialchars($this->memberEnterpriseRow['zipcode']) : '';?>" /></td>
 						</tr>
-						-->
 						<tr>
 							<td width="15%"><font class="required-star">*</font>&nbsp;法定代表人姓名：</td>
 							<td width="35%"><input type="text" class="validate[required] input" name="legalPersonName" id="legalPersonName" value="<?php echo isset($this->memberEnterpriseRow['legalPersonName']) ? htmlspecialchars($this->memberEnterpriseRow['legalPersonName']) : '';?>" /></td>
@@ -126,10 +128,22 @@ foreach($this->memberVars['industry'] as $key=>$value) {
 							-->
 						</tr>
 						<tr>
+							<td width="15%"><font class="required-star">*</font>&nbsp;经办人身份证：</td>
+							<td width="35%">(扫描件)<input type="file" name="operatorCopy" id="operatorCopy" value="<?php echo $this->memberEnterpriseRow['operatorCopyPath']; ?>" /></td>
+							<td width="15%"><font class="required-star">*</font>&nbsp;机构信用代码证：</td>
+							<td width="35%">(扫描件)<input type="file" name="creditCopy" id="creditCopy" value="<?php echo $this->memberEnterpriseRow['creditCopyPath']; ?>" /></td>
+						</tr>
+						<tr>
 							<td width="15%"><font class="required-star">*</font>&nbsp;营业执照：</td>
 							<td width="35%">(扫描件)<input type="file" name="businessLicenseCopy" id="businessLicenseCopy" value="<?php echo $this->memberEnterpriseRow['businessLicenseCopyPath']; ?>" /></td>
 							<td width="15%"><font class="required-star">*</font>&nbsp;组织机构代码证：</td>
 							<td width="35%">(扫描件)<input type="file" name="organizationCodeCopy" id="organizationCodeCopy" value="<?php echo $this->memberEnterpriseRow['organizationCodeCopyPath']; ?>" /></td>
+						</tr>
+						<tr>
+							<td width="15%"><font class="required-star">*</font>&nbsp;税务登记证：</td>
+							<td width="35%">(扫描件)<input type="file" name="taxCopy" id="taxCopy" value="<?php echo $this->memberEnterpriseRow['taxCopyPath']; ?>" /></td>
+							<td width="15%"><font class="required-star">*</font>&nbsp;银行开户许可证：</td>
+							<td width="35%">(扫描件)<input type="file" name="bankCopy" id="bankCopy" value="<?php echo $this->memberEnterpriseRow['bankCopyPath']; ?>" /></td>
 						</tr>
 						<tr>
 							<td width="15%">&nbsp;</td>
@@ -229,6 +243,24 @@ $("#mainForm").submit(function(){
 		return false;
 	}
 	<?php endif; ?>
+	<?php if (empty($this->memberEnterpriseRow['operatorCopyPath'])): ?>
+	if($("#operatorCopy").val() == "") {
+		alert('请选择经办人身份证扫描件。');
+		return false;
+	} else if(!validateFileExt($("#operatorCopy").val())) {
+		alert('经办人身份证扫描件格式不正确。');
+		return false;
+	}
+	<?php endif; ?>
+	<?php if (empty($this->memberEnterpriseRow['creditCopyPath'])): ?>
+	if($("#creditCopy").val() == "") {
+		alert('请选择机构信用代码证扫描件。');
+		return false;
+	} else if(!validateFileExt($("#creditCopy").val())) {
+		alert('机构信用代码证扫描件格式不正确。');
+		return false;
+	}
+	<?php endif; ?>
 	<?php if (empty($this->memberEnterpriseRow['businessLicenseCopyPath'])): ?>
 	if($("#businessLicenseCopy").val() == "") {
 		alert('请选择营业执照扫描件。');
@@ -244,6 +276,24 @@ $("#mainForm").submit(function(){
 		return false;
 	} else if(!validateFileExt($("#organizationCodeCopy").val())) {
 		alert('组织机构代码证扫描件格式不正确。');
+		return false;
+	}
+	<?php endif; ?>
+	<?php if (empty($this->memberEnterpriseRow['taxCopyPath'])): ?>
+	if($("#taxCopy").val() == "") {
+		alert('请选择税务登记证扫描件。');
+		return false;
+	} else if(!validateFileExt($("#taxCopy").val())) {
+		alert('税务登记证扫描件格式不正确。');
+		return false;
+	}
+	<?php endif; ?>
+	<?php if (empty($this->memberEnterpriseRow['bankCopyPath'])): ?>
+	if($("#bankCopy").val() == "") {
+		alert('请选择银行开户许可证扫描件。');
+		return false;
+	} else if(!validateFileExt($("#bankCopy").val())) {
+		alert('银行开户许可证扫描件格式不正确。');
 		return false;
 	}
 	<?php endif; ?>

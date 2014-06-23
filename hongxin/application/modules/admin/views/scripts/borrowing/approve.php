@@ -87,7 +87,7 @@ foreach($this->row['statusLogRows'] as $logRow) {
 			<td><?php echo date('Y-m-d', $this->row['endTime']);?></td>
 		</tr>
 		<tr>
-			<td>融资到期时间：</td>
+			<td>票据到期时间：</td>
 			<td><?php echo date('Y-m-d', $this->row['ticketEndTime']);?></td>
 		</tr>
 		<tr>
@@ -95,7 +95,7 @@ foreach($this->row['statusLogRows'] as $logRow) {
 			<td><?php echo date('Y-m-d', $this->row['repayEndTime']);?></td>
 		</tr>
         <tr>
-            <td>融资说明：</td>
+            <td>融资用途：</td>
             <td><?php echo $this->row['notes'] != '' ? str_replace("\n", "<br/>", $this->row['notes']) : '--';?></td>
         </tr>
     </table>
