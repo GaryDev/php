@@ -1,5 +1,5 @@
 
-<table width="100%" border="0" align="center" cellpadding="0" cellspacing="0">
+<table width="1175" border="0" align="center" cellpadding="0" cellspacing="0">
   <tr>
     <td height="30" style="border-bottom: 1px solid #dedede"><table width="1085" border="0" align="center" cellpadding="0" cellspacing="0">
       <tr>
@@ -15,9 +15,9 @@
     </table></td>
   </tr>
 </table>
-<table width="1175" border="0" align="right" cellpadding="10" cellspacing="0">
+<table width="1085" border="0" align="center" cellpadding="10" cellspacing="0">
   <tr>
-    <td width="416"><img src="/files/default/images/logo2.jpg"></td>
+    <td width="416"><a href="http://www.jianfengcf.com" target="_blank"><img src="/files/default/images/logo2.jpg"></a></td>
     <!--  <td width="400" align="right"><a id="guide" href="<?php echo $this->projectUrl(array('module'=>'default', 'controller'=>'guide', 'action'=>'index'));?>" style="font-size: 16px;color:#30318B;">新手指引</a></td>-->
     <td width="385" align="right"></td>
     <?php if (empty($this->loginedUserName)) { ?>
@@ -31,7 +31,7 @@
      <?php }?>
   </tr>
 </table>
-<table width="100%" border="0" align="center" cellpadding="0" cellspacing="0">
+<table width="1175" border="0" align="center" cellpadding="0" cellspacing="0">
   <tr>
     <td height="40" bgcolor="#30318b"><table width="1085" border="0" align="center" cellpadding="0" cellspacing="0">
       <tr>
@@ -77,7 +77,7 @@ function checkLogin(type)
 		} else if(type == 2) {
 			msg = "请先登录，才能操作";
 			if(status == 2) {
-				msg = "企业用户不能进行投资操作，请使用个人账号";
+				msg = "企业账户不能投资，请您注册个人账户！";
 			} else if(status == -1) {
 				popupWindow("身份验证","<?php echo $this->projectUrl(array('module'=>'member', 'controller'=>'user', 'action'=>'identify'));?>");
 				return false;

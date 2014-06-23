@@ -80,7 +80,8 @@ class IndexController extends CommonController
         }
         
         // 债权转让
-        /*$cessionRow = $borrowingModel->getTopCession();
+        $tmp = $doneRow['id'] > 0 ? $doneRow['id'] : 0;
+        $cessionRow = $borrowingModel->getTopCession($tmp);
         if($cessionRow['id'] > 0)
         {
         	$cessionRow['borrowedCount'] = $cessionRow['amountMaxUnit'] - $cessionRow['amountUnit'];
@@ -89,7 +90,7 @@ class IndexController extends CommonController
         		$cessionRow['ticketCopyUrl'] = $ticketUrl . $cessionRow['ticketCopyPath'];
         	}
         	$cessionRow['remainDay'] = (int)((($cessionRow['endTime'] - time())/86400) + 1);
-        }*/
+        }
 
         //网站活动
         /*$archivesSelect = $archivesModel->select(false)
@@ -172,6 +173,7 @@ class IndexController extends CommonController
         //$this->view->actRows = $actRows;
         $this->view->popRow = $popRow;
         $this->view->doneRow = $doneRow;
+        $this->view->cessionRow = $cessionRow;
         $this->view->archives1Rows = $archives1Rows;
         $this->view->archives2Rows = $archives2Rows;
         //$this->view->archives3Rows = $archives3Rows;

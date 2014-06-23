@@ -132,15 +132,23 @@ class Application_Model_Borrowing extends Application_Model_Common
      * @param string userName
      * @return 1/0
      */
-    public function getTopCession()
+    public function getTopCession($id)
     {
-    	$sql = "SELECT * 
+    	/*$sql = "SELECT * 
     	          FROM `{$this->getTableName()}` 
     	         WHERE `amountUnit` > 0 
     	           AND `status` = '3'
     	           AND endTime >= unix_timestamp(current_date())
     	           AND type = 'credit' 
-    	         ORDER BY amountUnit LIMIT 1";
+    	         ORDER BY amountUnit LIMIT 1";*/
+    	$sql = "SELECT *
+		    	FROM `{$this->getTableName()}`
+		    	WHERE `amountUnit` > 0
+		    	AND `status` = '3'
+		    	AND endTime >= unix_timestamp(current_date())
+		    	AND type = 'recommend'
+		    	AND id <> $id
+		    	ORDER BY amountUnit LIMIT 1";
     	$row = $this->getAdapter()->fetchRow($sql);
     
     	$data = isset($row['id']) ? $row : array('id' => 0);
