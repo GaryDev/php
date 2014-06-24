@@ -50,7 +50,7 @@
 						<td align="left"><?php echo $row['orderSN'];?></td>
 						<td><a target="_blank" href="<?php echo $this->projectUrl(array('module'=>'default', 'controller'=>'borrowing', 'action'=>'view', 'code'=>$row['borrowCode']));?>"><?php echo $row['title'];?></a></td>
 						<td><?php echo date('Y-m-d H:i:s', $row['addTime']);?></td>
-						<td><?php echo $row['orderAmount'];?></td>
+						<td><?php echo number_format($row['orderAmount']);?>元</td>
 						<td><?php echo $this->orderStatus[$row['status']];?></td>
 						<td align="center">
 						<?php if($row['status'] == 10) {?>

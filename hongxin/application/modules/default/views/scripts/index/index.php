@@ -50,6 +50,12 @@
 		}
 		return false;
     }
+    function goBuy(code){
+		if(checkLogin(2)){
+			window.location.href = "<?php echo $this->projectUrl(array('module'=>'default', 'controller'=>'borrowing', 'action'=>'view'));?>/code/" + code;
+		}
+		return false;
+    }
 </script>
 </head>
 
@@ -194,7 +200,7 @@
 	          <tr>
 	            <td align="left" bgcolor="#FFFFFF" class="bt_hs12"><?php echo $this->borrowingRows[$i]['title']; ?></td>
 	            <td align="right" bgcolor="#FFFFFF" class="hsbfb"><?php echo $this->borrowingRows[$i]['yearInterestRate']; ?></td>
-	            <td align="right" bgcolor="#FFFFFF" class="bt_hs12"><?php echo ($this->borrowingRows[$i]['amountUnit'] * $this->borrowingRows[$i]['borrowUnit']); ?></td>
+	            <td align="right" bgcolor="#FFFFFF" class="bt_hs12"><?php echo number_format(($this->borrowingRows[$i]['amountUnit'] * $this->borrowingRows[$i]['borrowUnit'])); ?></td>
 	            <td align="right" bgcolor="#FFFFFF" class="bt_hs12"><?php echo $this->borrowingRows[$i]['deadline']; ?></td>
 	            <td align="right" bgcolor="#FFFFFF" class="bt_hs12"><?php echo $this->borrowingRows[$i]['percent']; ?></td>
 	            <td align="center" bgcolor="#FFFFFF" class="bt_hs14">
@@ -270,7 +276,7 @@
               <br/></td>
             <td width="50%" height="25" align="right"><table width="95%" border="0" align="right" cellpadding="0" cellspacing="0">
               <tr>
-                <td align="center" class="box_hs1"><a href="<?php echo $this->projectUrl(array('module'=>'default', 'controller'=>'borrowing', 'action'=>'view', 'code'=>$this->popRow['code']));?>"><span>立即投资</span></a></td>
+                <td align="center" class="box_hs1"><a href="javascript:void(0);" onclick="goBuy('<?php echo $this->popRow['code'];?>');"><span>立即投资</span></a></td>
               </tr>
             </table></td>
           </tr>
@@ -343,7 +349,7 @@
                   <br></td>
               <td width="50%" height="25" align="right"><table width="95%" border="0" align="right" cellpadding="0" cellspacing="0">
                   <tr>
-                    <td align="center" class="box_red1"><a href="<?php echo $this->projectUrl(array('module'=>'default', 'controller'=>'borrowing', 'action'=>'view', 'code'=>$this->doneRow['code']));?>"><span>立即投资</span></a></td>
+                    <td align="center" class="box_red1"><a href="javascript:void(0);" onclick="goBuy('<?php echo $this->doneRow['code'];?>');"><span>立即投资</span></a></td>
                   </tr>
               </table></td>
             </tr>
@@ -410,13 +416,13 @@
             <tr>
               <td width="50%" height="25" align="left" valign="middle"><table width="95%" border="0" align="left" cellpadding="0" cellspacing="0">
                   <tr>
-                    <td align="center" class="box_red"><a href="javascript:void(0);" target="_blank" onclick='return viewTicket("<?php echo $this->cessionRow['ticketCopyUrl']; ?>");'><span>查看汇票</span></a></td>
+                    <td align="center" class="box_ls"><a href="javascript:void(0);" target="_blank" onclick='return viewTicket("<?php echo $this->cessionRow['ticketCopyUrl']; ?>");'><span>查看汇票</span></a></td>
                   </tr>
                 </table>
                   <br></td>
               <td width="50%" height="25" align="right"><table width="95%" border="0" align="right" cellpadding="0" cellspacing="0">
                   <tr>
-                    <td align="center" class="box_red1"><a href="<?php echo $this->projectUrl(array('module'=>'default', 'controller'=>'borrowing', 'action'=>'view', 'code'=>$this->cessionRow['code']));?>"><span>立即投资</span></a></td>
+                    <td align="center" class="box_ls1"><a href="javascript:void(0);" onclick="goBuy('<?php echo $this->cessionRow['code'];?>');"><span>立即投资</span></a></td>
                   </tr>
               </table></td>
             </tr>
@@ -472,7 +478,7 @@
     </table></td>
     <td width="33%" height="300" align="center" valign="middle"><table width="96%" border="0" cellpadding="0" cellspacing="0" style="border:1px #dfdfdf solid; background-color:#ffffff;">
       <tr>
-        <td width="50%" height="40" align="left" class="lsbfb" style="border-bottom:2px #1eb3d4 solid; padding-left:10px;">行业咨询</td>
+        <td width="50%" height="40" align="left" class="lsbfb" style="border-bottom:2px #1eb3d4 solid; padding-left:10px;">行业资讯</td>
         <td width="50%" align="right" style="border-bottom:2px #1eb3d4 solid; padding-right:10px;"><a href="<?php echo $this->projectUrl(array('module'=>'default', 'controller'=>'archives', 'action'=>'index', 'classId'=>2));?>">+更多</a></td>
       </tr>
       <tr>

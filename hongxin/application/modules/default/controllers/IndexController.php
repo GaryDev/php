@@ -65,6 +65,7 @@ class IndexController extends CommonController
         		$popRow['ticketCopyUrl'] = $ticketUrl . $popRow['ticketCopyPath'];
         	}
         	$popRow['remainDay'] = (int)((($popRow['endTime'] - time())/86400) + 1);
+        	$popRow['amount'] = number_format($popRow['amount']);
         }
         
         // 即将满标
@@ -77,6 +78,7 @@ class IndexController extends CommonController
         		$doneRow['ticketCopyUrl'] = $ticketUrl . $doneRow['ticketCopyPath'];
         	}
         	$doneRow['remainDay'] = (int)((($doneRow['endTime'] - time())/86400) + 1);
+        	$doneRow['amount'] = number_format($doneRow['amount']);
         }
         
         // 债权转让
@@ -90,6 +92,7 @@ class IndexController extends CommonController
         		$cessionRow['ticketCopyUrl'] = $ticketUrl . $cessionRow['ticketCopyPath'];
         	}
         	$cessionRow['remainDay'] = (int)((($cessionRow['endTime'] - time())/86400) + 1);
+        	$cessionRow['amount'] = number_format($cessionRow['amount']);
         }
 
         //网站活动
@@ -117,7 +120,7 @@ class IndexController extends CommonController
             $archives2Rows[$key] = $row;
         }
         
-        //行业咨询
+        //行业资讯
         $archivesSelect = $archivesModel->select(false)
         ->setIntegrityCheck(false)
         ->from(array($archivesModel->getTableName()), array('id', 'title', 'isLink', 'linkUrl', 'picture', 'updateTime', 'content'))

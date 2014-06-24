@@ -27,7 +27,7 @@
 <style type="text/css">
     #tabContainer
     {
-        margin: 15px 5px 5px 30px;
+        margin: 15px auto 5px auto;
     	padding-top: 3px;
     }
     #tabContainer li
@@ -53,7 +53,7 @@
 </style>
 </head>
 
-<body>
+<body style="text-align: center;">
 <?php echo $this->render('top.php');?>
 
 <div id="tabContainer" style="width: 1200px;">

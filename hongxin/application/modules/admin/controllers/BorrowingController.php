@@ -73,10 +73,16 @@ class Admin_BorrowingController extends Admin_CommonController
         Zend_Loader::loadClass('Project_Paginator');
         $paginator = new Project_Paginator($recordCount, $pageSize, $pageNo);
         $paginator->urlTemplateContent = $urlTemplate;
+        $rows = $dbPaginator->getRows();
 
+        foreach($rows as $key=>$row) {
+        	$row['amount'] = number_format($row['amount']);
+        	$rows[$key] = $row;
+        }
+        
         //分配view(分页处理后的记录集以及分页HTML字符)
         $this->view->pageString = $paginator->getPageString();
-        $this->view->rows = $dbPaginator->getRows();
+        $this->view->rows = $rows;
         $urls['pageNo'] = $pageNo;
         $this->view->pageUrl = $this->view->projectUrl($urls);
         $this->view->vars = $vars;
@@ -211,7 +217,7 @@ class Admin_BorrowingController extends Admin_CommonController
     
     	$popRow = $this->_model->getPopstar();
     	
-    	
+    	$row['amount'] = number_format($row['amount']);
     	$this->view->row = $row;
     	$this->view->popRow = $popRow;
     	$this->view->borrowingUnitMin = $this->_configs['project']['borrowingUnitMin'];

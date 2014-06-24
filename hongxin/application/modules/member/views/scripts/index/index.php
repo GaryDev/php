@@ -50,10 +50,10 @@
 				    <?php }?>
 			    <?php } ?>
 			    <?php if($this->loginedUserType == 'P') { ?>
-			        投资中资金：<span class="bt_js12"><?php echo $this->totalOrderAmount;?></span>元<br/>
+			        投资中资金：<span class="bt_js12"><?php echo number_format($this->totalOrderAmount);?></span>元<br/>
 			        预期投资收益：<span class="bt_js12"><?php echo $this->totalBenifit;?></span>元<br/>
 			    <?php }?>
-			         账户余额：<span class="bt_js12"><?php echo $this->balance['normal'];?></span>元
+			         账户余额：<span class="bt_js12"><?php echo number_format($this->balance['normal'], 2, '.', ',');?></span>元
 		    </td>
             <?php if($this->loginedUserType == 'P') { ?>
             <td width="66%" valign="top"  style="padding:20px; line-height:25px;">
@@ -93,7 +93,7 @@
             <td width="324" height="110">
             <table width="95%" border="0" align="center" cellpadding="0" cellspacing="0">
                 <tr>
-                  <td height="25" align="left">订单金额：<span class="bt_js12"><?php echo $orderRow['orderAmount']; ?></span>元</td>
+                  <td height="25" align="left">订单金额：<span class="bt_js12"><?php echo number_format($orderRow['orderAmount']); ?></span>元</td>
                 </tr>
                 <tr>
                   <td height="25" align="left">订单号：<?php echo $orderRow['orderSN']; ?></td>

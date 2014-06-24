@@ -96,7 +96,7 @@ class ArchivesController extends CommonController
 	        	$this->view->subTitle = '理财课堂';
 	        	break;
         	case 2:
-        		$this->view->subTitle = '行业咨询';
+        		$this->view->subTitle = '行业资讯';
         		break;
         	case 6:
 	        	$this->view->subTitle = '媒体报道';

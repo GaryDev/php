@@ -151,7 +151,7 @@
     			<td>产品编号：<label id="code"><?php echo $this->row['code'];?></label></td>
     		</tr>
     		<tr>
-    			<td>融资金额：<label><?php echo $this->row['amount'] / 10000;?></label>万</td>
+    			<td>融资金额：<label><?php echo number_format($this->row['amount']);?></label>元</td>
     		</tr>
     		<tr>
     			<td>年化收益：<label><?php echo $this->row['yearInterestRate']; ?></label>%</td>

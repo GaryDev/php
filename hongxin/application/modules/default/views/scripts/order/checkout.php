@@ -38,7 +38,7 @@
 						<td>产品名称：<?php echo $this->row['title']; ?></td>
 					</tr>
 					<tr>
-						<td>交易金额：<?php echo $this->row['orderAmount']; ?> 元</td>
+						<td>交易金额：<?php echo number_format($this->row['orderAmount']); ?> 元</td>
 					</tr>
 					<tr>
 						<td>预期收益：<?php echo $this->row['benifit']; ?> 元</td>

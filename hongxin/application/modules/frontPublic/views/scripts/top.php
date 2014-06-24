@@ -21,11 +21,11 @@
     <!--  <td width="400" align="right"><a id="guide" href="<?php echo $this->projectUrl(array('module'=>'default', 'controller'=>'guide', 'action'=>'index'));?>" style="font-size: 16px;color:#30318B;">新手指引</a></td>-->
     <td width="385" align="right"></td>
     <?php if (empty($this->loginedUserName)) { ?>
-    <td height="70"><table width="160" border="0" align="center" cellpadding="0" cellspacing="0">
+    <td height="70"><table width="170" border="0" align="center" cellpadding="0" cellspacing="0">
       <tr>
         <!--  <td class="top_tel" style="text-align: right;">客服热线：400-606-0009</td> -->
-	        <td width="80" align="center" height="30px" style="border: 1px solid #dedede;"><a id="login" href="<?php echo $this->projectUrl(array('module'=>'member', 'controller'=>'user', 'action'=>'login'));?>" class="dl">登录</a> </td>
-	        <td width="80" align="center" height="30px" style="border: 1px solid #dedede; background:#30318b;"><a id="register" href="<?php echo $this->projectUrl(array('module'=>'member', 'controller'=>'user', 'action'=>'register'));?>" class="dl" style="color:#ffffff;">注册</a></td>
+	        <td width="85" align="center" height="30px" style="border: 1px solid #dedede;"><a id="login" href="<?php echo $this->projectUrl(array('module'=>'member', 'controller'=>'user', 'action'=>'login'));?>" class="dl">登录</a> </td>
+	        <td width="85" align="center" height="30px" style="border: 1px solid #dedede; background:#30318b;"><a id="register" href="<?php echo $this->projectUrl(array('module'=>'member', 'controller'=>'user', 'action'=>'register'));?>" class="dl" style="color:#ffffff;">免费注册</a></td>
       </tr>
     </table></td>
      <?php }?>

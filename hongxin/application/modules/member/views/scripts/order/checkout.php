@@ -1,6 +1,6 @@
 
 <form id="paymentForm" name="paymentForm" method="post" action="<?php echo $this->ysburl; ?>" target="_blank">
-	<table width="400" border="0" align="center" cellpadding="5" cellspacing="0" style="border:0px #dedede solid;margin-top: 10px;margin-left: 30px;">
+	<table width="400" border="0" align="center" cellpadding="5" cellspacing="0" style="border:0px #dedede solid;margin-top: 5px;margin-left: 30px;">
 		<tr>
 			<td width="40%" valign="top">
 				<table width="90%" border="0" align="center" cellpadding="3" cellspacing="0">
@@ -14,7 +14,7 @@
 						<td>产品名称：<?php echo $this->row['title']; ?></td>
 					</tr>
 					<tr>
-						<td>交易金额：<?php echo $this->row['orderAmount']; ?> 元</td>
+						<td>交易金额：<?php echo number_format($this->row['orderAmount']); ?> 元</td>
 					</tr>
 					<tr>
 						<td>预期收益：<?php echo $this->row['benifit']; ?> 元</td>

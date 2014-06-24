@@ -147,6 +147,7 @@ class BorrowingController extends CommonController
             } else if($row['percent'] > 100) {
             	$row['percent'] = 99;
             }
+            $row['amount'] = number_format($row['amount']);
             $rows[$key] = $row;
         }
 
@@ -201,6 +202,7 @@ class BorrowingController extends CommonController
         } else if($row['borrowedCount'] > 0 && $row['percent'] > 100) {
         	$row['percent'] = 99;
         }
+        $row['amount'] = number_format($row['amount']);
         
         /*
         $borrowedInfo = Zend_Json::decode($row['borrowedJson']);

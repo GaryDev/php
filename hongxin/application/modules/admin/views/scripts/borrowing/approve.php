@@ -54,10 +54,12 @@ foreach($this->row['statusLogRows'] as $logRow) {
 			<td>融资金额：</td>
         	<td><?php echo $this->row['amount'];?>元</td>
        	</tr>
+       	<!--  
         <tr>
         	<td>还款方式：</td>
         	<td><?php echo '保本保息'; ?></td>
        	</tr>
+       	-->
         <tr>
 			<td>年利率：</td>
         	<td><?php echo $this->row['yearInterestRate'];?>%</td>

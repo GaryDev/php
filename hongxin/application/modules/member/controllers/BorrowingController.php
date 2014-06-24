@@ -72,6 +72,7 @@ class Member_BorrowingController extends Member_CommonController
         	} else if($row['percent'] > 100) {
         		$row['percent'] = 99;
         	}
+        	$row['amount'] = number_format($row['amount']);
         	$rows[$key] = $row;
         }
 
@@ -192,8 +193,6 @@ class Member_BorrowingController extends Member_CommonController
     public function viewAction()
     {
         $borrowingDetailModel = new Application_Model_BorrowingDetail();
-        $accountDetailsModel = new Application_Model_AccountDetails();
-        $repaymentModel = new Application_Model_Repayment();
 
         $code = trim($this->_request->get('code'));
 
@@ -202,63 +201,10 @@ class Member_BorrowingController extends Member_CommonController
             echo $this->view->message('记录不存在，请返回重试！', $this->view->projectUrl(array('controller'=>'index', 'action'=>'index'))) ;
             exit;
         }
-        $borrowingDetailRows = $borrowingDetailModel->fetchAll("`borrowingCode` = '{$row['code']}'", "id ASC");
-        $repaymentRows = $repaymentModel->fetchAll("`borrowingCode` = '{$row['code']}'", "id ASC");
-
-        //获取用户可用余额
-        $surplusAvailableAmount = $accountDetailsModel->getSurplusAvailableAmount(Application_Model_MemberLogin::getLoginedUserName());
-
-        //获取当最近一次应还款金额
-        $currentRepaymentAmount = 0;
-        foreach($repaymentRows as $repaymentRow) {
-            if ($repaymentRow['status'] == '1') {
-                $currentRepaymentAmount = $repaymentRow['principal'] + $repaymentRow['interest'];
-                break;
-            }
-        }
-
-        //获取总共未还金额
-        $allNoRepaymentAmount = 0;
-        foreach($repaymentRows as $repaymentRow) {
-            if ($repaymentRow['status'] == '1') {
-                $allNoRepaymentAmount += $repaymentRow['principal'] + $repaymentRow['interest'];
-            }
-        }
-
+        $row['amount'] = number_format($row['amount']);
         $this->view->row = $row;
         $this->view->borrowingUnitMin = $this->_configs['project']['borrowingUnitMin'];
-        $this->view->borrowingDetailRows = $borrowingDetailRows;
-        $this->view->repaymentRows = $repaymentRows;
-        $this->view->surplusAvailableAmount = $surplusAvailableAmount;
-        $this->view->currentRepaymentAmount = $currentRepaymentAmount;
-        $this->view->allNoRepaymentAmount = $allNoRepaymentAmount;
-
-        if ($this->_request->isPost()) {
-            if ($row['status'] != '4') {
-                echo $this->view->message('此标状态不在还款中。');
-                exit;
-            }
-            $repaymentHowType = $this->_request->get('repaymentHowType');
-            if ($repaymentHowType == '1') {//还完当前
-                if ($currentRepaymentAmount > $surplusAvailableAmount) {
-                    echo $this->view->message('还款失败，你的余额不足。');
-                    exit;
-                } else {
-                    $repaymentModel->repayment(Application_Model_MemberLogin::getLoginedUserName(), $code, $from = 'member', 0, $repaymentRows);
-                    echo $this->view->message('还款成功。');
-                    exit;
-                }
-            } else if ($repaymentHowType == '2') {//还完所有
-                if ($allNoRepaymentAmount > $surplusAvailableAmount) {
-                    echo $this->view->message('还款失败，你的余额不足。');
-                    exit;
-                } else {
-                    $repaymentModel->repayment(Application_Model_MemberLogin::getLoginedUserName(), $code, $from = 'member', 1, $repaymentRows);
-                    echo $this->view->message('你的所有借款已经还款完毕。');
-                    exit;
-                }
-            }
-        }
+        
     }
 
     /**

@@ -201,7 +201,7 @@ function calculateAmount() {
 		benifit = amount * (1-((yearRate/100) * (benifitDay/365)));
 	}
 	benifit = parseInt(Math.round(benifit*100)/100);
-	$("#amount").val(benifit);
+	$("#amount").val(fmoney(benifit, 3));
 }
 
 $("#ticketAmount").change(function(){ 
