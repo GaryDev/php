@@ -51,9 +51,9 @@
 		return false;
     }
     function goBuy(code){
-		if(checkLogin(2)){
+		//if(checkLogin(2)){
 			window.location.href = "<?php echo $this->projectUrl(array('module'=>'default', 'controller'=>'borrowing', 'action'=>'view'));?>/code/" + code;
-		}
+		//}
 		return false;
     }
 </script>
@@ -141,19 +141,19 @@
               <td height="35" align="left" class="bt_hs22">个性化定制您的投资</td>
             </tr>
             <tr>
-              <td height="30" align="left" class="bt_hs14">期望收益率</td>
+              <td height="30" align="left" class="bt_hs14">投资收益率</td>
             </tr>
             <tr>
               <td height="35" align="left"><input type="text" name="qYearRate" class="xlbd" />&nbsp;<span class="bt_hs14">%</span></td>
             </tr>
             <tr>
-              <td height="30" align="left" class="bt_hs14">期望金额</td>
+              <td height="30" align="left" class="bt_hs14">投资金额</td>
             </tr>
             <tr>
               <td height="35" align="left"><input type="text" name="qAmount" class="xlbd" />&nbsp;<span class="bt_hs14">元</span></td>
             </tr>
             <tr>
-              <td height="30" align="left" class="bt_hs14">期望期限</td>
+              <td height="30" align="left" class="bt_hs14">投资期限</td>
             </tr>
             <tr>
               <td height="35" align="left"><input type="text" name="qDeadLine" class="xlbd" />&nbsp;<span class="bt_hs14">天</span></td>
@@ -246,15 +246,15 @@
       <tr>
         <td height="30"><table width="88%" border="0" align="center" cellpadding="0" cellspacing="0">
           <tr>
-            <td width="50%" height="25" align="left"><span class="hsbfb2">认筹：</span><?php echo $this->popRow['borrowUnit']; ?>元起<br/></td>
-            <td width="50%" height="25" align="left"><span class="hsbfb2">停售：</span><?php echo date('Y-m-d', $this->popRow['endTime']); ?><br/></td>
+            <td width="50%" height="25" align="left"><span class="hsbfb2">投资：</span><?php echo $this->popRow['borrowUnit']; ?>元起<br/></td>
+            <td width="50%" height="25" align="left"><span class="hsbfb2">截止：</span><?php echo date('Y-m-d', $this->popRow['endTime']); ?><br/></td>
             </tr>
           <tr>
             <td width="50%" height="25" align="left"><span class="hsbfb2">剩余：</span><?php echo $this->popRow['remainDay']; ?>天</td>
-            <td width="50%" height="25" align="left"><span class="hsbfb2">已售：</span><?php echo $this->popRow['borrowedCount']; ?>份</td>
+            <td width="50%" height="25" align="left"><span class="hsbfb2">已投：</span><?php echo $this->popRow['borrowedCount']; ?>份</td>
             </tr>
           <tr>
-            <td width="50%" height="25" align="left"><span class="hsbfb2">总价：</span><?php echo $this->popRow['amount']; ?>元</td>
+            <td width="50%" height="25" align="left"><span class="hsbfb2">融资额：</span><?php echo $this->popRow['amount']; ?>元</td>
             <td width="50%" height="25" align="left">&nbsp;</td>
             </tr>
           
@@ -321,15 +321,15 @@
       <tr>
         <td height="30"><table width="88%" border="0" align="center" cellpadding="0" cellspacing="0">
             <tr>
-              <td width="50%" height="25" align="left"><span class="renbfb2">认筹：</span><?php echo $this->doneRow['borrowUnit']; ?>元起<br/></td>
-              <td width="50%" height="25" align="left"><span class="renbfb2">停售：</span><?php echo date('Y-m-d', $this->doneRow['endTime']); ?><br/></td>
+              <td width="50%" height="25" align="left"><span class="renbfb2">投资：</span><?php echo $this->doneRow['borrowUnit']; ?>元起<br/></td>
+              <td width="50%" height="25" align="left"><span class="renbfb2">截止：</span><?php echo date('Y-m-d', $this->doneRow['endTime']); ?><br/></td>
             </tr>
             <tr>
               <td width="50%" height="25" align="left"><span class="renbfb2">剩余：</span><?php echo $this->doneRow['remainDay']; ?>天</td>
-              <td width="50%" height="25" align="left"><span class="renbfb2">已售：</span><?php echo $this->doneRow['borrowedCount']; ?>份</td>
+              <td width="50%" height="25" align="left"><span class="renbfb2">已投：</span><?php echo $this->doneRow['borrowedCount']; ?>份</td>
             </tr>
             <tr>
-              <td width="50%" height="25" align="left"><span class="renbfb2">总价：</span><?php echo $this->doneRow['amount']; ?>元</td>
+              <td width="50%" height="25" align="left"><span class="renbfb2">融资额：</span><?php echo $this->doneRow['amount']; ?>元</td>
               <td width="50%" height="25" align="left">&nbsp;</td>
             </tr>
         </table></td>
@@ -394,15 +394,15 @@
       <tr>
         <td height="30"><table width="88%" border="0" align="center" cellpadding="0" cellspacing="0">
             <tr>
-              <td width="50%" height="25" align="left"><span class="lsbfb2">认筹：</span><?php echo $this->cessionRow['borrowUnit']; ?>元起<br/></td>
-              <td width="50%" height="25" align="left"><span class="lsbfb2">停售：</span><?php echo date('Y-m-d', $this->cessionRow['endTime']); ?><br/></td>
+              <td width="50%" height="25" align="left"><span class="lsbfb2">投资：</span><?php echo $this->cessionRow['borrowUnit']; ?>元起<br/></td>
+              <td width="50%" height="25" align="left"><span class="lsbfb2">截止：</span><?php echo date('Y-m-d', $this->cessionRow['endTime']); ?><br/></td>
             </tr>
             <tr>
               <td width="50%" height="25" align="left"><span class="lsbfb2">剩余：</span><?php echo $this->cessionRow['remainDay']; ?>天</td>
-              <td width="50%" height="25" align="left"><span class="lsbfb2">已售：</span><?php echo $this->cessionRow['borrowedCount']; ?>份</td>
+              <td width="50%" height="25" align="left"><span class="lsbfb2">已投：</span><?php echo $this->cessionRow['borrowedCount']; ?>份</td>
             </tr>
             <tr>
-              <td width="50%" height="25" align="left"><span class="lsbfb2">总价：</span><?php echo $this->cessionRow['amount']; ?>元</td>
+              <td width="50%" height="25" align="left"><span class="lsbfb2">融资额：</span><?php echo $this->cessionRow['amount']; ?>元</td>
               <td width="50%" height="25" align="left">&nbsp;</td>
             </tr>
         </table></td>

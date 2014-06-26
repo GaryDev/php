@@ -180,10 +180,10 @@ if (empty($this->rows)) {
 <script type="text/javascript">
 	function goBuy(code)
 	{
-		if(checkLogin(2))
-		{
+		//if(checkLogin(2))
+		//{
 			window.location.href = "<?php echo $this->projectUrl(array('module'=>'default', 'controller'=>'borrowing', 'action'=>'view'));?>/code/" + code;
-		}
+		//}
 	}
 
 	$("form a").click(function(){

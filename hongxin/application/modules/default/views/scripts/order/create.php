@@ -104,12 +104,12 @@
 		<td width="70%" valign="top">
 			<table class="order-info" width="90%" border="0" align="center" cellpadding="10" cellspacing="0" style="border:1px #dedede solid;margin-top: 10px;">
 				<tr>
-					<th>购买份数</th>
+					<th>投资份数</th>
 					<td>&nbsp;</td>
 					<td>&nbsp;</td>
 				</tr>
 				<tr>
-					<td width="15%">当前购买份额</td>
+					<td width="15%">当前投资份额</td>
 					<td width="55%"><div id="slider"></div></td>
 					<td><input type="text" id="orderQty" name="orderQty" value="1" style="text-align: right; width: 60px;" />份</td>
 					<td>&nbsp;</td>
@@ -129,7 +129,7 @@
 				</tr>
 				<tr>
 					<td width="25%">投资人姓名：</td>
-					<td><?php echo $this->LoginedRow['userName']; ?></td>
+					<td><?php echo $this->LoginedRow['name']; ?></td>
 				</tr>
 				<tr>
 					<td width="25%">投资人身份证号码：</td>
@@ -138,7 +138,7 @@
 			</table>
 			<table width="90%" border="0" align="center" cellpadding="10" cellspacing="0" style="margin-top: 10px;">
 				<tr>
-					<td align="center"><input type="submit" class="btn" name="goBuyBtn" id="goBuyBtn" value="提交订单" /></td>
+					<td align="center"><input type="submit" class="btn" name="goBuyBtn" id="goBuyBtn" value="立即投资" /></td>
 				</tr>
 			</table>
 		</td>
@@ -169,10 +169,10 @@
     			<td>最大投资份数：<label><?php echo $this->row['amountMaxUnit'];?></label>份</td>
     		</tr>
     		<tr>
-    			<td>募集开始时间：<?php echo date('Y-m-d', $this->row['startTime']);?></td>
+    			<td>投资开始时间：<?php echo date('Y-m-d', $this->row['startTime']);?></td>
     		</tr>
     		<tr>
-    			<td>募集截止时间：<?php echo date('Y-m-d',$this->row['endTime']);?></td>
+    			<td>投资截止时间：<?php echo date('Y-m-d',$this->row['endTime']);?></td>
     		</tr>
     		<tr>
     			<td>项目到期时间：<?php echo date('Y-m-d',$this->row['ticketEndTime']);?></td>

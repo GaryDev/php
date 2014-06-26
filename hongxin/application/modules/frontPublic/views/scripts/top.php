@@ -42,7 +42,7 @@
         <!-- <td align="center"><a id="cession" href="<?php echo $this->projectUrl(array('module'=>'default', 'controller'=>'cession', 'action'=>'index'));?>" class="menu">债权转让</a></td> -->
         <td align="left"><a id="archives" href="<?php echo $this->projectUrl(array('module'=>'default', 'controller'=>'archives', 'action'=>'index'));?>" class="menu">信息公告</a></td>
         <!--  <td align="center"><a id="guide" href="<?php echo $this->projectUrl(array('module'=>'default', 'controller'=>'guide', 'action'=>'index'));?>" class="menu">新手指引</a></td>-->
-        <td align="left"><a id="member" href="<?php echo $this->projectUrl(array('module'=>'member', 'controller'=>'index', 'action'=>'index'));?>" class="menu">我的鉴丰</a></td>
+        <td align="left"><a id="member" href="<?php echo $this->projectUrl(array('module'=>'member', 'controller'=>'index', 'action'=>'index'));?>" class="menu">我的账户</a></td>
         <!-- <td align="center"><a id="about" href="<?php echo $this->projectUrl(array('module'=>'default', 'controller'=>'info', 'action'=>'about'));?>" class="menu">关于我们</a></td>-->
         <!-- <td align="center"><a id="contact" href="<?php echo $this->projectUrl(array('module'=>'default', 'controller'=>'info', 'action'=>'contact'));?>" class="menu">联系我们</a></td>-->
       	<td width="30%">&nbsp;</td>
@@ -57,6 +57,8 @@ function checkLogin(type)
 {
 	var status = 1;
 	var url = '<?php echo $this->projectUrl(array('module'=>'member', 'controller'=>'user', 'action'=>'check-login'));?>' + '?rand=' + Math.random();
+	var loginUrl = "<?php echo $this->projectUrl(array('module'=>'member', 'controller'=>'user', 'action'=>'login'));?>";
+	var registerUrl = "<?php echo $this->projectUrl(array('module'=>'member', 'controller'=>'user', 'action'=>'register'));?>";
 	$.ajax({
 		type: "POST",
 		url: url,
@@ -72,18 +74,18 @@ function checkLogin(type)
 			if(status == 2) {
 				status = 0;
 			} else {
-				msg = "请先登录，才能查看";
+				msg = "请先<a href='"+loginUrl+"' style='text-decoration:underline;'>登录</a>，才能查看";
 			}
 		} else if(type == 2) {
-			msg = "请先登录，才能操作";
+			msg = "请先<a href='"+loginUrl+"' style='text-decoration:underline;'>登录</a>，才能操作";
 			if(status == 2) {
-				msg = "企业账户不能投资，请您注册个人账户！";
+				msg = "企业账户不能投资，请您<a href='"+registerUrl+"' style='text-decoration:underline;'>注册</a>个人账户！";
 			} else if(status == -1) {
 				popupWindow("身份验证","<?php echo $this->projectUrl(array('module'=>'member', 'controller'=>'user', 'action'=>'identify'));?>");
 				return false;
 			}
 		}
-		msg == '' || layer.msg(msg, 3, 5);
+		msg == '' || layer.msg(msg, 5, 5);
 	}
 	return (status == 0);
 }

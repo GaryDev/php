@@ -58,7 +58,13 @@ class Member_CommonController extends Zend_Controller_Action
         $this->view->copyRight = $this->_configs['project']['copyRight'];
         
         //设置已登录的用户名
-        $this->view->loginedUserName = Application_Model_MemberLogin::getLoginedUserName();
+        $loginName = Application_Model_MemberLogin::getLoginedUserName();
+        $loginModel = new Application_Model_MemberLogin();
+        $loginRow = $loginModel->getLoginedRow();
+        if(!empty($loginRow) && !empty($loginRow['name'])) {
+        	$loginName = $loginRow['name'];
+        }
+        $this->view->loginedUserName = $loginName;
         $this->view->loginedUserType = Application_Model_MemberLogin::getLoginedUserType();
         
         //添加公共的视图文件路径

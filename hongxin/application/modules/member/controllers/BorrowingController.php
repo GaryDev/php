@@ -296,8 +296,8 @@ class Member_BorrowingController extends Member_CommonController
             $field['amountMinUnit'] = 1;	// 最小投资份数
             $field['amountMaxUnit'] = $field['amount'] / $field['borrowUnit']; // 最大投资份数
             $field['amountUnit'] = $field['amountMaxUnit'];
-            $field['startTime'] = time();												// 募集开始时间
-            $field['endTime'] = strtotime($filter->filter(trim($this->_request->get('applyEndDate')))); // 募集截止时间
+            $field['startTime'] = time();												// 投资开始时间
+            $field['endTime'] = strtotime($filter->filter(trim($this->_request->get('applyEndDate')))); // 投资截止时间
             $field['ticketEndTime'] = strtotime($filter->filter(trim($this->_request->get('ticketEndDate'))));	//项目到期时间
             $field['repayEndTime'] = strtotime($filter->filter(trim($this->_request->get('repayEndTime'))));	//最迟还款日期
             //$field['deadline'] = (int)((($field['ticketEndTime'] - $field['startTime'])/86400) + 1);	   // 期限

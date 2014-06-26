@@ -81,11 +81,11 @@ foreach($this->row['statusLogRows'] as $logRow) {
 			<td><?php echo $this->row['amountMaxUnit'];?>份</td>
 		</tr>
 		<tr>
-			<td>募集开始时间：</td>
+			<td>投资开始时间：</td>
 			<td><?php echo date('Y-m-d', $this->row['startTime']);?></td>
 		</tr>
 		<tr>
-			<td>募集截止时间：</td>
+			<td>投资截止时间：</td>
 			<td><?php echo date('Y-m-d', $this->row['endTime']);?></td>
 		</tr>
 		<tr>

@@ -83,11 +83,11 @@ if (trim($this->row['statusMessage']) != '') {
 					<td align="left"><?php echo $this->row['amountMaxUnit'];?>份</td>
 				</tr>
 				<tr>
-					<td align="left">募集开始时间：</td>
+					<td align="left">投资开始时间：</td>
 					<td align="left"><?php echo date('Y-m-d', $this->row['startTime']);?></td>
 				</tr>
 				<tr>
-					<td align="left">募集截止时间：</td>
+					<td align="left">投资截止时间：</td>
 					<td align="left"><?php echo date('Y-m-d', $this->row['endTime']);?></td>
 				</tr>
 				<tr>

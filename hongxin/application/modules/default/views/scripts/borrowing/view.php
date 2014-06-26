@@ -33,7 +33,7 @@
     		<td align="center"><img src="<?php echo $this->row['ticketCopyPath']; ?>" width="210" height="280" /></td>
     	</tr>
     	<tr>
-    		<td align="right"><a href="<?php echo $this->row['ticketCopyPath']; ?>" target="_blank">查看大图</a></td>
+    		<td align="right"><a href="javascript:void(0);" target="_blank" onclick='return viewTicket("<?php echo $this->row['ticketCopyPath']; ?>");'>查看大图</a></td>
     	</tr>
     </table>
     </td>
@@ -69,8 +69,8 @@
     			<td>&nbsp;</td>
     		</tr>
     		<tr>
-    			<td>募集开始时间：<?php echo date('Y-m-d', $this->row['startTime']);?></td>
-    			<td>募集截止时间：<?php echo date('Y-m-d',$this->row['endTime']);?></td>
+    			<td>投资开始时间：<?php echo date('Y-m-d', $this->row['startTime']);?></td>
+    			<td>投资截止时间：<?php echo date('Y-m-d',$this->row['endTime']);?></td>
     			<td>&nbsp;</td>
     		</tr>
     		<tr>
@@ -110,7 +110,7 @@
       <p class="bt_hs14">收益率说明：</p>
       <p>理财收益＝理财本金×理财收益率×实际理财天数÷365</p>
       <p class="bt_hs14">投资风险说明：</p>
-    <p>投资本产品可能面临的风险包括但不限于： （1） 政策风险：本产品是针对当前的相关法规和政策设计的。如国家宏观政策以及市场相关法规政策发生变化，可能影响理财计划的受理、投资、偿还等的正常进行，给投资者带来风险。 （2） 流动性风险：在理财期限内，投资者不得提前赎回，可能影响投资者的资金安排，带来流动性风险。 （3） 市场风险：如果在理财期限内，市场利率上升，本产品的收益率不随市场利率上升而提高。 （4） 早偿风险：如杭州银行在特定情况下提前终止理财，则投资者可能将无法实现期初预期的全部收益。 （5） 产品不成立风险：如募集期届满，理财产品募集金额未达到规模下限（如有约定）或市场发生剧烈波动，经杭州银行合理判断难以按照本产品</p></td>
+    <p>投资本产品可能面临的风险包括但不限于： （1） 政策风险：本产品是针对当前的相关法规和政策设计的。如国家宏观政策以及市场相关法规政策发生变化，可能影响理财计划的受理、投资、偿还等的正常进行，给投资者带来风险。 （2） 流动性风险：在理财期限内，投资者不得提前赎回，可能影响投资者的资金安排，带来流动性风险。 （3） 市场风险：如果在理财期限内，市场利率上升，本产品的收益率不随市场利率上升而提高。 （4） 早偿风险：如杭州银行在特定情况下提前终止理财，则投资者可能将无法实现期初预期的全部收益。 （5） 产品不成立风险：如投资期届满，理财产品投资金额未达到规模下限（如有约定）或市场发生剧烈波动，经杭州银行合理判断难以按照本产品</p></td>
   </tr>
 </table>
 </div>
@@ -124,6 +124,12 @@
 			window.location.href = "<?php echo $this->projectUrl(array('module'=>'default', 'controller'=>'order', 'action'=>'create'));?>/code/" + code;
 		}
 	}
+    function viewTicket(url){
+		if(checkLogin(1)) { 
+			window.open(url, "_blank"); 
+		}
+		return false;
+    }
 </script>
 </body>
 </html>
