@@ -64,6 +64,7 @@ class Member_BorrowingController extends Member_CommonController
         $paginator->urlTemplateContent = $urlTemplate;
         $rows = $dbPaginator->getRows();
         
+        $borrowStatus = $this->_configs['project']['memberVars']['borrowStatus'];
         foreach($rows as $key=>$row) {
         	$row['borrowedCount'] = $row['amountMaxUnit'] - $row['amountUnit'];
         	$row['percent'] = floor($row['borrowedCount'] / $row['amountMaxUnit'] * 100);
@@ -72,6 +73,7 @@ class Member_BorrowingController extends Member_CommonController
         	} else if($row['percent'] > 100) {
         		$row['percent'] = 99;
         	}
+        	$row['borrowStatus'] = $borrowStatus[$row['currentStatus']];
         	$row['amount'] = number_format($row['amount']);
         	$rows[$key] = $row;
         }
@@ -201,6 +203,8 @@ class Member_BorrowingController extends Member_CommonController
             echo $this->view->message('记录不存在，请返回重试！', $this->view->projectUrl(array('controller'=>'index', 'action'=>'index'))) ;
             exit;
         }
+        $borrowStatus = $this->_configs['project']['memberVars']['borrowStatus'];
+        $row['borrowStatus'] = $borrowStatus[$row['currentStatus']];
         $row['amount'] = number_format($row['amount']);
         $this->view->row = $row;
         $this->view->borrowingUnitMin = $this->_configs['project']['borrowingUnitMin'];
@@ -287,6 +291,9 @@ class Member_BorrowingController extends Member_CommonController
 			$field['repaymentBank'] = $filter->filter(trim($this->_request->get('repayBank')));
             $field['title'] = $this->_configs['project']['productTitle']; //$filter->filter(trim($this->_request->get('title')));
             $field['code'] = date('YmdHis') . rand(1000, 9999);
+            $ticketAmount = trim($this->_request->get('ticketAmount'));
+            $ticketAmount = str_replace(',', '', $ticketAmount);
+            $field['ticketAmount'] = is_numeric($ticketAmount) ? intval($ticketAmount) : 0;
             $amount = trim($this->_request->get('amount'));
             $amount = str_replace(',', '', $amount);
             $field['amount'] = is_numeric($amount) ? intval($amount) : 0;

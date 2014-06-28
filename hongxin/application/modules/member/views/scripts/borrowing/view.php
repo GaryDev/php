@@ -41,20 +41,17 @@
 					<td align="left">融资金额：</td>
 					<td align="left"><?php echo $this->row['amount'];?>元</td>
 				</tr>
-				<!--  
-				<tr>
-					<td align="left">还款方式：</td>
-					<td align="left"><?php echo '保本保息'; ?></td>
-				</tr>
-				-->
 				<tr>
 					<td align="left">年利率：</td>
 					<td align="left"><?php echo $this->row['yearInterestRate'];?>%</td>
 				</tr>
-		
 				<tr>
-					<td align="left">状态：</td>
-					<td align="left"><?php if ($this->row['status'] == 1) {echo '已提交待审核';} else if ($this->row['status'] == 2) {echo '初审已通过';} else if ($this->row['status'] == 3) {echo '终审已通过（融资中）';}  else if ($this->row['status'] == 4) {echo '初审未通过';}  else if ($this->row['status'] == 5) {echo '终审未通过';} ?></td>
+					<td align="left">当前状态：</td>
+					<td align="left"><?php echo $this->row['borrowStatus']; ?></td>
+				</tr>
+				<tr>
+					<td align="left">申请状态：</td>
+					<td align="left"><?php if ($this->row['status'] == 1) {echo '已提交待审核';} else if ($this->row['status'] == 2) {echo '初审已通过';} else if ($this->row['status'] == 3) {echo '终审已通过';}  else if ($this->row['status'] == 4) {echo '初审未通过';}  else if ($this->row['status'] == 5) {echo '终审未通过';} ?></td>
 				</tr>
 <?php
 if (trim($this->row['statusMessage']) != '') {

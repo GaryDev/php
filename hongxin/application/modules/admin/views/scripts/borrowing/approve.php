@@ -30,11 +30,11 @@
         	<td><?php echo $this->row['title'];?></td>
        	</tr>
         <tr>
-        	<td>状态：</td>
+        	<td>申请状态：</td>
         	<td>
 				<label><input <?php echo $this->row['status'] > 1 ? ' disabled' : '';?> type="radio" name="status" id="status" value="1" <?php echo $this->row['status'] == '1' ? ' checked' : '';?>/> 已提交待审核</label>
 				<label><input <?php echo $this->row['status'] > 2 ? ' disabled' : '';?> type="radio" name="status" id="status" value="2" <?php echo $this->row['status'] == '2' ? ' checked' : '';?>/> 初审已通过</label>
-				<label><input type="radio" name="status" id="status" value="3" <?php echo $this->row['status'] == '3' ? ' checked' : '';?> <?php echo $this->row['status'] != '2' ? ' disabled' : '';?>/> 终审已通过（融资中）</label>
+				<label><input type="radio" name="status" id="status" value="3" <?php echo $this->row['status'] == '3' ? ' checked' : '';?> <?php echo $this->row['status'] != '2' ? ' disabled' : '';?>/> 终审已通过</label>
 				<label><input type="radio" name="status" id="status" value="4" <?php echo $this->row['status'] == '4' ? ' checked' : '';?> <?php echo $this->row['status'] == '3' ? ' disabled="disabled"' : '';?>/> 初审未通过</label>
 				<label><input type="radio" name="status" id="status" value="5" <?php echo $this->row['status'] == '5' ? ' checked' : '';?> <?php echo $this->row['status'] != '2' ? ' disabled="disabled"' : '';?>/> 终审未通过</label>
 				
@@ -50,16 +50,21 @@ foreach($this->row['statusLogRows'] as $logRow) {
 }
 ?>		</td>
        	</tr>
+       	<tr>
+        	<td>当前状态：</td>
+        	<td>
+        	<?php echo $this->row['borrowStatus'];?>&nbsp;&nbsp;
+        	<?php if($this->row['currentStatus'] == 3) { ?>
+        		<input name="complete" type="submit" id="complete" value="立即满标" class="button" onclick="$('#act').val('complete');" />
+        	<?php } else if($this->row['currentStatus'] == 4) {?>
+        		<input name="repayment" type="submit" id="repayment" value="已还款" class="button" onclick="$('#act').val('repayment');" />
+        	<?php } ?>
+        	</td>
+       	</tr>
         <tr>
 			<td>融资金额：</td>
         	<td><?php echo $this->row['amount'];?>元</td>
        	</tr>
-       	<!--  
-        <tr>
-        	<td>还款方式：</td>
-        	<td><?php echo '保本保息'; ?></td>
-       	</tr>
-       	-->
         <tr>
 			<td>年利率：</td>
         	<td><?php echo $this->row['yearInterestRate'];?>%</td>

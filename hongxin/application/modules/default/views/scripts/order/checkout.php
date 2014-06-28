@@ -55,7 +55,7 @@
 				</tr>
 				<tr>
 					<td width="25%">投资人姓名：</td>
-					<td><?php echo $this->LoginedRow['userName']; ?></td>
+					<td><?php echo $this->LoginedRow['name']; ?></td>
 				</tr>
 				<tr>
 					<td width="25%">投资人身份证号码：</td>
@@ -73,7 +73,7 @@
 		-->
 		<td align="center">
 		<input type="checkbox" name="agreement" id="agreement" checked="checked" />
-			我同意 <a href="<?php echo $this->projectUrl(array('module'=>'default', 'controller'=>'info', 'action'=>'agreement'));?>" target="_blank">质押借款协议</a> 和 <a href="<?php echo $this->projectUrl(array('module'=>'default', 'controller'=>'info', 'action'=>'policy'));?>" target="_blank">委托协议</a>
+			我同意 <a href="<?php echo $this->projectUrl(array('module'=>'default', 'controller'=>'agreement', 'action'=>'loan', 'code'=>$this->row['orderSN']));?>" target="_blank">质押借款协议</a> 和 <a href="<?php echo $this->projectUrl(array('module'=>'default', 'controller'=>'agreement', 'action'=>'delegate', 'code'=>$this->row['orderSN']));?>" target="_blank">委托协议</a>
 		</td>
 		<tr>
 			<td align="center"><input type="submit" class="btn" id="goPay" name="goPay" value="资金冻结" /></td>
@@ -98,9 +98,10 @@
 	</table>
 </div>
 <?php
-$endtime = strtotime("+25 minutes");
-$nowtime = time();
-$lefttime = $endtime-$nowtime;  //实际剩下的时间（秒）
+$endtime = strtotime("+25 minutes", $this->row['addTime'] - time());
+//$nowtime = time();
+//$nowtime = $this->row['addTime'];
+$lefttime = $endtime;//-$nowtime;  //实际剩下的时间（秒）
 ?>
 <script type="text/javascript">
 	$("#paymentForm").submit(function(){

@@ -30,7 +30,7 @@
 		<tr>
 			<td align="center">
 			<input type="checkbox" name="agreement" id="agreement" checked="checked" />
-				我同意 <a href="<?php echo $this->projectUrl(array('module'=>'default', 'controller'=>'info', 'action'=>'agreement'));?>" target="_blank">质押借款协议</a> 和 <a href="<?php echo $this->projectUrl(array('module'=>'default', 'controller'=>'info', 'action'=>'policy'));?>" target="_blank">委托协议</a>
+				我同意 <a href="<?php echo $this->projectUrl(array('module'=>'default', 'controller'=>'agreement', 'action'=>'loan', 'code'=>$this->row['orderSN']));?>" target="_blank">质押借款协议</a> 和 <a href="<?php echo $this->projectUrl(array('module'=>'default', 'controller'=>'agreement', 'action'=>'delegate', 'code'=>$this->row['orderSN']));?>" target="_blank">委托协议</a>
 			</td>
 		</tr>
 		<tr>

@@ -75,7 +75,9 @@ class Admin_BorrowingController extends Admin_CommonController
         $paginator->urlTemplateContent = $urlTemplate;
         $rows = $dbPaginator->getRows();
 
+        $borrowStatus = $this->_configs['project']['memberVars']['borrowStatus'];
         foreach($rows as $key=>$row) {
+        	$row['borrowStatus'] = $borrowStatus[$row['currentStatus']];
         	$row['amount'] = number_format($row['amount']);
         	$rows[$key] = $row;
         }
@@ -217,13 +219,17 @@ class Admin_BorrowingController extends Admin_CommonController
     
     	$popRow = $this->_model->getPopstar();
     	
+    	$borrowStatus = $this->_configs['project']['memberVars']['borrowStatus'];
+    	$row['borrowStatus'] = $borrowStatus[$row['currentStatus']];
     	$row['amount'] = number_format($row['amount']);
     	$this->view->row = $row;
     	$this->view->popRow = $popRow;
     	$this->view->borrowingUnitMin = $this->_configs['project']['borrowingUnitMin'];
     	$this->view->backUrl = $backUrl;
+    	
+    	$act = $this->_request->get('act');
     
-    	if ($this->_request->isPost() && $this->_request->get('act') == 'updateStatus') {
+    	if ($this->_request->isPost() && $act == 'updateStatus') {
     		$field = array();
     		$filter = new Zend_Filter_StripTags();
     		$field['status'] = $filter->filter(trim($this->_request->getPost('status')));
@@ -239,11 +245,18 @@ class Admin_BorrowingController extends Admin_CommonController
     						(in_array($row['status'], array('2', '3')) && $field['status'] == 5)
     				)
     		){
-    			$status = array('1'=>'已提交待审核', '2'=>'初审已通过', '3'=>'终审已通过（融资中）', '4'=>'初审未通过', '5'=>'终审未通过');
+    			$status = array('1'=>'已提交待审核', '2'=>'初审已通过', '3'=>'终审已通过', '4'=>'初审未通过', '5'=>'终审未通过');
     			$log = trim($row['statusLog']) != '' ? Zend_Json::decode($row['statusLog']) : array();
     			$log[] = array('previousStatus'=>$status[$row['status']], 'currentStatus'=>$status[$field['status']], 'user'=>$this->_currentUserRow['userName'], 'time'=>date('Y-m-d H:i:s'));
     			$field['statusLog'] = Zend_Json::encode($log);
     
+    			if($field['status'] == 2) {
+    				$field['currentStatus'] = 2;
+    			} else if($field['status'] == 3) {
+    				$field['currentStatus'] = 3;
+    			} else if ($field['status'] == 4 || $field['status'] == 5) {
+    				$field['currentStatus'] = 6;
+    			}
     			$field['statusUpdateTime'] = time();
     			$this->_model->update($field, "`id` = {$id}");
     			if($field['status'] == 2) {
@@ -255,7 +268,41 @@ class Admin_BorrowingController extends Admin_CommonController
     		exit;
     	}
     	
-    	if ($this->_request->isPost() && $this->_request->get('act') == 'popstar') {
+    	if ($this->_request->isPost() && $act == 'complete') {
+    		$orderModel = new Application_Model_Order();
+    		$orderRow = $orderModel->fetchAll("`borrowCode` = '{$row['code']}' AND `ysbFreezeSeq` > 0");
+    		if(!empty($orderRow)) {
+    			foreach ($orderRow as $key=>$row) {
+    				$toUserSeq = $this->_thawMoney($row);
+    				if(!empty($toUserSeq)) {
+    					$this->_model->update(array('status'=>21), "`id` = {$row['id']}");
+    				}
+    			}
+    		}
+    		$field = array();
+    		$field['currentStatus'] = 4;
+    		$field['amountUnit'] = 0;
+    		$this->_model->update($field, "`id` = {$id}");
+    		echo $this->view->message('操作成功！');
+    		exit;
+    	}
+    	
+    	if ($this->_request->isPost() && $act == 'repayment') {
+    		$orderModel = new Application_Model_Order();
+    		$orderRow = $orderModel->fetchAll("`borrowCode` = '{$row['code']}' AND `ysbFreezeSeq` > 0");
+    		if(!empty($orderRow)) {
+    			foreach ($orderRow as $key=>$row) {
+    				$this->_model->update(array('status'=>22), "`id` = {$row['id']}");
+    			}
+    		}
+    		$field = array();
+    		$field['currentStatus'] = 5;
+    		$this->_model->update($field, "`id` = {$id}");
+    		echo $this->view->message('操作成功！');
+    		exit;
+    	}
+    	
+    	if ($this->_request->isPost() && $act == 'popstar') {
     		$field = array();
     		$filter = new Zend_Filter_StripTags();
     		$popstar = $filter->filter(trim($this->_request->getPost('popstar')));
@@ -264,6 +311,46 @@ class Admin_BorrowingController extends Admin_CommonController
     		echo $this->view->message('操作成功！') ;
     		exit;
     	}
+    }
+    
+    private function _thawMoney($orderRow) {
+    	$toUserSeq = NULL;
+    	$params = ysbThawParam($this->_configs['project']['ysbVars'], $orderRow, 1);
+    	//var_dump('-----------------解冻参数---------------');
+    	//var_dump($params);
+    	$client = new Zend_Http_Client();
+    	$response = $client->setUri($this->_configs['project']['ysbVars']['url']['thaw'])
+    	->setMethod(Zend_Http_Client::POST)
+    	->setParameterPost($params)
+    	->request();
+    	if($response->isSuccessful()) {
+    		$result = Zend_Json::decode($response->getBody());
+    		//var_dump('-----------------解冻响应---------------');
+    		//var_dump($result);
+    		if(key_exists('rspCode', $result) && $result['rspCode'] == '0000') {
+    			$verify = array(
+    					'rspCode' => $result['rspCode'],
+    					'rspMsg' => $result['rspMsg'],
+    					'merchantId' => $result['merchantId'],
+    					'orderId' => $result['orderId'],
+    					'toUserSeq' => $result['toUserSeq'],
+    					'toUserFeeSeq' => $result['toUserFeeSeq'],
+    					'fromUserAcctId' => $result['fromUserAcctId'],
+    					'fromUserAcctBal' => $result['fromUserAcctBal'],
+    					'toUserAcctId' => $result['toUserAcctId'],
+    					'toUserAcctBal' => $result['toUserAcctBal'],
+    					'merchantKey' => $this->_configs['project']['ysbVars']['merchantKey'],
+    			);
+    			if($result['mac'] == ysbMac($verify)) {
+    				$toUserSeq = $result['toUserSeq'];
+    			} else {
+    				echo $this->view->message('Mac校验出错。请重试！', '', 3, 'window.opener=null;window.close();');
+    				exit;
+    				//die('_thawMoney');
+    			}
+    		}
+    	}
+    	return $toUserSeq;
     }
     
     private function _sendsms($row)

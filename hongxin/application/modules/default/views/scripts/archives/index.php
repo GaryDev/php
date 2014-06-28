@@ -53,12 +53,14 @@
 	<tr>
 		<td valign="top">
 			<ul>
-		      <li id="tab1" style="margin-left: 35px;"><a href="<?php echo $this->projectUrl(array('module'=>'default', 'controller'=>'archives', 'action'=>'index', 'classId'=>3));?>" class="<?php echo ($this->vars['classId'] == 3) ? 'on' : ''; ?>">理财课堂</a></li>
-		      <li id="tab2" style="margin-left: 35px;"><a href="<?php echo $this->projectUrl(array('module'=>'default', 'controller'=>'archives', 'action'=>'index', 'classId'=>2));?>" class="<?php echo ($this->vars['classId'] == 2) ? 'on' : ''; ?>">行业资讯</a></li>
-		      <li id="tab3" style="margin-left: 35px;"><a href="<?php echo $this->projectUrl(array('module'=>'default', 'controller'=>'archives', 'action'=>'index', 'classId'=>6));?>" class="<?php echo ($this->vars['classId'] == 6) ? 'on' : ''; ?>">媒体报道</a></li>
-		      <li id="tab4" style="margin-left: 35px;"><a href="<?php echo $this->projectUrl(array('module'=>'default', 'controller'=>'info', 'action'=>'about'));?>">关于我们</a></li>
-		      <li id="tab5" style="margin-left: 35px;"><a href="<?php echo $this->projectUrl(array('module'=>'default', 'controller'=>'info', 'action'=>'contact'));?>">联系我们</a></li>
-		    </ul>
+			  <li id="tab1" style="margin-left: 35px;"><a href="<?php echo $this->projectUrl(array('module'=>'default', 'controller'=>'info', 'action'=>'team'));?>" class="<?php echo ($this->action == 'team') ? 'on' : ''; ?>">团队介绍</a></li>
+		      <li id="tab2" style="margin-left: 35px;"><a href="<?php echo $this->projectUrl(array('module'=>'default', 'controller'=>'archives', 'action'=>'index', 'classId'=>3));?>" class="<?php echo ($this->vars['classId'] == 3) ? 'on' : ''; ?>">理财课堂</a></li>
+		      <li id="tab3" style="margin-left: 35px;"><a href="<?php echo $this->projectUrl(array('module'=>'default', 'controller'=>'archives', 'action'=>'index', 'classId'=>2));?>" class="<?php echo ($this->vars['classId'] == 2) ? 'on' : ''; ?>">行业资讯</a></li>
+		      <li id="tab4" style="margin-left: 35px;"><a href="<?php echo $this->projectUrl(array('module'=>'default', 'controller'=>'archives', 'action'=>'index', 'classId'=>6));?>" class="<?php echo ($this->vars['classId'] == 6) ? 'on' : ''; ?>">媒体报道</a></li>
+		      <li id="tab5" style="margin-left: 35px;"><a href="<?php echo $this->projectUrl(array('module'=>'default', 'controller'=>'info', 'action'=>'about'));?>" class="<?php echo ($this->action == 'about') ? 'on' : ''; ?>">关于我们</a></li>
+		      <li id="tab6" style="margin-left: 35px;"><a href="<?php echo $this->projectUrl(array('module'=>'default', 'controller'=>'info', 'action'=>'job'));?>" class="<?php echo ($this->action == 'job') ? 'on' : ''; ?>">招贤纳士</a></li>
+		      <li id="tab7" style="margin-left: 35px;"><a href="<?php echo $this->projectUrl(array('module'=>'default', 'controller'=>'info', 'action'=>'contact'));?>" class="<?php echo ($this->action == 'contact') ? 'on' : ''; ?>">联系我们</a></li>
+			</ul>
 		</td>
 		<td style="width: 30px;">&nbsp;</td>
 		<td valign="top" style="width: 950px;">
@@ -66,6 +68,7 @@
 		<?php
 		if (!empty($this->rows)) {
 		?>
+				<div style="width: 800px; height: 300px;">
 				<table id="archivesList" width="798px" border="0" cellpadding="0" cellspacing="0">
 		<?php
 			foreach ($this->rows as $key=>$row) {
@@ -83,6 +86,7 @@
 			}
 		?>
 				</table>
+				</div>
 				<div class="page"><?php echo $this->pageString;?></div>
 		<?php
 		} else {

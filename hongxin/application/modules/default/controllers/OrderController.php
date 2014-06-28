@@ -180,10 +180,11 @@ class OrderController extends CommonController
 		$borrowingModel = new Application_Model_Borrowing();
 		$borrowRow = $borrowingModel->fetchRow("`code` = '{$code}'");
 		if($borrowRow['amountUnit'] == 0) {
-			$orderRow = $this->_model->fetchAll("`borrowCode` = '{$code}'");
+			$orderRow = $this->_model->fetchAll("`borrowCode` = '{$code}' AND `ysbFreezeSeq` > 0");
 			foreach ($orderRow as $key=>$row) {
 				$this->_thawMoney($row);
 			}
+			$borrowingModel->update(array('currentStatus'=>4), "`code` = '{$code}'");
 			/*
 			$benifitDay = (int)((($borrowRow['ticketEndTime'] - time())/86400));
 			$expr = 'orderAmount * ('.$borrowRow['yearInterestRate'].'/100) * ('.$benifitDay.'/365)';

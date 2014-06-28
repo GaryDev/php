@@ -36,8 +36,9 @@
 					<td>融资金额</td>
 					<td>期限</td>
 					<td>年利率</td>
-					<td>状态</td>
+					<td>当前状态</td>
 					<td>完成率</td>
+					<td>申请状态</td>
 					<td>申请时间</td>
 					<td>票据截止时间</td>
 					<!--  <td>终审</td> -->
@@ -51,8 +52,9 @@
 						<td><?php echo $row['amount'];?>元</td>
 						<td><?php echo $row['deadline'];?>天</td>
 						<td><?php echo $row['yearInterestRate'];?>%</td>
-						<td><?php if ($row['status'] == 1) {echo '已提交待审核';} else if ($row['status'] == 2) {echo '初审已通过';} else if ($row['status'] == 3) {echo '终审已通过（融资中）';}  else if ($row['status'] == 4) {echo '初审未通过';}  else if ($row['status'] == 5) {echo '终审未通过';} ?></td>
+						<td><?php echo $row['borrowStatus']; ?></td>
 						<td><?php echo $row['percent']; ?>%</td>
+						<td><?php if ($row['status'] == 1) {echo '已提交待审核';} else if ($row['status'] == 2) {echo '初审已通过';} else if ($row['status'] == 3) {echo '终审已通过';}  else if ($row['status'] == 4) {echo '初审未通过';}  else if ($row['status'] == 5) {echo '终审未通过';} ?></td>
 						<td><?php echo date('Y-m-d', $row['addTime']);?></td>
 						<td><?php echo date('Y-m-d', $row['ticketEndTime']);?></td>
 						<!--<td>&nbsp;</td>-->

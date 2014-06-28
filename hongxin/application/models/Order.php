@@ -70,6 +70,22 @@ class Application_Model_Order extends Application_Model_Common
 		return $row;
 	}
 	
+	public function getOrderInfo($orderSn) {
+		$memberModel = new Application_Model_Member();
+		$memberEnterpriseModel = new Application_Model_MemberEnterprise();
+		$borrowModel = new Application_Model_Borrowing();
+		$orderSelect = $this->select(false)
+		->setIntegrityCheck(false)
+		->from(array('o'=>$this->getTableName()), array('*'))
+		->joinInner(array('s'=>$memberModel->getTableName()), "`o`.`sellUser` = `s`.`userName`")
+		->joinInner(array('e'=>$memberEnterpriseModel->getTableName()), "`s`.`userName` = `e`.`userName`", array('name as companyName'))
+		->joinInner(array('b'=>$memberModel->getTableName()), "`o`.`buyUser` = `b`.`userName`", array('name as buyerName', 'idCardNumber'))
+		->joinInner(array('r'=>$borrowModel->getTableName()), "`o`.`borrowCode` = `r`.`code`", array('*'))
+		->where("`o`.`orderSN` = {$this->getAdapter()->quote($orderSn)}");
+		$row = $this->getAdapter()->fetchRow($orderSelect);
+		return $row;
+	}
+	
 	/**
 	 *    生成订单号
 	 *

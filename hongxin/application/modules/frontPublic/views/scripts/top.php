@@ -40,7 +40,7 @@
         <td align="left"><a id="borrowing" href="<?php echo $this->projectUrl(array('module'=>'default', 'controller'=>'borrowing', 'action'=>'index'));?>" class="menu">我要投资</a></td>
         <td align="left"><a id="lease" href="<?php echo $this->projectUrl(array('module'=>'member', 'controller'=>'borrowing', 'action'=>'apply'));?>" class="menu">企业融资</a></td>
         <!-- <td align="center"><a id="cession" href="<?php echo $this->projectUrl(array('module'=>'default', 'controller'=>'cession', 'action'=>'index'));?>" class="menu">债权转让</a></td> -->
-        <td align="left"><a id="archives" href="<?php echo $this->projectUrl(array('module'=>'default', 'controller'=>'archives', 'action'=>'index'));?>" class="menu">信息公告</a></td>
+        <td align="left"><a id="archives" href="<?php echo $this->projectUrl(array('module'=>'default', 'controller'=>'info', 'action'=>'team'));?>" class="menu">信息公告</a></td>
         <!--  <td align="center"><a id="guide" href="<?php echo $this->projectUrl(array('module'=>'default', 'controller'=>'guide', 'action'=>'index'));?>" class="menu">新手指引</a></td>-->
         <td align="left"><a id="member" href="<?php echo $this->projectUrl(array('module'=>'member', 'controller'=>'index', 'action'=>'index'));?>" class="menu">我的账户</a></td>
         <!-- <td align="center"><a id="about" href="<?php echo $this->projectUrl(array('module'=>'default', 'controller'=>'info', 'action'=>'about'));?>" class="menu">关于我们</a></td>-->

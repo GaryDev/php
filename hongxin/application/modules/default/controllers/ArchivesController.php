@@ -124,6 +124,8 @@ class ArchivesController extends CommonController
             echo $this->view->message('记录不存在！', $this->view->projectUrl(array('controller'=>'index', 'action'=>'index')));
             exit;
         }
+        $vars['classId'] = $row['classId'];
         $this->view->row = $row;
+        $this->view->vars = $vars;
     }
 }

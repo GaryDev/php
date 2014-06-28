@@ -109,7 +109,11 @@ foreach($this->memberVars['industry'] as $key=>$value) {
 							<td width="15%"><font class="required-star">*</font>&nbsp;公司邮箱：</td>
 							<td width="35%"><input type="text" class="validate[required] input" name="email" id="email" value="<?php echo isset($this->memberEnterpriseRow['email']) ? htmlspecialchars($this->memberEnterpriseRow['email']) : '';?>" /></td>
 							<td width="15%"><font class="required-star">*</font>&nbsp;公司座机：</td>
-							<td width="35%"><input type="text" class="validate[required] input" name="telephone" id="telephone" value="<?php echo isset($this->memberEnterpriseRow['telephone']) ? htmlspecialchars($this->memberEnterpriseRow['telephone']) : '';?>" /></td>
+							<td width="35%">
+							<input type="text" class="validate[required] input" name="phoneDistrict" id="phoneDistrict" maxlength="4" style="width: 30px;" value="<?php echo isset($this->memberEnterpriseRow['phoneDistrict']) ? htmlspecialchars($this->memberEnterpriseRow['phoneDistrict']) : '';?>" />&nbsp;-&nbsp;
+							<input type="text" class="validate[required] input" name="phoneNumber" id="phoneNumber" style="width: 195px;" value="<?php echo isset($this->memberEnterpriseRow['phoneNumber']) ? htmlspecialchars($this->memberEnterpriseRow['phoneNumber']) : '';?>" />
+							<!-- <input type="text" class="validate[required] input" name="telephone" id="telephone" value="<?php echo isset($this->memberEnterpriseRow['telephone']) ? htmlspecialchars($this->memberEnterpriseRow['telephone']) : '';?>" /> -->
+							</td>
 						</tr>
 						<tr>
 							<td width="15%"><font class="required-star">*</font>&nbsp;公司地址：</td>
@@ -223,7 +227,9 @@ if (borrowersStatus == '1') {
 	//$("#approveBtn").val('审核未通过');
 	//$("#approveCBX").parent().hide();
 }
-$('input:text', $("#baseDiv, #enterpriseDiv")).css("width", "80%");
+$('input:text', $("#baseDiv, #enterpriseDiv")).filter(function(){
+	return this.id.indexOf("phone") == -1;
+}).css("width", "80%");
 
 $("#approveCBX").change(function(){
 	if(this.checked) {

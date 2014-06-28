@@ -33,32 +33,32 @@ class Member_UserController extends Member_CommonController
         $memberLoginModel = new Application_Model_MemberLogin();
         $this->view->row  = $row = $memberLoginModel->getLoginedRow();
 
-        $memberBalanceModel = new Application_Model_MemberBalance();
-        $memberBaseModel = new Application_Model_MemberBase();
-        $memberContactModel = new Application_Model_MemberContact();
         $memberEnterpriseModel = new Application_Model_MemberEnterprise();
-        $memberSpouseModel = new Application_Model_MemberSpouse();
 
         $row = $memberLoginModel->getLoginedRow(); 
         if (empty($row)) {
             echo $this->view->message('记录不存在，请返回重试！', '') ;
             exit;
         }
-        $memberBalanceRow = $memberBalanceModel->fetchRow("`userName` = '{$row['userName']}'");
-        $memberBaseRow = $memberBaseModel->fetchRow("`userName` = '{$row['userName']}'");
-        $memberContactRow = $memberContactModel->fetchRow("`userName` = '{$row['userName']}'");
         $memberEnterpriseRow = $memberEnterpriseModel->fetchRow("`userName` = '{$row['userName']}'");
-        $memberSpouseRow = $memberSpouseModel->fetchRow("`userName` = '{$row['userName']}'");
+        if(!empty($memberEnterpriseRow)) {
+        	$memberEnterpriseRow['phoneDistrict'] = '';
+        	$memberEnterpriseRow['phoneNumber'] = '';
+        	$telephone = $memberEnterpriseRow['telephone'];
+        	if(!empty($telephone)) {
+        		$phone = explode('-', $telephone);
+        		if(count($phone) > 1) {
+        			$memberEnterpriseRow['phoneDistrict'] = $phone[0];
+        			$memberEnterpriseRow['phoneNumber'] = $phone[1];
+        		} else if(count($phone) > 0) {
+        			$memberEnterpriseRow['phoneNumber'] = $phone[0];
+        		}
+        	}
+        }
 
         $this->view->memberVars = $this->_configs['project']['memberVars'];
         $this->view->row = $row;
-        $this->view->memberBalanceRow = $memberBalanceRow;
-        $this->view->memberBaseRow = $memberBaseRow;
-        $this->view->memberContactRow = $memberContactRow;
         $this->view->memberEnterpriseRow = $memberEnterpriseRow;
-        $this->view->memberSpouseRow = $memberSpouseRow;
-        $this->view->memberGrade = $memberLoginModel->getCurrentMemberGrade($row['userName']);
-        $this->view->memberAmount = $memberLoginModel->getCurrentMemberAmount($row['userName']);
         
         //$formClass = $this->_request->get('formClass');
         //if ($this->_request->isPost()) {var_dump($formClass); die();}
@@ -89,7 +89,7 @@ class Member_UserController extends Member_CommonController
             $field['industry'] = $filter->filter(trim($this->_request->getPost('industry')));
             $field['name'] = $filter->filter(trim($this->_request->getPost('companyName')));
             $field['createTime'] = $filter->filter(trim($this->_request->getPost('createTime')));
-            $field['telephone'] = $filter->filter(trim($this->_request->getPost('telephone')));
+            $field['telephone'] = $filter->filter(trim($this->_request->getPost('phoneDistrict'))).'-'.$filter->filter(trim($this->_request->getPost('phoneNumber')));
             $field['premises'] = $filter->filter(trim($this->_request->getPost('premises')));
             $field['monthRent'] = $filter->filter(trim($this->_request->getPost('monthRent')));
             $field['leaseEndTime'] = $filter->filter(trim($this->_request->getPost('leaseEndTime')));

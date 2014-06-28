@@ -32,6 +32,32 @@ class InfoController extends CommonController
         $this->view->content = $textModel->content(2);
         $this->renderScript('info/info.php');
     }
+    
+    /**
+     * 团队介绍
+     *
+     * @return void
+     */
+    public function teamAction()
+    {
+    	$this->view->menuTitle = '团队介绍';
+    	$textModel = new Application_Model_Text();
+    	$this->view->content = $textModel->content(9);
+    	$this->renderScript('info/info.php');
+    }
+    
+    /**
+     * 招贤纳士
+     *
+     * @return void
+     */
+    public function jobAction()
+    {
+    	$this->view->menuTitle = '招贤纳士';
+    	$textModel = new Application_Model_Text();
+    	$this->view->content = $textModel->content(8);
+    	$this->renderScript('info/info.php');
+    }
 
     /**
      * 联系我们
