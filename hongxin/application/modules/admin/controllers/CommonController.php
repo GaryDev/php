@@ -149,4 +149,67 @@ class Admin_CommonController extends Zend_Controller_Action
         }
         return 0;
     }
+    
+    protected function __uploadFile($fieldName, $type, $options=array())
+    {
+    	$defalut = array('path' => '', 'imgWidth' => 0, 'imgHeight' => 0, 'waterMark'=>0);
+    	$options = array_merge($defalut, $options);
+    
+    	//上传设置
+    	$uploadFileExtension = array('jpg', 'jpeg', 'png', 'gif');
+    	$maxSize = 1024 * 1024 * 1;
+    	$maxSize = $maxSize * 2;
+    	$configBasePath = $type . 'BasePath';
+    	$files = $_FILES;
+    	$path = '';
+    	if (isset($files[$fieldName]) && $files[$fieldName]['error'] != 4) {
+    		if ($files[$fieldName]['error'] == 6) {
+    			echo $this->view->message('上传临时文件夹错误，请与管理员联系！') ;
+    			exit;
+    		} else if ($files[$fieldName]['error'] == 7) {
+    			echo $this->view->message('上传不可写，请与管理员联系！') ;
+    			exit;
+    		} else if ($files[$fieldName]['error'] != 0 && $files[$fieldName]['error'] != 4) {
+    			echo $this->view->message('其他上传错误！') ;
+    			exit;
+    		}
+    		if ($files[$fieldName]['size'] > $maxSize) {
+    			echo $this->view->message("上传的文件必须小于" . sizeToString($maxSize) . "！") ;
+    			exit;
+    		}
+    		 
+    		//检查文件扩展名是否正确
+    		$extension = strtolower(substr(strrchr($files[$fieldName]['name'], "."), 1));
+    		if (!in_array($extension, $uploadFileExtension)) {
+    			echo $this->view->message("上传文件只允许" . implode(',', $uploadFileExtension) . "格式的文件！") ;
+    			exit;
+    		}
+    		 
+    		if (!empty($options['path'])) {
+    			unlink($this->_configs['project'][$configBasePath] . $options['path']);
+    		}
+    		 
+    		//记录入库
+    		$row = array();
+    		$folder = date('Y-m-d');
+    		$dir = $this->_configs['project'][$configBasePath] . '/' . $folder;
+    		$path = '/' . $folder . '/' . date('YmdHis') . rand(1000, 9999) . '.' . $extension;
+    		 
+    		//保存文件
+    		createDirectory($dir);//创建临时文件夹
+    		move_uploaded_file($files[$fieldName]['tmp_name'], $this->_configs['project'][$configBasePath] . $path);
+    		if($options['imgWidth'] > 0 && $options['imgHeight'] > 0) {
+    			imageResize($this->_configs['project'][$configBasePath] . $path, $options['imgWidth'], $options['imgHeight']);
+    		}
+    		if($options['waterMark'] == 1) {
+    			$waterMarkFile = PUBLIC_PATH . '/files/publicFiles/images/logoWater.png';
+    			imageWaterMark($this->_configs['project'][$configBasePath] . $path, $waterMarkFile, -20, 0);
+    			//imageWaterMark($this->_configs['project'][$configBasePath] . $path, $waterMarkFile, 0, 50);
+    			imageWaterMark($this->_configs['project'][$configBasePath] . $path, $waterMarkFile, -20, 150);
+    		}
+    	} else {
+    		$path = $options['path'];
+    	}
+    	return $path;
+    }
 }

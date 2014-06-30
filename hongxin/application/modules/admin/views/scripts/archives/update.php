@@ -74,7 +74,7 @@ foreach($this->archivesClassRows as $archivesClassRow) {
                 <script language="javascript">
                 CKEDITOR.replace('content', {
 					filebrowserImageUploadUrl : '<?php echo $this->projectUrl(array('action'=>'editor-upload', 'id'=>$this->row['id']));?>',
-                	toolbar : 'Simple',
+                	//toolbar : 'Simple',
 					height : '280px'
                 });
                 </script>            </td>

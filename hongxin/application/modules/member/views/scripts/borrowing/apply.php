@@ -57,7 +57,7 @@
 						<td align="left">票据到期日期：</td>
 						<td align="left">
 						<input name="ticketEndDate" type="text" class="input" readonly="readonly" id="ticketEndDate" value="" size="45"/>
-						<script type="text/javascript">Calendar.setup({"ifFormat":"%Y-%m-%d","firstDay":0,"showsTime":false,"showOthers":false,"inputField":"ticketEndDate","button":"ticketEndDate", "onUpdate":function(){ calculateAmount(); }});</script></td>
+						<script type="text/javascript">Calendar.setup({"ifFormat":"%Y-%m-%d","firstDay":0,"showsTime":false,"showOthers":false,"inputField":"ticketEndDate","button":"ticketEndDate"/*, "onUpdate":function(){ calculateAmount(); }*/});</script></td>
 					</tr>
 					<tr>
 						<td width="15%" align="left">融资金额计算公式：</td>
@@ -71,7 +71,7 @@
 						<td align="left">最迟还款日期：</td>
 						<td align="left">
 						<input name="repayEndTime" type="text" class="input" readonly="readonly" id="repayEndTime" value="" size="45"/>
-						<script type="text/javascript">Calendar.setup({"ifFormat":"%Y-%m-%d","firstDay":0,"showsTime":false,"showOthers":false,"inputField":"repayEndTime","button":"repayEndTime"});</script></td>
+						<script type="text/javascript">Calendar.setup({"ifFormat":"%Y-%m-%d","firstDay":0,"showsTime":false,"showOthers":false,"inputField":"repayEndTime","button":"repayEndTime", "onUpdate":function(){ calculateAmount(); }});</script></td>
 					</tr>
 					<tr>
 						<td align="left">到期承兑银行：</td>
@@ -189,13 +189,13 @@ function checkYearInterestRate()
 
 function calculateAmount() {
 	if($.trim($("#ticketAmount").val()) == "" || $.trim($("#yearInterestRate").val()) == "" ||
-	   $.trim($("#ticketEndDate").val()) == "" || $.trim($("#applyEndDate").val()) == "") {
+	   $.trim($("#repayEndTime").val()) == "" || $.trim($("#applyEndDate").val()) == "") {
 	   $("#amount").val("");
 	   return false;
 	}
 	var amount = parseFloat(rmoney($.trim($("#ticketAmount").val())));
 	var yearRate = parseFloat($.trim($("#yearInterestRate").val()));
-	var benifitDay = diffDate($.trim($("#ticketEndDate").val()), $.trim($("#applyEndDate").val()));
+	var benifitDay = diffDate($.trim($("#repayEndTime").val()), $.trim($("#applyEndDate").val()));
 	var benifit = 0;
 	if(benifitDay > 0) {
 		benifit = amount * (1-((yearRate/100) * (benifitDay/365)));

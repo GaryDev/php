@@ -63,8 +63,8 @@ foreach($this->archivesClassRows as $archivesClassRow) {
                 <textarea dataType="editor" isCheckLength="1" name="content" title="内容" id="content" maxLength="0" minLength="0">内容整理中，敬请期待。</textarea>
                 <script language="javascript">
                 CKEDITOR.replace('content', {
-					filebrowserImageUploadUrl : '<?php echo $this->projectUrl(array('action'=>'editor-upload', 'temporarySpace'=>$this->temporarySpace));?>',
-                	toolbar : 'Simple',
+                	filebrowserImageUploadUrl : '<?php echo $this->projectUrl(array('action'=>'editor-upload', 'temporarySpace'=>$this->temporarySpace));?>',
+                	//toolbar : 'Simple',
 					height : '280px'
                 });
                 </script>

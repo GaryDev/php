@@ -7,6 +7,20 @@
 <script language="javascript" src="<?php echo $this->baseUrl;?>/files/publicFiles/scripts/public.js"></script>
 <script language="javascript" src="<?php echo $this->baseUrl;?>/files/admin/scripts/load.js"></script>
 <title><?php echo $this->title;?></title>
+<script>
+	function changePic()
+	{
+		if($("#ticketCopy").val() == "") {
+			alert('请选择银行承兑汇票扫描件。');
+			return false;
+		} else if(!validateFileExt($("#ticketCopy").val())) {
+			alert('银行承兑汇票扫描件格式不正确。');
+			return false;
+		}
+		$('#act').val('changePic');
+		return true;
+	}
+</script>
 </head>
 
 <body>
@@ -15,11 +29,15 @@
         <td class="content"><span class="description">当前位置：</span><a href="<?php echo $this->projectUrl(array('action'=>'index')) ;?>">融资列表</a> &gt; 修改融资信息</td>
     </tr>
 </table>
-<form id="editorForm" name="editorForm" method="post" action="">
+<form id="editorForm" name="editorForm" enctype="multipart/form-data" method="post" action="">
     <table width="100%" border="0" cellspacing="0" cellpadding="0" class="table">
         <tr>
         	<td width="12%">融资用户：</td>
         	<td width="88%"><?php echo $this->row['userName']?></td>
+       	</tr>
+        <tr>
+        	<td>融资企业：</td>
+        	<td><?php echo $this->row['enterpriseName']?></td>
        	</tr>
         <tr>
         	<td>融资编号：</td>
@@ -28,6 +46,11 @@
         <tr>
 			<td>融资标题：</td>
         	<td><?php echo $this->row['title'];?></td>
+       	</tr>
+        <tr>
+        	<td>银行承兑汇票：</td>
+        	<td><input type="file" name="ticketCopy" id="ticketCopy" />
+       		<?php echo !empty($this->row['pictureUrl']) ? "<a href=\"{$this->row['pictureUrl']}\" target=\"_blank\" style=\"margin-top:5px; margin-bottom:5px; margin-left:30px;\"><img src=\"{$this->row['pictureUrl']}\" height=\"20\" align=\"absmiddle\" border=\"0\"/></a> <label><input name=\"changePicture\" type=\"submit\" value=\"修改\" class=\"button\" onclick=\"return changePic();\" /></label>" : '';?></td>
        	</tr>
         <tr>
         	<td>申请状态：</td>

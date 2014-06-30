@@ -41,6 +41,7 @@
 <table width="100%" border="0" cellspacing="0" cellpadding="0" class="table">
     <form id="listForm" name="listForm" method="post" action="">
         <tr class="title">
+            <td width="5%" align="center">选择</td>
             <td align="center">融资用户</td>
             <td align="center">融资编号</td>
             <td align="center">标题</td>
@@ -57,9 +58,10 @@
 foreach ($this->rows as $key=>$row) {
 ?>
         <tr class="dataLine">
+        	<td width="5%" align="center"><input name="selectId[]" type="checkbox" id="selectId<?php echo $key;?>" value="<?php echo $row['id'];?>" /></td>
             <td align="center"><?php echo $row['userName'];?></td>
             <td align="center"><?php echo $row['code'];?></td>
-            <td align="center" title="<?php echo $row['title'];?>"><?php echo substrMoreCn($row['title'], 20);?></td>
+            <td align="center" title="<?php echo $row['title'];?>"><div style="margin-left:5px;"><?php echo substrMoreCn($row['title'], 20, '...');?> <?php echo !empty($row['pictureUrl']) ? "<a href=\"{$row['pictureUrl']}\" target=\"_blank\" style=\"margin:5px;\"><img src=\"{$row['pictureUrl']}\" height=\"20\" align=\"absmiddle\" border=\"0\"/></a>" : '';?></div></td>
             <td align="right"><?php echo $row['amount'];?>元</td>
             <td align="right"><?php echo $row['deadline'];?>天</td>
             <td align="right"><?php echo $row['yearInterestRate'];?>%</td>
@@ -72,6 +74,17 @@ foreach ($this->rows as $key=>$row) {
 <?php
 }
 ?>
+        <tr>
+            <td colspan="12">
+                <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                    <tr>
+                        <td>
+                            <input name="selectAllSetButton" type="button" id="selectAllSetButton" value="全选" class="button" onclick="selectAllSet('selectId[]');" />
+                            <input name="selectAllClearButton" type="button" id="selectAllClearButton" value="取消" class="button" onclick="selectAllClear('selectId[]');" />                        </td>
+                        <td align="right"><input name="delete" type="submit" id="delete" value="删除选中" class="button" onclick="if (confirm('确定删除吗？')){ $('#listForm').attr('action', '<?php echo $this->projectUrl(array('action'=>'delete', 'backUrl'=>urlencode($this->pageUrl))) ;?>');}else{return false;}" /></td>
+                    </tr>
+                </table>            </td>
+        </tr>
     </form>
     <tr>
         <td colspan="12" class="paginator"><?php echo $this->pageString;?></td>

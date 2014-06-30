@@ -507,4 +507,22 @@ class Application_Model_Borrowing extends Application_Model_Common
         $data = isset($row['a']) ? $row['a'] : 0;
         return $data;
     }
+    
+    /**
+     * 通过ID删除记录
+     *
+     * @param integer $id
+     * @return void
+     */
+    public function deleteById($id)
+    {
+    	$row = $this->fetchRow("`id` = {$id}");
+    	if (!empty($row)) {
+    		$ticketPath = $this->_configs['project']['ticketCopyBasePath'] . $row['ticketCopyPath'];
+    		if (is_file($ticketPath)) {
+    			unlink($ticketPath);
+    		}
+    		$this->delete("`id` = '{$id}'");
+    	}
+    }
 }
