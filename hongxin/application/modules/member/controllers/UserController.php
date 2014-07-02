@@ -576,6 +576,7 @@ class Member_UserController extends Member_CommonController
     public function sendsmsAction()
     {
     	$mobile = trim($this->_request->get('mobile'));
+    	//$mobile = '15900520256';
     	$code = rand(100000, 999999);
     	$this->_sendsms($mobile, $code);
     	$_SESSION['smscode'] = $code;
@@ -595,9 +596,11 @@ class Member_UserController extends Member_CommonController
     	);
     	$client = new Zend_Http_Client();
     	$response = $client->setUri($this->_configs['project']['ysbVars']['url']['sms'])
+    		->setConfig(array('timeout' => 60))
 	    	->setMethod(Zend_Http_Client::POST)
 	    	->setParameterPost($params)
 	    	->request();
+    	//var_dump($response);die();
     	if($response->isSuccessful()) {
     		$result = Zend_Json::decode($response->getBody());
     	}
@@ -643,7 +646,7 @@ class Member_UserController extends Member_CommonController
     		'userType' => $this->_request->get('userType'),
     		'orderId' => $this->_request->get('orderId'),
     		'orderTime' => $this->_request->get('orderTime'),
-    		'name' => $this->_request->get('name'),
+    		'name' => urldecode($this->_request->get('name')),
     		'idNum' => $this->_request->get('idNum'),
     		'mobilePhoneNum' => $this->_request->get('mobilePhoneNum'),
     		'merchantKey' => $this->_request->get('merchantKey'),

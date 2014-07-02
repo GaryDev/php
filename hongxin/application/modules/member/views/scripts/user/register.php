@@ -241,6 +241,13 @@ function time(o)
 	}
 }
 
+$("#smscode").on("keyup", function(){
+	var val = $(this).val();
+	if(val.length == 6) {
+		$("#password").focus();
+	}
+});
+
 $("#btnSms").click(function(){
 	if($("div.userName").size() > 0) return;
 	if($("#userName").val() != "" && $("#userName").val().match(/^1[358][0-9]{9}$/)) {
